@@ -18,3 +18,5 @@ Those datasets containing ground truth links are separated under their own sub-s
 - <a href="https://zenodo.org/record/7419275">Tough Tables</a>
 - <a href="https://zenodo.org/record/4282879">SemTab 2020 Synthetic</a>
 - WikiTables 2013 and 2019
+
+// TODO: Make description of characteristica of each dataset. Some might contain spelling errors or something else that make them interesting to evaluate entity linkers against.
