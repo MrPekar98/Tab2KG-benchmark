@@ -47,4 +47,7 @@ echo "Setting up WikiTables"
 mkdir /benchmarks/dbpedia/wikitables
 mkdir /benchmarks/wikidata/wikitables
 
+# TODO: Download benchmarks
+# TODO: Process benchmarks to follow the same format
+
 echo "Done"
