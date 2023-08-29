@@ -32,8 +32,10 @@ We summarize the corpora used in this benchmark and their golden standard.
 - <a href="http://webdatacommons.org/webtables/goldstandardV2.html">WebDataCommons</a>
 - <a href="https://sem-tab-challenge.github.io/2023/">SemTab 2023</a>
 - <a href="https://zenodo.org/record/7419275">Tough Tables</a>
-- <a href="https://zenodo.org/record/4282879">SemTab 2020 Synthetic</a>
-- WikiTables from 2019
+- <a href="https://zenodo.org/record/8082116">WikiTables</a>
+  - Large corpus of clean Wikipedia tables
+  - There is no noise
+  - Entity cells are annotated with their corresponding Wikipedia page which can be used to construct ground truth using DBpedia and Wikidata
 
 // TODO: Make description of characteristica of each dataset. Some might contain spelling errors or something else that make them interesting to evaluate entity linkers against.
 

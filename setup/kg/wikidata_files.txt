@@ -1,0 +1,1 @@
+https://dumps.wikimedia.org/wikidatawiki/entities/latest-all.ttl.bz2
