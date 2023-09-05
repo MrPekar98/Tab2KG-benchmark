@@ -30,17 +30,16 @@ All the results are now stored in the `results/` folder.
 We summarize the corpora used in this benchmark and their golden standard.
 
 - <a href="http://webdatacommons.org/webtables/goldstandardV2.html">WebDataCommons</a>
+  - Web HTML tables
+  - Contains ambiguities
+  - Large scale suitable for scalability evaluation (233 million tables)
 - <a href="https://sem-tab-challenge.github.io/2023/">SemTab 2023</a>
+  - Noisy, contains spelling errors and ambiguities
 - <a href="https://zenodo.org/record/7419275">Tough Tables</a>
+  - Complement to SemTab tables
+  - Contains more noise
+  - Ensures human annotators can resolve ambiguities
 - <a href="https://zenodo.org/record/8082116">WikiTables</a>
   - Large corpus of clean Wikipedia tables
   - There is no noise
   - Entity cells are annotated with their corresponding Wikipedia page which can be used to construct ground truth using DBpedia and Wikidata
-
-// TODO: Make description of characteristica of each dataset. Some might contain spelling errors or something else that make them interesting to evaluate entity linkers against.
-
-### Potential Corpora
-- <a href="https://opendata.camden.gov.uk/">UKGOV, Camden Council data</a>
-- <a href="https://developer.imdb.com/non-commercial-datasets/">IMDB</a>
-- <a href="https://gittables.github.io/">GitTables</a>
-- <a href="https://webdatacommons.org/webtables/">Web Tables</a>
