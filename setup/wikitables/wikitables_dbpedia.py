@@ -2,22 +2,40 @@ import os
 import json
 from neo4j import GraphDatabase
 
-tables_dir = 'wikitables/'
-out_dir = 'benchmark/wikitables/'
+tables_dir = '/home/wikitables/wikitables/'
+out_dir = '/benchmarks/dbpedia/wikitables/'
 tables = os.listdir(tables_dir)
+URI = 'bolt://localhost:7687'
+AUTH = ('neo4j', 'admin')
+isPrimaryTopicOf = None
 progress = 0
 
 def query(tx, link):
-    result = tx.run('MATCH (a:Resource)-[l:ns109__isPrimaryTopicOf]->(b:Resource) WHERE b.uri in [$link] RETURN a.uri as mention', link = link)
+    result = tx.run('MATCH (a:Resource)-[l:' + isPrimaryTopicOf + ']->(b:Resource) WHERE b.uri in [$link] RETURN a.uri as mention', link = link)
+    return set(result)
+
+def predicate_query(tx):
+    result = tx.run('CALL db.relationshipTypes() YIELD relationshipType RETURN relationshipType as predicate')
     return list(result)
 
-def get_uri(link):
-    URI = 'bolt://localhost:7687'
-    AUTH = ('neo4j', 'admin')
-
+def get_predicate():
     with GraphDatabase.driver(URI, auth = AUTH) as driver:
         driver.verify_connectivity()
 
+        with driver.session(database = 'neo4j') as session:
+            predicates = session.execute_read(predicate_query)
+
+            for predicate in predicates:
+                pred = predicate.data()['predicate']
+
+                if 'isPrimaryTopicOf' in pred:
+                    return pred
+
+            return None
+
+def get_uri(link):
+    with GraphDatabase.driver(URI, auth = AUTH) as driver:
+        driver.verify_connectivity()
 
         with driver.session(database = 'neo4j') as session:
             uris = session.execute_read(query, link)
@@ -26,6 +44,12 @@ def get_uri(link):
                 return uri.data()['mention']
 
             return None
+
+isPrimaryTopicOf = get_predicate()
+
+if isPrimaryTopicOf is None:
+    print('Could not find predicate')
+    exit(1)
 
 for table in tables:
     print(' ' * 100, end = '\r')

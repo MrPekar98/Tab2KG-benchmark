@@ -3,12 +3,11 @@
 export NEO4J_HOME=${PWD}
 export NEO4J_IMPORT="${NEO4J_HOME}/"$2"/import"
 export DATA_IMPORT="${PWD}/"$1
-export NEO4J_DB_DIR=$NEO4J_HOME/$2/data/databases/graph.db
 ulimit -n 65535
 
 echo "Moving and cleaning"
 
-for FILEIN in ${DATA_IMPORT}/*.ttl
+for FILEIN in ${DATA_IMPORT}/*.*
 do
     FILE_CLEAN="$(basename "${FILEIN}")"
 
@@ -22,11 +21,17 @@ done
 
 echo "Importing"
 
-for file in ${NEO4J_IMPORT}/*.ttl*; do
+for file in ${NEO4J_IMPORT}/*.*; do
     echo ""
     filename="$(basename "${file}")"
     echo "Importing $filename from ${NEO4J_HOME}"
-    ${NEO4J_HOME}/$2/bin/cypher-shell -u neo4j -p 'admin' "CALL  n10s.rdf.import.fetch(\"file://${NEO4J_IMPORT}/$filename\",\"Turtle\");"
+
+    if [[ "$1" == *"wikidata"* ]]
+    then
+        ${NEO4J_HOME}/$2/bin/cypher-shell -u neo4j -p 'admin' "CALL  n10s.rdf.import.fetch(\"file://${NEO4J_IMPORT}/$filename\",\"N-Triples\");"
+    else
+        ${NEO4J_HOME}/$2/bin/cypher-shell -u neo4j -p 'admin' "CALL  n10s.rdf.import.fetch(\"file://${NEO4J_IMPORT}/$filename\",\"Turtle\");"
+    fi
     rm -v ${file}
 done
 
