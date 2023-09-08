@@ -35,8 +35,14 @@ rm ToughTables-WD_v3.zip
 rm CEA_WD_Evaluator.py
 rm CTA_WD_Evaluator.py
 rmdir DataSets/
-./kg/download-files.sh tough_tables/wikidata-2023.txt
-mv files tough_tables/wikidata/
+wget https://zenodo.org/record/6643443/files/wikidata-20220521-truthy.nt.bz2?download=1
+mv 'wikidata-20220521-truthy.nt.bz2?download=1' wikidata.nt.bz2
+bzip2 -dk wikidata.nt.bz2
+rm wikidata.nt.bz2
+mkdir -p tough_tables/wikidata/
+mv wikidata.nt tough_tables/wikidata/
+python3 tough_tables/split.py
+rm /home/tough_tables/wikidata/wikidata.nt
 ln -s /home/tough_tables/wikidata /home/kg/wikidata
 
 # SemTab 2023

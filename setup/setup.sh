@@ -2,52 +2,37 @@
 
 set -e
 
-cd kg/
-
 echo "Downloading DBpedia"
-./download_files.sh dbpedia_files.txt
-mv files dbpedia
+mkdir -p kg/dbpedia/
+./kg/download-files.sh kg/dbpedia_files.txt
+mv files/* kg/dbpedia
+rmdir files
 
-echo "Downloading Wikidata"
-./download_files.sh wikidata_files.txt
-mv files wikidata
-
+echo
 echo "Installing Neo4J"
-./install.sh
+./kg/install.sh
 mkdir tmp
 mv neo4j-server tmp
 cp -r tmp/neo4j-server .
-mv neo4j-server neo4j-dbpedia
+mv neo4j-server kg/neo4j-dbpedia
 cp -r tmp/neo4j-server .
-mv neo4j-server neo4j-wikidata
+mv neo4j-server kg/neo4j-wikidata
 rm -rf tmp
 
-echo "Importing DBpedia"
-./neo4j-dbpedia/bin/neo4j start
-sleep 30s
-./import.sh dbpedia neo4j-dbpedia
-./neo4j-dbpdedia/bin/neo4j stop
-sleep 30s
+echo "dbms.memory.heap.initial_size=50g" >> kg/neo4j-dbpedia/conf/neo4j.conf
+echo "dbms.memory.heap.max_size=150g" >> kg/neo4j-dbpedia/conf/neo4j.conf
+echo "dbms.memory.heap.initial_size=50g" >> kg/neo4j-wikidata/conf/neo4j.conf
+echo "dbms.memory.heap.max_size=150g" >> kg/neo4j-wikidata/conf/neo4j.conf
 
-echo "Importing Wikidata"
-./neo4j-wikidata/bin/neo4j start
-sleep 30s
-./import.sh wikidata neo4j-wikidata
-./neo4j-wikidata/bin/neo4j stop
-sleep 30s
-
-cd ..
+echo
 echo "Setting up benchmark"
 echo
+echo "Downloading benchmarks"
+./download_benchmarks.sh
 
-mkdir /benchmarks/dbpedia
-mkdir /benchmarks/wikidata
+echo
+echo "Processing benchmarks"
+./process_benchmarks.sh
 
-echo "Setting up WikiTables"
-mkdir /benchmarks/dbpedia/wikitables
-mkdir /benchmarks/wikidata/wikitables
-
-# TODO: Download benchmarks
-# TODO: Process benchmarks to follow the same format
-
+echo
 echo "Done"
