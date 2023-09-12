@@ -15,4 +15,6 @@ setup/webcommons/classes_GS.csv
 setup/webcommons/tables/
 setup/webcommons/instance/
 setup/webcommons/property/
+setup/webcommons/dbpedia/
 setup/wikitables/wikitables/
+setup/*.stats
