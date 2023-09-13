@@ -16,5 +16,5 @@ setup/webcommons/tables/
 setup/webcommons/instance/
 setup/webcommons/property/
 setup/webcommons/dbpedia/
-setup/wikitables/wikitables/
+setup/wikitables/wikitables*/
 setup/*.stats

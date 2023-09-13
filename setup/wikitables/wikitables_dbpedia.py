@@ -1,9 +1,15 @@
+import sys
 import os
 import json
 from neo4j import GraphDatabase
 
-tables_dir = '/home/wikitables/wikitables/'
-out_dir = '/benchmarks/dbpedia/wikitables/'
+if len(sys.argv) < 2:
+    print('Missing version year')
+    exit(1)
+
+version = sys.argv[1]
+tables_dir = '/home/wikitables/wikitables_20' + version + '/'
+out_dir = '/benchmarks/dbpedia/wikitables_20' + version + '/'
 tables = os.listdir(tables_dir)
 URI = 'bolt://localhost:7687'
 AUTH = ('neo4j', 'admin')
