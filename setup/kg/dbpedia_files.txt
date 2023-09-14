@@ -8,3 +8,4 @@ https://downloads.dbpedia.org/repo/dbpedia/mappings/instance-types/2022.12.01/in
 https://downloads.dbpedia.org/repo/dbpedia/mappings/mappingbased-literals/2022.12.01/mappingbased-literals_lang=en.ttl.bz2
 https://downloads.dbpedia.org/repo/dbpedia/wikidata/sameas-external/2022.12.01/sameas-external.ttl.bz2
 https://downloads.dbpedia.org/repo/dbpedia/wikidata/sameas-all-wikis/2022.12.01/sameas-all-wikis.ttl.bz2
+https://databus.dbpedia.org/vehnem/replaced-iris/sameAs/2022.12.01/sameAs_lang=en.ttl.bzip2

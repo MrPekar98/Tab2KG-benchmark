@@ -13,7 +13,7 @@ do
 
     if [[ "$1" == *"wikidata"* ]]
     then
-        cp ${FILEIN} ${NEO4J_IMPORT}/${FILE_CLEAN}
+        iconv -f utf-8 -t ascii -c "${FILEIN}" | grep -E '^<(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[A-Za-z0-9\+&@#/?=~_|:]>\W<' | grep -Fv 'xn--b1aew' > ${NEO4J_IMPORT}/${FILE_CLEAN}
     else
         iconv -f utf-8 -t ascii -c "${FILEIN}" | grep -E '^<(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[A-Za-z0-9\+&@#/%?=~_|]>\W<' | grep -Fv 'xn--b1aew' > ${NEO4J_IMPORT}/${FILE_CLEAN}
     fi
