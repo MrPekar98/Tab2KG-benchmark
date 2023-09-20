@@ -33,7 +33,7 @@ We summarize the corpora used in this benchmark and their golden standard.
   - Web HTML tables
   - Contains ambiguities
   - Large scale suitable for scalability evaluation (233 million tables)
-- <a href="https://sem-tab-challenge.github.io/2023/">SemTab 2023</a>
+- <a href="https://zenodo.org/record/7416036">HardTables</a>
   - Noisy, contains spelling errors and ambiguities
 - <a href="https://zenodo.org/record/7419275">Tough Tables</a>
   - Complement to SemTab tables
@@ -43,3 +43,19 @@ We summarize the corpora used in this benchmark and their golden standard.
   - Large corpus of clean Wikipedia tables
   - There is no noise
   - Entity cells are annotated with their corresponding Wikipedia page which can be used to construct ground truth using DBpedia and Wikidata
+
+## Dataset Analysis
+Below is listed the average dimensions and number of entities in the datasets used in this repository.
+There is also a plot that shows the type distribution of the knowledge graph entities involved in the tabular datasets.
+This helps us understand the domains of the table entities.
+
+To run the analysis process, run the following commands.
+
+```bash
+docker build -f analyze.dockerfile -t tab2kg_analysis .
+docker run --rm -v ${PWD}/benchmark:/home/benchmark -v ${PWD}/setup:/home/setup tab2kg_analysis
+```
+
+The plots are then saved in `setup/analysis/`.
+
+// TODO: Insert plots

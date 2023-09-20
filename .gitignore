@@ -4,9 +4,8 @@ setup/kg/neo4j-dbpedia/
 setup/kg/neo4j-wikidata/
 setup/kg/dbpedia/
 setup/kg/wikidata
-setup/semtab/DataSets/
+setup/semtab/HardTablesR2/
 setup/semtab/wikidata
-setup/semtab/CEA_WD_Evaluator.py
 setup/tough_tables/ToughTablesR2-DBP/
 setup/tough_tables/ToughTablesR2-WD/
 setup/tough_tables/repo/
@@ -19,3 +18,4 @@ setup/webcommons/property/
 setup/webcommons/dbpedia/
 setup/wikitables/wikitables*/
 setup/analysis/*.stats
+setup/analysis/__pycache__/
