@@ -11,6 +11,7 @@ mv instance/ webcommons/
 mv property/ webcommons/
 rm extended_instance_goldstandard.tar.gz
 ./kg/download-files.sh webcommons/dbpedia-files.txt
+mv files webcommons/dbpedia
 
 # Tough Tables (DBpedia)
 wget https://zenodo.org/record/7419275/files/ToughTables-DBP_v3.zip?download=1
@@ -46,25 +47,35 @@ rm /home/tough_tables/wikidata/wikidata.nt
 ln -s /home/tough_tables/wikidata /home/kg/wikidata
 
 # SemTab 2023
-wget https://github.com/sem-tab-challenge/2023/raw/main/datasets/WikidataTables2023R1.tar.gz
-tar -xf WikidataTables2023R1.tar.gz
-mv DataSets/ semtab/
-rm WikidataTables2023R1.tar.gz
-rm CEA_WD_Evaluator.py
-rm CPA_WD_Evaluator.py
-rm CTA_WD_Evaluator.py
+wget https://zenodo.org/record/7416036/files/HardTablesR2.zip?download=1 -O HardTablesR2.zip
+unzip HardTablesR2.zip
+mv HardTablesR2 semtab/
+rm HardTablesR2.zip
 ln -s /home/tough_tables/wikidata /home/semtab/wikidata
 
-# WikiTables (2019)
+# WikiTables (2013)
 git clone https://github.com/EDAO-Project/SemanticTableSearchDataset.git
+mv SemanticTableSearchDataset/table_corpus/tables_2013/ .
+mkdir -p wikitables/wikitables_2013/
+
+for F in tables_2013/* ;\
+do
+    tar -xf ${F}
+    mv ${F:12:-7}/* wikitables/wikitables_2013/
+    rm -r ${F:12:-7}
+done
+
+rm -r tables_2013/
+
+# WikiTables (2019)
 mv SemanticTableSearchDataset/table_corpus/tables_2019/ .
 rm -r SemanticTableSearchDataset
-mkdir -p wikitables/wikitables/
+mkdir -p wikitables/wikitables_2019/
 
 for F in tables_2019/* ;\
 do
     tar -xf ${F}
-    mv ${F:0:-7}/* wikitables/wikitables/
+    mv ${F:0:-7}/* wikitables/wikitables_2019/
 done
 
 rm -r tables_2019/
