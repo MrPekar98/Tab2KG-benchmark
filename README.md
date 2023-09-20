@@ -50,12 +50,21 @@ There is also a plot that shows the type distribution of the knowledge graph ent
 This helps us understand the domains of the table entities.
 
 To run the analysis process, run the following commands.
+But first, make sure you set the ownership of the files in setup to yourself.
+
+```bash
+sudo chown ${USER} setup/
+sudo chown ${USER} setup/**/
+```
+
+You can now build the image and start analyzing the datasets.
+Note that building the context when building the images is a lengthy process due to the large sizes of the datasets.
 
 ```bash
 docker build -f analyze.dockerfile -t tab2kg_analysis .
 docker run --rm -v ${PWD}/benchmark:/home/benchmark -v ${PWD}/setup:/home/setup tab2kg_analysis
 ```
 
-The plots are then saved in `setup/analysis/`.
+The plots are then saved in `setup/analysis/` as PDF files.
 
 // TODO: Insert plots
