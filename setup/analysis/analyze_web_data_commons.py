@@ -10,8 +10,8 @@ import pickle
 from stats import Stats
 
 def analyze_web_data_commons():
-    dir = '../webcommons/tables/'
-    gt_dir = '../webcommons/instance/'
+    dir = '/home/setup/webcommons/tables/'
+    gt_dir = '/home/setup/webcommons/instance/'
     table_files = os.listdir(dir)
     gt_files = os.listdir(gt_dir)
     stats = Stats()

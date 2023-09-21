@@ -9,8 +9,9 @@ import csv
 import pickle
 from stats import Stats
 
+# TODO: Needs to be re-written, as we now use HardTables from SemTab 2022
 def analyze_semtab():
-    dir = '../semtab/DataSets/Test/tables/'
+    dir = '/home/setup/semtab/HardTablesR2/DataSets/HardTablesR2/Test/tables/'
     files = os.listdir(dir)
     stats = Stats()
     rows = 0

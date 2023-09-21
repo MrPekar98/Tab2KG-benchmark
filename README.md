@@ -58,11 +58,10 @@ sudo chown ${USER} setup/**/
 ```
 
 You can now build the image and start analyzing the datasets.
-Note that building the context when building the images is a lengthy process due to the large sizes of the datasets.
 
 ```bash
 docker build -f analyze.dockerfile -t tab2kg_analysis .
-docker run --rm -v ${PWD}/benchmark:/home/benchmark -v ${PWD}/setup:/home/setup tab2kg_analysis
+docker run --rm -v ${PWD}:/plots -v ${PWD}/benchmarks:/home/benchmarks -v ${PWD}/setup:/home/setup tab2kg_analysis
 ```
 
 The plots are then saved in `setup/analysis/` as PDF files.

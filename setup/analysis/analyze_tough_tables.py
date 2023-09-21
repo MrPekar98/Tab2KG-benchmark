@@ -18,7 +18,7 @@ def analyze_tough_tables(kg):
     else:
         kg_dir = 'ToughTablesR2-WD/'
 
-    dir = '../tough_tables/' + kg_dir + 'Test/tables/'
+    dir = '/home/setup/tough_tables/' + kg_dir + 'Test/tables/'
     files = os.listdir(dir)
     rows = 0
     columns = 0
@@ -40,7 +40,7 @@ def analyze_tough_tables(kg):
     stats.set_rows(rows / len(files))
     stats.set_columns(columns / len(files))
 
-    gt_file = '../tough_tables/' + kg_dir + 'Test/gt/cea_gt.csv'
+    gt_file = '/home/setup/tough_tables/' + kg_dir + 'Test/gt/cea_gt.csv'
 
     with open(gt_file, 'r') as fd:
         handle = csv.reader(fd)
