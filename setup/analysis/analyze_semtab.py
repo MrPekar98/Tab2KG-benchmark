@@ -7,15 +7,72 @@ import sys
 import json
 import csv
 import pickle
+import statistics
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
 from stats import Stats
+from neo4j import GraphDatabase
 
-# TODO: Needs to be re-written, as we now use HardTables from SemTab 2022
+def query_types(tx, entity, predicate):
+    result = tx.run('MATCH (a:Resource)-[l:' + predicate + ']->(b:Resource) WHERE a.uri in [$entity] RETURN b.uri as type', entity = entity)
+    return list(result)
+
+def predicates(tx):
+    results = tx.run('CALL db.relationshipTypes() YIELD relationshipType RETURN relationshipType as predicate')
+    return list(result)
+
+def type_predicate():
+    with GraphDatabase.driver(URI, auth = AUTH) as driver:
+        with driver.session(database = 'neo4j') as session:
+            preds = session.execute_read(predicates)
+
+            for predicate in preds:
+                pred = predicate.data()['predicate']
+
+                if pred.endswith('P31'):
+                    return pred
+
+            return None
+
+def entity_types(entity, predicate):
+    types = set()
+
+    with GraphDatabase.driver(URI, auth = AUTH) as driver:
+        with driver.session(database = 'neo4j') as session:
+            results = session.execute_read(query_types, entity, predicate)
+
+            for type in results:
+                types.add(type.data()['type'])
+
+            return types
+
 def analyze_semtab():
-    dir = '/home/setup/semtab/HardTablesR2/DataSets/HardTablesR2/Test/tables/'
-    files = os.listdir(dir)
+    base = '/home/setup/semtab/HardTablesR2/DataSets/HardTablesR2/Test/'
+    table_dir = base + 'tables/'
+    gt_file = base + 'gt/cea_gt.csv'
+    files = os.listdir(table_dir)
     stats = Stats()
     rows = 0
     columns = 0
+    entities = set()
+    type_pred = type_predicate()
+
+    with open(gt_file, 'r') as fd:
+        handle = csv.reader(fd)
+        table_entities = dict()
+
+        for line in handle:
+            table_id = line[0]
+            entity = line[3]
+            entities.add(entity)
+
+            if table_id not in table_entities.keys():
+                table_entities[table_id] = 0
+
+            table_entities[table_id] += 1
+
+        stats.set_num_entities(statistics.mean(table_entities.values()))
 
     for file in files:
         with open(dir + file, 'r') as fd:
@@ -26,10 +83,35 @@ def analyze_semtab():
                 rows += 1
                 tmp_columns = len(line)
 
+            rows -= 1
             columns += tmp_columns
 
+    stats.set_tables(len(files))
     stats.set_rows(rows / len(files))
     stats.set_columns(columns / len(files))
+
+    type_distribution = dict()
+
+    for entity in entities:
+        types = entity_types(entity, type_pred)
+
+        for type in types:
+            type = type.split('/')[-1]
+
+            if type not in type_distribution.keys():
+                type_distribution[type] = 0
+
+            type_distribution[type] += 1
+
+    median = statistics.median(type_distribution.values())
+    type_distribution = dict((k, v) for k, v in type_distribution.items() if v > median)
+    fig, ax = plt.subplots(figsize = (12, 11))
+    data = pd.DataFrame()
+    data['Entity types'] = list(type_distribution.keys())
+    data['Type frequency'] = list(type_distribution.values())
+    plot = sns.barplot(data, x = 'Entity types', y = 'Type frequency', ax = ax)
+    plot.set_xticklabels(plot.get_xticklabels(), rotation = 30, horizontalalignment = 'right')
+    plt.savefig('/plots/Wikitables-Wikidata_' + str(version) + '.pdf')
 
     return stats
 
