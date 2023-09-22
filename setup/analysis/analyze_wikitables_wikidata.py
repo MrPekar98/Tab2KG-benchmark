@@ -33,7 +33,7 @@ def type_predicate():
             for predicate in preds:
                 pred = predicate.data()['predicate']
 
-                if 'instance' in pred and 'of' in pred:
+                if pred.endswith('P31'):
                     return pred
 
             return None
