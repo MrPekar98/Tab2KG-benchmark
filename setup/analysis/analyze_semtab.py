@@ -13,13 +13,17 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from stats import Stats
 from neo4j import GraphDatabase
+from collections import Counter
+
+URI = 'bolt://localhost:7687'
+AUTH = ('neo4j', 'admin')
 
 def query_types(tx, entity, predicate):
     result = tx.run('MATCH (a:Resource)-[l:' + predicate + ']->(b:Resource) WHERE a.uri in [$entity] RETURN b.uri as type', entity = entity)
     return list(result)
 
 def predicates(tx):
-    results = tx.run('CALL db.relationshipTypes() YIELD relationshipType RETURN relationshipType as predicate')
+    result = tx.run('CALL db.relationshipTypes() YIELD relationshipType RETURN relationshipType as predicate')
     return list(result)
 
 def type_predicate():
@@ -75,7 +79,7 @@ def analyze_semtab():
         stats.set_num_entities(statistics.mean(table_entities.values()))
 
     for file in files:
-        with open(dir + file, 'r') as fd:
+        with open(table_dir + file, 'r') as fd:
             handle = csv.reader(fd)
             tmp_columns = 0
 
@@ -103,21 +107,21 @@ def analyze_semtab():
 
             type_distribution[type] += 1
 
-    median = statistics.median(type_distribution.values())
-    type_distribution = dict((k, v) for k, v in type_distribution.items() if v > median)
+    counter = Counter(type_distribution)
+    type_distribution = {k:v for k, v in counter.most_common()[:25]}
     fig, ax = plt.subplots(figsize = (12, 11))
     data = pd.DataFrame()
     data['Entity types'] = list(type_distribution.keys())
     data['Type frequency'] = list(type_distribution.values())
     plot = sns.barplot(data, x = 'Entity types', y = 'Type frequency', ax = ax)
     plot.set_xticklabels(plot.get_xticklabels(), rotation = 30, horizontalalignment = 'right')
-    plt.savefig('/plots/Wikitables-Wikidata_' + str(version) + '.pdf')
+    plt.savefig('/plots/SemTab.pdf')
 
     return stats
 
 # Returns SemTab stats
 def load_stats():
-    with open('.SemTab.stats', 'rb') as file:
+    with open('/plots/.SemTab.stats', 'rb') as file:
         semtab = pickle.load(file)
         return semtab
 
@@ -143,7 +147,7 @@ if __name__ == '__main__':
 
     if sys.argv[1] == 'new':
         stats_semtab = analyze_semtab()
-        write_stats('.SemTab.stats', stats_semtab)
+        write_stats('/plots/.SemTab.stats', stats_semtab)
 
     print('SemTab stats:')
     stats_semtab.print()

@@ -13,6 +13,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from stats import Stats
 from neo4j import GraphDatabase
+from collections import Counter
 
 URI = 'bolt://localhost:7687'
 AUTH = ('neo4j', 'admin')
@@ -22,7 +23,7 @@ def query_types(tx, entity, predicate):
     return list(result)
 
 def predicates(tx):
-    results = tx.run('CALL db.relationshipTypes() YIELD relationshipType RETURN relationshipType as predicate')
+    result = tx.run('CALL db.relationshipTypes() YIELD relationshipType RETURN relationshipType as predicate')
     return list(result)
 
 def type_predicate():
@@ -66,7 +67,7 @@ def analyze_wikitables(version, kg):
             rows += len(table)
 
             if len(table) > 0:
-                columns = len(table[0])
+                columns += len(table[0])
 
             for row in table:
                 for column in row:
@@ -74,7 +75,7 @@ def analyze_wikitables(version, kg):
                         entities += 1
                         entity_set.add(column['entity'])
 
-    stats.set_table(len(table_files))
+    stats.set_tables(len(table_files))
     stats.set_rows(rows / len(table_files))
     stats.set_columns(columns / len(table_files))
     stats.set_num_entities(entities / len(table_files))
@@ -92,8 +93,8 @@ def analyze_wikitables(version, kg):
 
             type_distribution[type] += 1
 
-    median = statistics.median(type_distribution.values())
-    type_distribution = dict((k, v) for k, v in type_distribution.items() if v > median)
+    counter = Counter(type_distribution)
+    type_distribution = {k:v for k, v in counter.most_common()[:25]}
     fig, ax = plt.subplots(figsize = (12, 11))
     data = pd.DataFrame()
     data['Entity types'] = list(type_distribution.keys())
@@ -110,11 +111,11 @@ def analyze_wikitables(version, kg):
 def load_stats():
     stats = list()
 
-    with open('.Wikitables2013_Wikidata.stats', 'rb') as file:
+    with open('/plots/.Wikitables2013_Wikidata.stats', 'rb') as file:
         wiki = pickle.load(file)
         stats.append(wiki)
 
-    with open('.Wikitables2019_Wikidata.stats', 'rb') as file:
+    with open('/plots/.Wikitables2019_Wikidata.stats', 'rb') as file:
         wiki = pickle.load(file)
         stats.append(wiki)
 
@@ -148,8 +149,8 @@ if __name__ == '__main__':
     if sys.argv[1] == 'new':
         stats_wikitables_wikidata_2013 = analyze_wikitables(2013, 'wikidata')
         stats_wikitables_Wikidata_2019 = analyze_wikitables(2019, 'wikidata')
-        write_stats('.Wikitables2013_Wikidata.stats', stats_wikitables_wikidata_2013)
-        write_stats('.Wikitables2019_Wikidata.stats', stats_wikitables_Wikidata_2019)
+        write_stats('/plots/.Wikitables2013_Wikidata.stats', stats_wikitables_wikidata_2013)
+        write_stats('/plots/.Wikitables2019_Wikidata.stats', stats_wikitables_Wikidata_2019)
 
     print('Wikitables 2013 stats (Wikidata):')
     stats_wikitables_wikidata_2013.print()

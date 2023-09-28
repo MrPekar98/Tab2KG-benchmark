@@ -7,10 +7,9 @@ import sys
 import json
 import csv
 import pickle
-import statistics
 import seaborn as sns
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
 from stats import Stats
 from neo4j import GraphDatabase
 from collections import Counter
@@ -34,7 +33,7 @@ def type_predicate():
             for predicate in preds:
                 pred = predicate.data()['predicate']
 
-                if 'type' in pred and 'rdf' in pred:
+                if pred.endswith('P31'):
                     return pred
 
             return None
@@ -51,36 +50,55 @@ def entity_types(entity, predicate):
 
             return types
 
-def analyze_wikitables(version, kg):
-    stats = Stats()
+def analyze_tough_tables():
+    dir = '/home/setup/tough_tables/ToughTablesR2-WD/Test/tables/'
+    files = os.listdir(dir)
     rows = 0
     columns = 0
     entities = 0
     entity_set = set()
-    dir = '/home/benchmarks/' + kg + '/wikitables_' + str(version) + '/'
-    table_files = os.listdir(dir)
+    entity_map = dict()
+    stats = Stats()
     type_pred = type_predicate()
 
-    for table_file in table_files:
-        with open(dir + table_file, 'r') as file:
-            table = json.load(file)['table']
-            rows += len(table)
+    for file in files:
+        with open(dir + file, 'r') as fd:
+            handle = csv.reader(fd)
+            tmp_columns = 0
 
-            if len(table) > 0:
-                columns += len(table[0])
+            for line in handle:
+                rows += 1
+                tmp_columns = len(line)
 
-        for row in table:
-            for column in row:
-                if len(column['entity']) > 0:
-                    entities += 1
-                    entity_set.add(column['entity'])
+            columns += tmp_columns
 
-    stats.set_tables(len(table_files))
-    stats.set_rows(rows / len(table_files))
-    stats.set_columns(columns / len(table_files))
-    stats.set_num_entities(entities / len(table_files))
+    stats.set_tables(len(files))
+    stats.set_rows(rows / len(files))
+    stats.set_columns(columns / len(files))
+
+    gt_file = '/home/setup/tough_tables/ToughTablesR2-WD/Test/gt/cea_gt.csv'
+
+    with open(gt_file, 'r') as fd:
+        handle = csv.reader(fd)
+
+        for line in handle:
+            table = line[0]
+            ents = line[3]
+
+            for entity in ents.split(' '):
+                entity_set.add(entity)
+
+            if table not in entity_map.keys():
+                entity_map[table] = 1
+
+            else:
+                entity_map[table] += 1
+
+    for table in entity_map.keys():
+        entities += entity_map[table]
 
     type_distribution = dict()
+    stats.set_num_entities(entities / len(entity_map.keys()))
 
     for entity in entity_set:
         types = entity_types(entity, type_pred)
@@ -101,25 +119,17 @@ def analyze_wikitables(version, kg):
     data['Type frequency'] = list(type_distribution.values())
     plot = sns.barplot(data, x = 'Entity types', y = 'Type frequency', ax = ax)
     plot.set_xticklabels(plot.get_xticklabels(), rotation = 30, horizontalalignment = 'right')
-    plt.savefig('/plots/Wikitables-DBpedia_' + str(version) + '.pdf')
+    plt.savefig('/plots/ToughTables-Wikidata.pdf')
 
     return stats
 
 # Returns array of Stats instances, one for each benchmark
-# 1: Wikitables 2013 - DBpedia
-# 2: Wikitables 2019 - DBpedia
+# 1: ToughTables - DBpedia
+# 2: ToughTables - Wikidata
 def load_stats():
-    stats = list()
-
-    with open('/plots/.Wikitables2013_DBpedia.stats', 'rb') as file:
-        wiki = pickle.load(file)
-        stats.append(wiki)
-
-    with open('/plots/.Wikitables2019_DBpedia.stats', 'rb') as file:
-        wiki = pickle.load(file)
-        stats.append(wiki)
-
-    return stats
+    with open('/plots/.ToughTables_Wikidata.stats', 'rb') as file:
+        tt = pickle.load(file)
+        return tt
 
 def write_stats(filename, stats):
     with open(filename, 'wb') as file:
@@ -130,29 +140,19 @@ if __name__ == '__main__':
         print('Missing argument \'load\' or \'new\'')
         exit(1)
 
-    all_stats = None
-    stats_wikitables_dbpedia_2013 = None
-    stats_wikitables_dbpedia_2019 = None
+    stats_tough_tables_dbpedia = None
 
     if sys.argv[1] == 'load':
-        all_stats = load_stats()
+        stats_tough_tables_dbpedia = load_stats()
 
-        if all_stats is None:
+        if stats_tough_tables_dbpedia is None:
             print('No stats have been loaded. You need to use the \'new\' command.')
             exit(1)
 
-        stats_wikitables_dbpedia_2013 = all_stats[0]
-        stats_wikitables_dbpedia_2019 = all_stats[1]
-
-    print('\nAnalyzing Wikitables...')
+    print('\nAnalyzing ToughTables... (Wikidata)')
 
     if sys.argv[1] == 'new':
-        stats_wikitables_dbpedia_2013 = analyze_wikitables(2013, 'dbpedia')
-        stats_wikitables_dbpedia_2019 = analyze_wikitables(2019, 'dbpedia')
-        write_stats('/plots/.Wikitables2013_DBpedia.stats', stats_wikitables_dbpedia_2013)
-        write_stats('/plots/.Wikitables2019_DBpedia.stats', stats_wikitables_dbpedia_2019)
+        stats_tough_tables_dbpedia = analyze_tough_tables()
+        write_stats('/plots/.ToughTables_Wikidata.stats', stats_tough_tables_dbpedia)
 
-    print('Wikitables 2013 stats (DBpedia):')
-    stats_wikitables_dbpedia_2013.print()
-    print('\nWikitables 2019 stats (DBpedia):')
-    stats_wikitables_dbpedia_2019.print()
+    stats_tough_tables_dbpedia.print()

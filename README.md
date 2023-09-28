@@ -1,6 +1,8 @@
 # Table to KG Entity Linking Benchmark
 Table to KG entity linking benchmark evaluation scalability, data dynamism, and KG generality.
 
+Before setting up this benchmark, make sure you have at least 1.5T disk space available.
+
 ## Setup
 Before executing the benchmark, the table corpora must be downloaded and processed, Wikidata and DBpedia must be downloaded, and a Neo4J instance must be setup and populated with the two knowledge graphs.
 All of this is wrapped in a single Docker file `setup.dockerfile`.
@@ -20,8 +22,10 @@ Similar to setting up the benchmark, run the following commands to start the ben
 
 ```bash
 mkdir -p results
+docker pull searx/searx
+docker run --rm -d -v ${PWD}/searx:/etc/searx --network host -e BASE_URL=http://localhost:3030/ searx/searx
 docker build -t tab2kg_benchmark -f evaluate.dockerfile .
-docker run --rm -v ${PWD}/setup:/data -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results tab2kg_benchmark
+docker run --rm --network host -v ${PWD}/setup:/data -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results tab2kg_benchmark
 ```
 
 All the results are now stored in the `results/` folder.
