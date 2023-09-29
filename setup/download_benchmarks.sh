@@ -52,6 +52,27 @@ unzip HardTablesR2.zip
 mv HardTablesR2 semtab/
 rm HardTablesR2.zip
 ln -s /home/tough_tables/wikidata /home/semtab/wikidata
+wget https://zenodo.org/record/7319654/files/biodivtab_benchmark.zip?download=1 -O BioDivTab_WD.zip
+unzip BioDivTab_WD.zip
+rm BioDivTab_WD.zip
+mv biodivtab_benchmark semtab/
+wget wget https://zenodo.org/record/7319654/files/BiodivTab_DBpedia.zip?download=1 -O BioDivTab_DBP.zip
+unzip BioDivTab_DBP.zip
+rm BioDivTab_DBP.zip
+mv BiodivTab_DBpedia semtab/
+
+query=$(curl -H "Accept:text/sparql" https://databus.dbpedia.org/dbpedia/collections/dbpedia-snapshot-2022-03)
+files=$(curl -X POST -H "Accept: text/csv" --data-urlencode "query=${query}" https://databus.dbpedia.org/sparql | tail -n +2 | sed 's/\r$//' | sed 's/"//g')
+while IFS= read -r file ; do wget $file; done <<< "$files"
+mkdir semtab/dbpedia_2022-03/
+
+for FILE in *.bzip2 ;\
+do
+    bzip2 -dk ${FILE} -k -c > semtab/dbpedia_2022-03/${FILE:0:-6}
+    rm ${FILE}
+done
+
+rm "*=*"
 
 # WikiTables (2013)
 git clone https://github.com/EDAO-Project/SemanticTableSearchDataset.git

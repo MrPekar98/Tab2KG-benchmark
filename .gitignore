@@ -7,6 +7,9 @@ setup/kg/dbpedia/
 setup/kg/wikidata
 setup/semtab/HardTablesR2/
 setup/semtab/wikidata
+setup/semtab/BiodivTab_DBpedia/
+setup/semtab/biodivtab_benchmark/
+setup/semtab/dbpedia_2022-03/
 setup/tough_tables/ToughTablesR2-DBP/
 setup/tough_tables/ToughTablesR2-WD/
 setup/tough_tables/repo/
