@@ -68,12 +68,19 @@ else
 fi
 
 python3 /home/setup/analysis/analyze_semtab.py ${command}
+
+if [[ -f "/plots/.SemTab_BioDivTab-WD.stats" ]]
+then
+    command="load"
+else
+    command="new"
+fi
+
+python3 /home/setup/analysis/analyze_semtab_biodivtab_wikidata.py ${command}
 /home/setup/kg/neo4j-wikidata/bin/neo4j stop
 sleep 1m
 
-# WebDataCommons
-
-if [[ -f ".SemTab.stats" ]]
+if [[ -f "/plots/.SemTab_BioDivTab-DBP.stats" ]]
 then
     command="load"
 else
@@ -82,6 +89,17 @@ fi
 
 /home/setup/kg/neo4j-dbpedia/bin/neo4j start
 sleep 10m
+python3 /home/setup/analysis/analyze_semtab_biodivtab_dbpedia.py ${command}
+
+# WebDataCommons
+
+if [[ -f "/plots/.WebDataCommons.stats" ]]
+then
+    command="load"
+else
+    command="new"
+fi
+
 python3 /home/setup/analysis/analyze_web_data_commons.py ${command}
 /home/setup/kg/neo4j-dbpedia/bin/neo4j stop
 sleep 1m
