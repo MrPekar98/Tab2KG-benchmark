@@ -47,6 +47,9 @@ We summarize the corpora used in this benchmark and their golden standard.
   - Large corpus of clean Wikipedia tables
   - There is no noise
   - Entity cells are annotated with their corresponding Wikipedia page which can be used to construct ground truth using DBpedia and Wikidata
+- <a href="https://zenodo.org/record/7319654">BioDivTab</a>
+  - Domain-specific corpus about bio diversity
+  - Links to both Wikidata and DBpedia
 
 ## Dataset Analysis
 Below is listed the average dimensions and number of entities in the datasets used in this repository.
