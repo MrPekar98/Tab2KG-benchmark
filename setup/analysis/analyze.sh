@@ -25,8 +25,7 @@ else
 fi
 
 /home/setup/kg/neo4j-wikidata/bin/neo4j start
-#sleep 24h
-sleep 15m
+sleep 24h
 python3 /home/setup/analysis/analyze_wikitables_wikidata.py ${command}
 /home/setup/kg/neo4j-wikidata/bin/neo4j stop
 sleep 1m
@@ -54,8 +53,7 @@ else
 fi
 
 /home/setup/kg/neo4j-wikidata/bin/neo4j start
-#sleep 24h
-sleep 15m
+sleep 24h
 python3 /home/setup/analysis/analyze_tough_tables_wikidata.py ${command}
 
 # SemTab

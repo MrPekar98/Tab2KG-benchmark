@@ -115,7 +115,7 @@ def analyze_semtab():
     data['Type frequency'] = list(type_distribution.values())
     plot = sns.barplot(data, x = 'Entity types', y = 'Type frequency', ax = ax)
     plot.set_xticklabels(plot.get_xticklabels(), rotation = 30, horizontalalignment = 'right')
-    plt.savefig('/plots/SemTab.pdf')
+    plt.savefig('/plots/SemTab_BioDivTab_Wikidata.pdf')
 
     return stats
 
