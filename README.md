@@ -22,10 +22,11 @@ Similar to setting up the benchmark, run the following commands to start the ben
 
 ```bash
 mkdir -p results
+docker network create evaluation
 docker pull searx/searx
-docker run --rm -d -v ${PWD}/searx:/etc/searx --network host -e BASE_URL=http://localhost:3030/ searx/searx
+docker run --rm -d -v ${PWD}/searx:/etc/searx --network evaluation -e BASE_URL=http://localhost:3030/ searx/searx
 docker build -t tab2kg_benchmark -f evaluate.dockerfile .
-docker run --rm --network host -v ${PWD}/setup:/data -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results tab2kg_benchmark
+docker run --rm --network evaluation -v ${PWD}/setup:/data -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results tab2kg_benchmark
 ```
 
 All the results are now stored in the `results/` folder.
