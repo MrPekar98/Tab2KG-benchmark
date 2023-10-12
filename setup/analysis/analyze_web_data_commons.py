@@ -6,50 +6,11 @@ import os
 import sys
 import json
 import csv
-import pickle
 import statistics
-import seaborn as sns
-import pandas as pd
-import matplotlib.pyplot as plt
 from stats import Stats
-from neo4j import GraphDatabase
-from collections import Counter
-
-URI = 'bolt://localhost:7687'
-AUTH = ('neo4j', 'admin')
-
-def query_types(tx, entity, predicate):
-    result = tx.run('MATCH (a:Resource)-[l:' + predicate + ']->(b:Resource) WHERE a.uri in [$entity] RETURN b.uri as type', entity = entity)
-    return list(result)
-
-def predicates(tx):
-    result = tx.run('CALL db.relationshipTypes() YIELD relationshipType RETURN relationshipType as predicate')
-    return list(result)
-
-def type_predicate():
-    with GraphDatabase.driver(URI, auth = AUTH) as driver:
-        with driver.session(database = 'neo4j') as session:
-            preds = session.execute_read(predicates)
-
-            for predicate in preds:
-                pred = predicate.data()['predicate']
-
-                if 'type' in pred and 'rdf' in pred:
-                    return pred
-
-            return None
-
-def entity_types(entity, predicate):
-    types = set()
-
-    with GraphDatabase.driver(URI, auth = AUTH) as driver:
-        with driver.session(database = 'neo4j') as session:
-            results = session.execute_read(query_types, entity, predicate)
-
-            for type in results:
-                types.add(type.data()['type'])
-
-            return types
+import save_stats as ss
+from plot import plot
+import neo4j_connector.py as neo4j
 
 def analyze_web_data_commons():
     dir = '/home/setup/webcommons/tables/'
@@ -61,7 +22,7 @@ def analyze_web_data_commons():
     columns = 0
     entities = 0
     entity_set = set()
-    type_pred = type_predicate()
+    type_pred = neo4j.type_predicate()
 
     for table_file in table_files:
         try:
@@ -100,7 +61,7 @@ def analyze_web_data_commons():
     type_distribution = dict()
 
     for entity in entity_set:
-        types = entity_types(entity, type_pred)
+        types = neo4j.entity_types(entity, type_pred)
 
         for type in types:
             type = type.split('/')[-1]
@@ -110,27 +71,8 @@ def analyze_web_data_commons():
 
             type_distribution[type] += 1
 
-    counter = Counter(type_distribution)
-    type_distribution = {k:v for k, v in counter.most_common()[:25]}
-    fig, ax = plt.subplots(figsize = (12, 11))
-    data = pd.DataFrame()
-    data['Entity types'] = list(type_distribution.keys())
-    data['Type frequency'] = list(type_distribution.values())
-    plot = sns.barplot(data, x = 'Entity types', y = 'Type frequency', ax = ax)
-    plot.set_xticklabels(plot.get_xticklabels(), rotation = 30, horizontalalignment = 'right')
-    plt.savefig('/plots/WebDataCommons.pdf')
-
+    plot(type_distribution, 25, 12, 11, '/plots/WebDataCommons.pdf')
     return stats
-
-# Returns stats
-def load_stats():
-    with open('/plots/.WebDataCommons.stats', 'rb') as file:
-        webcommons = pickle.load(file)
-        return webcommons
-
-def write_stats(filename, stats):
-    with open(filename, 'wb') as file:
-        pickle.dump(stats, file, pickle.HIGHEST_PROTOCOL)
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
@@ -140,17 +82,17 @@ if __name__ == '__main__':
     stats_web_data_commons = None
 
     if sys.argv[1] == 'load':
-        stats_web_data_commons = load_stats()
+        stats_web_data_commons = ss.load_stats('/plots/.WebDataCommons.stats')
 
-        if all_stats is None:
-            print('No stats have been loaded. You need to use the \'new\' command.')
+        if stats_web_data_commons is None:
+            print('Stats could not be loaded. You need to use the \'new\' command.')
             exit(1)
 
     print('Analyzing WebDataCommons...')
 
     if sys.argv[1] == 'new':
         stats_web_data_commons = analyze_web_data_commons()
-        write_stats('/plots/.WebDataCommons.stats', stats_web_data_commons)
+        ss.write_stats('/plots/.WebDataCommons.stats', stats_web_data_commons)
 
     print('WebDataCommons stats:')
     stats_web_data_commons.print()

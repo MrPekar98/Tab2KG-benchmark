@@ -6,49 +6,10 @@ import os
 import sys
 import json
 import csv
-import pickle
-import seaborn as sns
-import matplotlib.pyplot as plt
-import pandas as pd
 from stats import Stats
-from neo4j import GraphDatabase
-from collections import Counter
-
-URI = 'bolt://localhost:7687'
-AUTH = ('neo4j', 'admin')
-
-def query_types(tx, entity, predicate):
-    result = tx.run('MATCH (a:Resource)-[l:' + predicate + ']->(b:Resource) WHERE a.uri in [$entity] RETURN b.uri as type', entity = entity)
-    return list(result)
-
-def predicates(tx):
-    results = tx.run('CALL db.relationshipTypes() YIELD relationshipType RETURN relationshipType as predicate')
-    return list(results)
-
-def type_predicate():
-    with GraphDatabase.driver(URI, auth = AUTH) as driver:
-        with driver.session(database = 'neo4j') as session:
-            preds = session.execute_read(predicates)
-
-            for predicate in preds:
-                pred = predicate.data()['predicate']
-
-                if pred.endswith('P31'):
-                    return pred
-
-            return None
-
-def entity_types(entity, predicate):
-    types = set()
-
-    with GraphDatabase.driver(URI, auth = AUTH) as driver:
-        with driver.session(database = 'neo4j') as session:
-            results = session.execute_read(query_types, entity, predicate)
-
-            for type in results:
-                types.add(type.data()['type'])
-
-            return types
+import save_stats as ss
+from plot import plot
+import neo4j_connector.py as neo4j
 
 def analyze_tough_tables():
     dir = '/home/setup/tough_tables/ToughTablesR2-WD/Test/tables/'
@@ -59,7 +20,7 @@ def analyze_tough_tables():
     entity_set = set()
     entity_map = dict()
     stats = Stats()
-    type_pred = type_predicate()
+    type_pred = neo4j.type_predicate()
 
     for file in files:
         with open(dir + file, 'r') as fd:
@@ -101,7 +62,7 @@ def analyze_tough_tables():
     stats.set_num_entities(entities / len(entity_map.keys()))
 
     for entity in entity_set:
-        types = entity_types(entity, type_pred)
+        types = neo4j.entity_types(entity, type_pred)
 
         for type in types:
             type = type.split('/')[-1].split('#')[-1]
@@ -111,29 +72,8 @@ def analyze_tough_tables():
 
             type_distribution[type] += 1
 
-    counter = Counter(type_distribution)
-    type_distribution = {k:v for k, v in counter.most_common()[:25]}
-    fig, ax = plt.subplots(figsize = (12, 11))
-    data = pd.DataFrame()
-    data['Entity types'] = list(type_distribution.keys())
-    data['Type frequency'] = list(type_distribution.values())
-    plot = sns.barplot(data, x = 'Entity types', y = 'Type frequency', ax = ax)
-    plot.set_xticklabels(plot.get_xticklabels(), rotation = 30, horizontalalignment = 'right')
-    plt.savefig('/plots/ToughTables-Wikidata.pdf')
-
+    plot(type_distribution, 25, 12, 11, '/plots/ToughTables-Wikidata.pdf')
     return stats
-
-# Returns array of Stats instances, one for each benchmark
-# 1: ToughTables - DBpedia
-# 2: ToughTables - Wikidata
-def load_stats():
-    with open('/plots/.ToughTables_Wikidata.stats', 'rb') as file:
-        tt = pickle.load(file)
-        return tt
-
-def write_stats(filename, stats):
-    with open(filename, 'wb') as file:
-        pickle.dump(stats, file, pickle.HIGHEST_PROTOCOL)
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
@@ -143,16 +83,16 @@ if __name__ == '__main__':
     stats_tough_tables_dbpedia = None
 
     if sys.argv[1] == 'load':
-        stats_tough_tables_dbpedia = load_stats()
+        stats_tough_tables_dbpedia = ss.load_stats('/plots/.ToughTables_Wikidata.stats')
 
         if stats_tough_tables_dbpedia is None:
-            print('No stats have been loaded. You need to use the \'new\' command.')
+            print('Stats could not be loaded. You need to use the \'new\' command.')
             exit(1)
 
     print('\nAnalyzing ToughTables... (Wikidata)')
 
     if sys.argv[1] == 'new':
         stats_tough_tables_dbpedia = analyze_tough_tables()
-        write_stats('/plots/.ToughTables_Wikidata.stats', stats_tough_tables_dbpedia)
+        ss.write_stats('/plots/.ToughTables_Wikidata.stats', stats_tough_tables_dbpedia)
 
     stats_tough_tables_dbpedia.print()
