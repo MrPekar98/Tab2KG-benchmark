@@ -3,13 +3,15 @@
 set -e
 
 echo "WikiTables"
-mkdir -p /benchmarks/dbpedia/wikitables_2013/
-mkdir -p /benchmarks/dbpedia/wikitables_2019/
-mkdir -p /benchmarks/wikidata/wikitables_2013/
-mkdir -p /benchmarks/wikidata/wikitables_2019/
+mkdir -p /benchmarks/wikitables_2013/tables/
+mkdir -p /benchmarks/wikitables_2013/gt/dbpedia/
+mkdir -p /benchmarks/wikitables_2013/gt/wikidata/
+mkdir -p /benchmarks/wikitables_2019/tables/
+mkdir -p /benchmarks/wikitables_2019/gt/dbpedia/
+mkdir -p /benchmarks/wikitables_2013/gt/wikidata/
 
 ./kg/neo4j-dbpedia/bin/neo4j start
-sleep 5m
+sleep 10m
 python3 wikitables/wikitables_dbpedia.py 13
 python3 wikitables/wikitables_dbpedia.py 19
 python3 wikitables/wikitables_wikidata.py 13
@@ -17,36 +19,27 @@ python3 wikitables/wikitables_wikidata.py 19
 ./kg/neo4j-dbpedia/bin/neo4j stop
 sleep 1m
 
-echo
-echo "SemTab 2023"
-mkdir -p /benchmarks/dbpedia/semtab/
-mkdir -p /benchmarks/wikidata/semtab/
+echo "Semtab"
+mkdir -p /benchmarks/semtab/HardTables/gt/
+mkdir -p /benchmarks/semtab/biodivtab/dbpedia/gt/
+mkdir -p /benchmarks/semtab/biodivtab/wikidata/gt/
+mv semtab/HardTablesR2/DataSets/HardTablesR2/Test/tables/ /benchmarks/semtab/HardTables/
+mv semtab/HardTablesR2/DataSets/HardTablesR2/Test/gt/cea_gt.csv /benchmarks/semtab/HardTables/gt/
+mv semtab/BiodivTab_DBpedia/test/tables/ /benchmarks/semtab/biodivtab/dbpedia/
+mv semtab/BiodivTab_DBpedia/test/gt/CEA_biodivtab_gt.csv /benchmarks/semtab/biodivtab/dbpedia/gt/
+mv semtab/biodivtab_benchmark/tables/ /benchmarks/semtab/biodivtab/wikidata/
+mv semtab/biodivtab_benchmark/gt/CEA_biodivtab_2021_gt.csv /benchmarks/semtab/biodivtab/wikidata/gt/
 
-python3 semtab/semtab_dbpedia.py
-python3 semtab/semtab_wikidata.py
+echo "WebDataCommons"
+mkdir -p /benchmarks/webdatacommons/gt/
+mv webcommons/tables/ /benchmarks/webdatacommons/
+mv webcommons/instance/ /benchmarks/webdatacommons/gt/
 
-echo
 echo "Tough Tables"
-mkdir -p /benchmarks/dbpedia/tough_tables/
-mkdir -p /benchmarks/wikidata/tough_tables/
+mkdir -p /benchmarks/toughtables/dbpedia/gt/
+mkdir -p /benchmarks/toughtables/wikidata/gt/
+mv tough_tables/toughTablesR2-DBP/Test/tables/ /benchmarks/toughtables/dbpedia/
+mv tough_tables/toughTablesR2-DBP/Test/gt/cea_gt.csv /benchmarks/toughtables/dbpedia/gt/
+mv tough_tables/ToughTablesR2-WD/Test/tables/ /benchmarks/toughtables/wikidata/
+mv tough_tables/ToughTablesR2-WD/Test/gt/cea_gt.csv /benchmarks/toughtables/wikidata/gt/
 
-python3 tough_tables/tough_tables_dbpedia.py
-python3 tough_tables/tough_tables_wikidata.py
-
-echo
-echo "WebCommons"
-mkdir -p /benchmarks/dbpedia/webcommons/
-mkdir -p /benchmarks/wikidata/webcommons/
-
-python3 webcommons/webcommons_dbpedia.py
-python3 webcommons/webcommons_wikidata.py
-
-./kg/neo4j-dbpedia/bin/neo4j start
-sleep 5m
-python3 aliases.py dbpedia
-./kg/neo4j-dbpedia/bin/neo4j stop
-sleep 1m
-./kg/neo4j-wikidata/bin/neo4j start
-sleep 15m
-python3 aliases.py wikidata
-sleep 1m
