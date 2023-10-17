@@ -5,6 +5,7 @@ class Stats:
         self.__entities = 0
         self.__entities_in_kg = 0
         self.__tables = 0
+        self.__entity_density = 0
 
     def tables(self):
         return self.__tables
@@ -18,8 +19,8 @@ class Stats:
     def entities(self):
         return self.__entities
 
-    def entity_coverage(self):
-        return self.__entities_in_kg
+    def entity_density(self)
+        return self.__entity_density
 
     def set_tables(self, num):
         self.__tables = num
@@ -33,17 +34,12 @@ class Stats:
     def set_num_entities(self, num):
         self.__entities = num
 
-    def set_num_covered_entities(self, num):
-        self.__entities_in_kg = num
+    def set_entity_density(self, density):
+        self.__entity_density = density
 
     def print(self):
         print('#tables: ' + str(self.__tables))
         print('Avg #rows: ' + str(self.__rows))
         print('Avg #columns: ' + str(self.__columns))
         print('Avg #entities: ' + str(self.__entities))
-
-        if self.__entities > 0:
-            print('Avg ground truth entity coverage: ' + str((self.__entities_in_kg / self.__entities) * 100))
-
-        else:
-            print('Avg ground truth entity coverage: 0.0%')
+        print('Avg entity density: ' + str(self.__entity_density))

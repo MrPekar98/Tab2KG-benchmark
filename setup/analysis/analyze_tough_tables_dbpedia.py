@@ -12,32 +12,17 @@ from plot import plot
 import neo4j_connector.py as neo4j
 
 def analyze_tough_tables():
+    gt_file = '/home/setup/tough_tables/ToughTablesR2-DBP/Test/gt/cea_gt.csv'
     dir = '/home/setup/tough_tables/ToughTablesR2-DBP/Test/tables/'
     files = os.listdir(dir)
     rows = 0
     columns = 0
     entities = 0
+    entity_density = 0
     entity_set = set()
     entity_map = dict()
     stats = Stats()
     type_pred = neo4j.type_predicate()
-
-    for file in files:
-        with open(dir + file, 'r') as fd:
-            handle = csv.reader(fd)
-            tmp_columns = 0
-
-            for line in handle:
-                rows += 1
-                tmp_columns = len(line)
-
-            columns += tmp_columns
-
-    stats.set_tables(len(files))
-    stats.set_rows(rows / len(files))
-    stats.set_columns(columns / len(files))
-
-    gt_file = '/home/setup/tough_tables/ToughTablesR2-DBP/Test/gt/cea_gt.csv'
 
     with open(gt_file, 'r') as fd:
         handle = csv.reader(fd)
@@ -57,6 +42,28 @@ def analyze_tough_tables():
 
     for table in entity_map.keys():
         entities += entity_map[table]
+
+    for file in files:
+        with open(dir + file, 'r') as fd:
+            table_id = file.replace('.csv', '')
+            handle = csv.reader(fd)
+            table_cells = 0
+            tmp_columns = 0
+
+            for line in handle:
+                rows += 1
+                tmp_columns = len(line)
+                table_cells += len(line)
+
+            columns += tmp_columns
+
+            if table_id in table_map.keys():
+                entity_density += float(table_map[table_id]) / table_cells
+
+    stats.set_tables(len(files))
+    stats.set_rows(rows / len(files))
+    stats.set_columns(columns / len(files))
+    stats.set_entity_density(entity_density / len(files))
 
     type_distribution = dict()
     stats.set_num_entities(entities / len(entity_map.keys()))

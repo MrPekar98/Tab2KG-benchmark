@@ -21,6 +21,7 @@ def analyze_web_data_commons():
     rows = 0
     columns = 0
     entities = 0
+    entity_density = 0
     entity_set = set()
     type_pred = neo4j.type_predicate()
 
@@ -31,6 +32,7 @@ def analyze_web_data_commons():
                 table = obj['relation']
                 rows += len(table[0]) - 1
                 columns += len(table)
+                table_cells = (len(table[0]) - 1) * len(table)
 
                 if table_file.replace('json', 'csv') in gt_files:
                     with open(gt_dir + table_file.replace('json', 'csv'), 'r') as gt_file:
@@ -50,6 +52,8 @@ def analyze_web_data_commons():
 
                             row_index += 1
 
+                        entity_density += float(len(gt_map.keys())) / table_cells
+
         except UnicodeDecodeError as e:
             continue
 
@@ -57,6 +61,7 @@ def analyze_web_data_commons():
     stats.set_columns(columns / len(table_files))
     stats.set_num_entities(entities / len(table_files))
     stats.set_tables(len(table_files))
+    stats.set_entity_density(entity_density / len(table_files))
 
     type_distribution = dict()
 

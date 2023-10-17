@@ -21,6 +21,7 @@ def analyze_semtab():
     stats = Stats()
     rows = 0
     columns = 0
+    entity_density = 0
     entities = set()
     type_pred = neo4j.type_predicate()
 
@@ -41,6 +42,9 @@ def analyze_semtab():
         stats.set_num_entities(statistics.mean(table_entities.values()))
 
     for file in files:
+        table_id = file.replace('.csv', '')
+        table_cells = 0
+
         with open(table_dir + file, 'r') as fd:
             handle = csv.reader(fd)
             tmp_columns = 0
@@ -48,13 +52,18 @@ def analyze_semtab():
             for line in handle:
                 rows += 1
                 tmp_columns = len(line)
+                table_cells += len(line)
 
             rows -= 1
             columns += tmp_columns
 
+            if table_id in table_entities.keys():
+                entity_density += float(table_entities[table_id]) / table_cells
+
     stats.set_tables(len(files))
     stats.set_rows(rows / len(files))
     stats.set_columns(columns / len(files))
+    stats.set_entity_density(entity_density / len(files))
 
     type_distribution = dict()
 

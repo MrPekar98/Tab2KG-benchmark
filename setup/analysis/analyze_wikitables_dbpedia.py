@@ -16,12 +16,16 @@ def analyze_wikitables(version, kg):
     rows = 0
     columns = 0
     entities = 0
+    entity_density = 0
     entity_set = set()
     dir = '/home/benchmarks/' + kg + '/wikitables_' + str(version) + '/'
     table_files = os.listdir(dir)
     type_pred = neo4j.type_predicate()
 
     for table_file in table_files:
+        table_cells = 0
+        table_entities = 0
+
         with open(dir + table_file, 'r') as file:
             table = json.load(file)['table']
             rows += len(table)
@@ -31,14 +35,20 @@ def analyze_wikitables(version, kg):
 
         for row in table:
             for column in row:
+                table_cells += 1
+
                 if len(column['entity']) > 0:
                     entities += 1
                     entity_set.add(column['entity'])
+                    table_entities += 1
+
+        entity_density += float(table_entities) / table_cells
 
     stats.set_tables(len(table_files))
     stats.set_rows(rows / len(table_files))
     stats.set_columns(columns / len(table_files))
     stats.set_num_entities(entities / len(table_files))
+    stats.set_entity_density(entity_density / len(table_files))
 
     type_distribution = dict()
 
