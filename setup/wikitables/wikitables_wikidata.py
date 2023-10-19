@@ -1,6 +1,7 @@
 import sys
 import os
 import json
+import csv
 from neo4j import GraphDatabase
 
 if len(sys.argv) < 2:
@@ -8,9 +9,8 @@ if len(sys.argv) < 2:
     exit(1)
 
 version = sys.argv[1]
-tables_dir = '/benchmarks/dbpedia/wikitables_20' + version + '/'
-out_dir = '/benchmarks/wikidata/wikitables_20' + version + '/'
-tables = os.listdir(tables_dir)
+gt_file = '/benchmarks/wikitables_20' + version + '/gt/dbpedia/gt.csv'
+gt_out = '/benchmarks/wikitables_20' + version + '/gt/wikidata/gt.csv'
 URI = 'bolt://localhost:7687'
 AUTH = ('neo4j', 'admin')
 sameAs = None
@@ -60,32 +60,20 @@ if sameAs is None:
     print('Could not find predicate')
     exit(1)
 
-for table in tables:
-    print(' ' * 100, end = '\r')
-    print('Progress: ' + str((progress / len(tables)) * 100)[0:5] + '%', end = '\r')
-    progress += 1
+print('All CSV tables for Wikitables aldready exist. Generating ground truth for Wikidata')
 
-    with open(tables_dir + table, 'r') as file:
-        tab = json.load(file)
-        new_table = {'table': list()}
+with open(gt_file, 'r') as in_file:
+    reader = csv.reader(in_file, delimiter = ',')
 
-        with open(out_dir + table, 'w') as out_file:
-            for row in tab['table']:
-                j_row = list()
+    with open(gt_out, 'w') as out_file:
+        writer = csv.writer(out_file, delimiter = ',')
 
-                for column in row:
-                    j_column = dict()
-                    j_column['text'] = column['text']
-                    j_column['entity'] = ''
+        for row in reader:
+            table_id = row[0]
+            table_row = row[1]
+            table_column = row[2]
+            dbpedia_entity = row[3]
+            wikidata_entity = get_uri(dbpedia_entity)
 
-                    if len(column['entity']) > 0:
-                        uri = get_uri(column['entity'])
-
-                        if not uri is None:
-                            j_column['entity'] = uri
-
-                    j_row.append(j_column)
-
-                new_table['table'].append(j_row)
-
-            json.dump(new_table, out_file)
+            if not wikidata_entity is None:
+                writer.writerow([table_id, table_row, table_column, wikidata_entity])

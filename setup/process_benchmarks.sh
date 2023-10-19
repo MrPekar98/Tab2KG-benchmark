@@ -8,7 +8,7 @@ mkdir -p /benchmarks/wikitables_2013/gt/dbpedia/
 mkdir -p /benchmarks/wikitables_2013/gt/wikidata/
 mkdir -p /benchmarks/wikitables_2019/tables/
 mkdir -p /benchmarks/wikitables_2019/gt/dbpedia/
-mkdir -p /benchmarks/wikitables_2013/gt/wikidata/
+mkdir -p /benchmarks/wikitables_2019/gt/wikidata/
 
 ./kg/neo4j-dbpedia/bin/neo4j start
 sleep 10m
@@ -29,17 +29,22 @@ mv semtab/BiodivTab_DBpedia/test/tables/ /benchmarks/semtab/biodivtab/dbpedia/
 mv semtab/BiodivTab_DBpedia/test/gt/CEA_biodivtab_gt.csv /benchmarks/semtab/biodivtab/dbpedia/gt/
 mv semtab/biodivtab_benchmark/tables/ /benchmarks/semtab/biodivtab/wikidata/
 mv semtab/biodivtab_benchmark/gt/CEA_biodivtab_2021_gt.csv /benchmarks/semtab/biodivtab/wikidata/gt/
+rm -rf semtab/HardTablesR2/
+rm -rf semtab/BiodivTab_DBpedia/
+rm -rf semtab/biodivtab_benchmark/
 
 echo "WebDataCommons"
 mkdir -p /benchmarks/webdatacommons/gt/
 mv webcommons/tables/ /benchmarks/webdatacommons/
-mv webcommons/instance/ /benchmarks/webdatacommons/gt/
+mv webcommons/instance/* /benchmarks/webdatacommons/gt/
+rm -rf webcommon/instance/
 
 echo "Tough Tables"
 mkdir -p /benchmarks/toughtables/dbpedia/gt/
 mkdir -p /benchmarks/toughtables/wikidata/gt/
-mv tough_tables/toughTablesR2-DBP/Test/tables/ /benchmarks/toughtables/dbpedia/
-mv tough_tables/toughTablesR2-DBP/Test/gt/cea_gt.csv /benchmarks/toughtables/dbpedia/gt/
+mv tough_tables/ToughTablesR2-DBP/Test/tables/ /benchmarks/toughtables/dbpedia/
+mv tough_tables/ToughTablesR2-DBP/Test/gt/cea_gt.csv /benchmarks/toughtables/dbpedia/gt/
 mv tough_tables/ToughTablesR2-WD/Test/tables/ /benchmarks/toughtables/wikidata/
 mv tough_tables/ToughTablesR2-WD/Test/gt/cea_gt.csv /benchmarks/toughtables/wikidata/gt/
-
+rm -rf tough_tables/ToughTablesR2-DBP/
+rm -rf tough_tables/ToughTablesR2-WD/

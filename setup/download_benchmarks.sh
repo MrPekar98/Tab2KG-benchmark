@@ -47,6 +47,7 @@ rm /home/tough_tables/wikidata/wikidata.nt
 ln -s /home/tough_tables/wikidata /home/kg/wikidata
 
 # SemTab 2023
+mkdir -p semtab
 wget https://zenodo.org/record/7416036/files/HardTablesR2.zip?download=1 -O HardTablesR2.zip
 unzip HardTablesR2.zip
 mv HardTablesR2 semtab/

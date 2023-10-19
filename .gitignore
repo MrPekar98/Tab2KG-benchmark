@@ -1,6 +1,8 @@
 searx/
-benchmarks/dbpedia/*
-benchmarks/wikidata/*
+benchmarks/semtab/
+benchmarks/wikitables_*/
+benchmarks/toughtables/
+benchmarks/webdatacommons/
 setup/kg/neo4j-dbpedia/
 setup/kg/neo4j-wikidata/
 setup/kg/dbpedia/
