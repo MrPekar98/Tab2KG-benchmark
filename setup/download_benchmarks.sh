@@ -103,14 +103,38 @@ done
 rm -r tables_2019/
 
 echo
-echo "Importing DBpedia"
-./kg/neo4j-dbpedia/bin/neo4j start
+echo "Importing DBpedia 12/2022"
+./kg/neo4j-dbpedia-12-2022/bin/neo4j start
 sleep 30s
-./kg/import.sh kg/dbpedia kg/neo4j-dbpedia
-./kg/neo4j-dbpedia/bin/neo4j stop
+./kg/import.sh kg/dbpedia kg/neo4j-dbpedia-12-2022
+./kg/neo4j-dbpedia-12-2022/bin/neo4j stop
 sleep 30s
 
 echo
+echo "Importing DBpedia 03/2022"
+./kg/neo4j-dbpedia-03-2022/bin/neo4j start
+sleep 30s
+./kg/import.sh semtab/dbpedia_2022-03 kg/neo4j-dbpedia-03-2022
+./kg/neo4j-dbpedia-03-2022/bin/neo4j stop
+sleep 30s
+
+echo
+echo "Importing DBpedia 10/2016"
+./kg/neo4j-dbpedia-10-2016/bin/neo4j start
+sleep 30s
+./kg/import.sh tough_tables/dbpedia kg/neo4j-dbpedia-10-2016
+./kg/neo4j-dbpedia-10-2016/bin/neo4j stop
+sleep 30s
+
+echo
+echo "Importing DBpedia 2014"
+./kg/neo4j-dbpedia-2014/bin/neo4j start
+sleep 30s
+./kg/import.sh webcommons/dbpedia kg/neo4j-dbpedia-2014
+./kg/neo4j-dbpedia-2014/bin/neo4j stop
+sleep 30s
+
+#echo
 echo "Importing Wikidata"
 ./kg/neo4j-wikidata/bin/neo4j start
 sleep 1m

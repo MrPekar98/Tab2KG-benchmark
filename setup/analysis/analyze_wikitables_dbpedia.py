@@ -18,7 +18,7 @@ def analyze_wikitables(version, kg):
     entities = 0
     entity_density = 0
     entity_set = set()
-    dir = '/home/benchmarks/' + kg + '/wikitables_' + str(version) + '/'
+    dir = '/home/benchmarks/wikitables_' + str(version) + '/tables/'
     table_files = os.listdir(dir)
     type_pred = neo4j.type_predicate()
 

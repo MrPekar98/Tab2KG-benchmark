@@ -19,7 +19,7 @@ class Stats:
     def entities(self):
         return self.__entities
 
-    def entity_density(self)
+    def entity_density(self):
         return self.__entity_density
 
     def set_tables(self, num):

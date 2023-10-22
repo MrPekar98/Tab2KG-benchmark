@@ -11,10 +11,10 @@ then
     command="load"
 fi
 
-/home/setup/kg/neo4j-dbpedia/bin/neo4j start
+/home/setup/kg/neo4j-dbpedia-12-2022/bin/neo4j start
 sleep 10m
 python3 /home/setup/analysis/analyze_wikitables_dbpedia.py ${command}
-/home/setup/kg/neo4j-dbpedia/bin/neo4j stop
+/home/setup/kg/neo4j-dbpedia-12-2022/bin/neo4j stop
 sleep 1m
 
 if [[ -f "/plots/.Wikitables2013_Wikidata.stats" ]]
@@ -39,10 +39,10 @@ else
     command="new"
 fi
 
-/home/setup/kg/neo4j-dbpedia/bin/neo4j start
+/home/setup/kg/neo4j-dbpedia-10-2016/bin/neo4j start
 sleep 10m
 python3 /home/setup/analysis/analyze_tough_tables_dbpedia.py ${command}
-/home/setup/kg/neo4j-dbpedia/bin/neo4j stop
+/home/setup/kg/neo4j-dbpedia-10-2016/bin/neo4j stop
 sleep 1m
 
 if [[ -f "/plots/.ToughTables_Wikidata.stats" ]]
@@ -85,9 +85,11 @@ else
     command="new"
 fi
 
-/home/setup/kg/neo4j-dbpedia/bin/neo4j start
+/home/setup/kg/neo4j-dbpedia-03-2022/bin/neo4j start
 sleep 10m
 python3 /home/setup/analysis/analyze_semtab_biodivtab_dbpedia.py ${command}
+/home/setup/kg/neo4j-dbpedia-03-2022/bin/neo4j stop
+sleep 1m
 
 # WebDataCommons
 
@@ -98,6 +100,8 @@ else
     command="new"
 fi
 
+/home/setup/kg/neo4j-dbpedia-2014/bin/neo4j start
+sleep 10m
 python3 /home/setup/analysis/analyze_web_data_commons.py ${command}
-/home/setup/kg/neo4j-dbpedia/bin/neo4j stop
+/home/setup/kg/neo4j-dbpedia-2014/bin/neo4j stop
 sleep 1m

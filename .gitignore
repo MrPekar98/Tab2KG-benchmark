@@ -3,7 +3,10 @@ benchmarks/semtab/
 benchmarks/wikitables_*/
 benchmarks/toughtables/
 benchmarks/webdatacommons/
-setup/kg/neo4j-dbpedia/
+setup/kg/neo4j-dbpedia-12-2022/
+setup/kg/neo4j-dbpedia-03-2022/
+setup/kg/neo4j-dbpedia-10-2016/
+setup/kg/neo4j-dbpedia-2014/
 setup/kg/neo4j-wikidata/
 setup/kg/dbpedia/
 setup/kg/wikidata

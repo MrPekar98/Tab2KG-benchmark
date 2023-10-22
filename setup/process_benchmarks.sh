@@ -10,13 +10,13 @@ mkdir -p /benchmarks/wikitables_2019/tables/
 mkdir -p /benchmarks/wikitables_2019/gt/dbpedia/
 mkdir -p /benchmarks/wikitables_2019/gt/wikidata/
 
-./kg/neo4j-dbpedia/bin/neo4j start
+./kg/neo4j-dbpedia-12-2022/bin/neo4j start
 sleep 10m
 python3 wikitables/wikitables_dbpedia.py 13
 python3 wikitables/wikitables_dbpedia.py 19
 python3 wikitables/wikitables_wikidata.py 13
 python3 wikitables/wikitables_wikidata.py 19
-./kg/neo4j-dbpedia/bin/neo4j stop
+./kg/neo4j-dbpedia-12-2022/bin/neo4j stop
 sleep 1m
 
 echo "Semtab"
