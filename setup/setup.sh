@@ -2,12 +2,6 @@
 
 set -e
 
-echo "Downloading DBpedia 12/2022"
-mkdir -p kg/dbpedia/
-./kg/download-files.sh kg/dbpedia_files.txt
-mv files/* kg/dbpedia
-rmdir files
-
 echo
 echo "Installing Neo4J"
 ./kg/install.sh

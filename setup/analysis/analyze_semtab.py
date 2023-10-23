@@ -23,7 +23,7 @@ def analyze_semtab():
     entity_density = 0
     entities = set()
     table_entities = dict()
-    type_pred = neo4j.type_predicate()
+    type_pred = neo4j.type_predicate('wikidata')
 
     with open(gt_file, 'r') as fd:
         handle = csv.reader(fd)

@@ -103,6 +103,10 @@ done
 rm -r tables_2019/
 
 echo
+echo "Downloading DBpedia 12/2022"
+./kg/download-files.sh kg/dbpedia_files.txt
+mv files/ kg/dbpedia/
+
 echo "Importing DBpedia 12/2022"
 ./kg/neo4j-dbpedia-12-2022/bin/neo4j start
 sleep 30s

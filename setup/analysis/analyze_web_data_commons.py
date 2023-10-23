@@ -23,7 +23,7 @@ def analyze_web_data_commons():
     entities = 0
     entity_density = 0
     entity_set = set()
-    type_pred = neo4j.type_predicate()
+    type_pred = neo4j.type_predicate('dbpedia')
 
     for table_file in table_files:
         try:
