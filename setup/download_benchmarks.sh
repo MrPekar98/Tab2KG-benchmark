@@ -134,7 +134,7 @@ sleep 30s
 ./kg/neo4j-dbpedia-2014/bin/neo4j stop
 sleep 30s
 
-#echo
+echo
 echo "Importing Wikidata"
 ./kg/neo4j-wikidata/bin/neo4j start
 sleep 1m
