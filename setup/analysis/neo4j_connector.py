@@ -29,7 +29,7 @@ def entity_types(entity, predicate):
 
     with GraphDatabase.driver(URI, auth = AUTH) as driver:
         with driver.session(database = 'neo4j') as session:
-            results = session.execute_read(query_types, entity, predicate)
+            results = session.execute_read(_query_types, entity, predicate)
 
             for type in results:
                 types.add(type.data()['type'])

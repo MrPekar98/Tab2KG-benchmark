@@ -60,7 +60,7 @@ if sameAs is None:
     print('Could not find predicate')
     exit(1)
 
-print('All CSV tables for Wikitables aldready exist. Generating ground truth for Wikidata')
+print('All CSV tables for Wikitables aldready exist. Generating ground truth for Wikidata.')
 
 with open(gt_file, 'r') as in_file:
     reader = csv.reader(in_file, delimiter = ',')
@@ -77,3 +77,5 @@ with open(gt_file, 'r') as in_file:
 
             if not wikidata_entity is None:
                 writer.writerow([table_id, table_row, table_column, wikidata_entity])
+
+print('Done')
