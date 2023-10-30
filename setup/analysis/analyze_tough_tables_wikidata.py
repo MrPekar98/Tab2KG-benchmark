@@ -9,7 +9,7 @@ import csv
 from stats import Stats
 import save_stats as ss
 from plot import plot
-import neo4j_connector.py as neo4j
+import neo4j_connector as neo4j
 
 def analyze_tough_tables():
     dir = '/home/setup/tough_tables/ToughTablesR2-WD/Test/tables/'

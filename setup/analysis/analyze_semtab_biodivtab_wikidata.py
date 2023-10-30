@@ -10,7 +10,7 @@ import statistics
 from stats import Stats
 import save_stats as ss
 from plot import plot
-import neo4j_connector.py as neo4j
+import neo4j_connector as neo4j
 
 def analyze_semtab():
     base = '/home/setup/semtab/biodivtab_benchmark/'

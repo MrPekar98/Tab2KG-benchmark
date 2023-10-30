@@ -11,7 +11,7 @@ from stats import Stats
 from collections import Counter
 import save_stats as ss
 from plot import plot
-import neo4j_connector.py as neo4j
+import neo4j_connector as neo4j
 
 def analyze_semtab():
     base = '/home/setup/semtab/BiodivTab_DBpedia/test/'

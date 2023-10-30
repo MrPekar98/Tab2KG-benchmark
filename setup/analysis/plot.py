@@ -1,6 +1,7 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+from collections import Counter
 
 def plot(type_distribution, top_k, x_size, y_size, filename):
     counter = Counter(type_distribution)

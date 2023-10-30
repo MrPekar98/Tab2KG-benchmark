@@ -4,13 +4,12 @@
 
 import os
 import sys
-import json
 import csv
 import statistics
 from stats import Stats
 import save_stats as ss
 from plot import plot
-import neo4j_connector.py as neo4j
+import neo4j_connector as neo4j
 
 def analyze_wikitables(version, kg):
     stats = Stats()
@@ -19,31 +18,41 @@ def analyze_wikitables(version, kg):
     entities = 0
     entity_density = 0
     entity_set = set()
-    dir = '/home/benchmarks/' + kg + '/wikitables_' + str(version) + '/'
+    analysis_map = dict()
+    dir = '/home/benchmarks/wikitables_' + str(version) + '/tables/'
+    gt = '/home/benchmarks/wikitables_' + str(version) + '/gt/wikidata/gt.csv'
     table_files = os.listdir(dir)
     type_pred = neo4j.type_predicate(kg)
 
     for table_file in table_files:
         table_cells = 0
-        table_entities = 0
 
         with open(dir + table_file, 'r') as file:
-            table = json.load(file)['table']
-            rows += len(table)
+            reader = csv.reader(file, delimter = ',')
+            tmp_column_size = 0
+            table_id = table_file.replace('.csv', '')
+            analysis_map[table_id] = dict()
+            analysis_map[table_id]['cells'] = 0
+            analysis_map[table_id]['entities'] = 0
+
+            for line in reader:
+                rows += 1
+                analysis_map[table_file]['cells'] += len(line)
+                tmp_column_size = len(line)
 
             if len(table) > 0:
                 columns += len(table[0])
 
-            for row in table:
-                for column in row:
-                    table_cells += 1
+    with open(gt, 'r') as file:
+        reader = csv.reader(file, delimiter = ',')
 
-                    if len(column['entity']) > 0:
-                        entities += 1
-                        table_entities += 1
-                        entity_set.add(column['entity'])
+        for line in reader:
+             entities += 1
+             analysis_map[line[0]]['entities'] += 1
+             entity_set.add(line[3])
 
-        entity_density += float(table_entities) / table_cells
+    for table in analysis_map.keys():
+        entity_density += float(analysis_map[table]['entities']) / analysis_map[table]['cells']
 
     stats.set_tables(len(table_files))
     stats.set_rows(rows / len(table_files))
