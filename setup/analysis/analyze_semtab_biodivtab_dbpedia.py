@@ -14,7 +14,7 @@ from plot import plot
 import neo4j_connector as neo4j
 
 def analyze_semtab():
-    base = '/home/setup/semtab/BiodivTab_DBpedia/test/'
+    base = '/home/benchmarks/semtab/biodivtab/dbpedia/'
     table_dir = base + 'tables/'
     gt_file = base + 'gt/CEA_biodivtab_gt.csv'
     files = os.listdir(table_dir)
@@ -26,7 +26,7 @@ def analyze_semtab():
     type_pred = neo4j.type_predicate('dbpedia')
 
     with open(gt_file, 'r') as fd:
-        handle = csv.reader(fd)
+        handle = csv.reader(fd, delimiter = ',')
         table_entities = dict()
 
         for line in handle:
@@ -46,7 +46,7 @@ def analyze_semtab():
         table_cells = 0
 
         with open(table_dir + file, 'r') as fd:
-            handle = csv.reader(fd)
+            handle = csv.reader(fd, delimiter = ',')
             tmp_columns = 0
 
             for line in handle:
@@ -78,7 +78,7 @@ def analyze_semtab():
 
             type_distribution[type] += 1
 
-    plot(type_distribution, 25, 12, 11, '/plots/SemTab_BioDivTab_DBpedia.pdf')
+    stats.set_type_distribution(type_distribution)
     return stats
 
 if __name__ == '__main__':
@@ -103,3 +103,4 @@ if __name__ == '__main__':
 
     print('SemTab (BioDivTab - DBpedia) stats:')
     stats_semtab.print()
+    plot(stats_semtab.type_distribution(), 25, 12, 11, '/plots/SemTab_BioDivTab_DBpedia.pdf')

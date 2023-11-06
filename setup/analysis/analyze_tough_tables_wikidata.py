@@ -12,8 +12,8 @@ from plot import plot
 import neo4j_connector as neo4j
 
 def analyze_tough_tables():
-    dir = '/home/setup/tough_tables/ToughTablesR2-WD/Test/tables/'
-    gt_file = '/home/setup/tough_tables/ToughTablesR2-WD/Test/gt/cea_gt.csv'
+    dir = '/home/benchmarks/toughtables/wikidata/tables/'
+    gt_file = '/home/benchmarks/toughtables/wikidata/gt/cea_gt.csv'
     files = os.listdir(dir)
     rows = 0
     columns = 0
@@ -25,7 +25,7 @@ def analyze_tough_tables():
     type_pred = neo4j.type_predicate('wikidata')
 
     with open(gt_file, 'r') as fd:
-        handle = csv.reader(fd)
+        handle = csv.reader(fd, delimiter = ',')
 
         for line in handle:
             table = line[0]
@@ -45,7 +45,7 @@ def analyze_tough_tables():
 
     for file in files:
         with open(dir + file, 'r') as fd:
-            handle = csv.reader(fd)
+            handle = csv.reader(fd, delimiter = ',')
             table_id = file.replace('.csv', '')
             table_cells = 0
             tmp_columns = 0
@@ -57,7 +57,7 @@ def analyze_tough_tables():
 
             columns += tmp_columns
 
-            if table_id in entity_map[table_id]:
+            if table_id in entity_map.keys():
                 entity_density += float(entity_map[table_id]) / table_cells
 
     stats.set_tables(len(files))
@@ -79,6 +79,7 @@ def analyze_tough_tables():
 
             type_distribution[type] += 1
 
+    stats.set_type_distribution(type_distribution)
     plot(type_distribution, 25, 12, 11, '/plots/ToughTables-Wikidata.pdf')
     return stats
 
@@ -103,3 +104,4 @@ if __name__ == '__main__':
         ss.write_stats('/plots/.ToughTables_Wikidata.stats', stats_tough_tables_dbpedia)
 
     stats_tough_tables_dbpedia.print()
+    plot(stats_tough_tables_dbpedia.type_distribution(), 25, 12, 11, '/plots/ToughTables-Wikidata.pdf')

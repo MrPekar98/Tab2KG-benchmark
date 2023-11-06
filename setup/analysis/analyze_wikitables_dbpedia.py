@@ -37,7 +37,7 @@ def analyze_wikitables(version, kg):
 
             for line in reader:
                 rows += 1
-                analysis_map[table_id]['cells'] += 1
+                analysis_map[table_id]['cells'] += len(line)
                 tmp_column_size = len(line)
 
             if tmp_column_size > 0:
@@ -73,7 +73,7 @@ def analyze_wikitables(version, kg):
 
             type_distribution[type] += 1
 
-    plot(type_distribution, 25, 12, 11, '/plots/Wikitables-DBpedia_' + str(version) + '.pdf')
+    stats.set_type_distribution(type_distribution)
     return stats
 
 if __name__ == '__main__':
@@ -102,5 +102,8 @@ if __name__ == '__main__':
 
     print('Wikitables 2013 stats (DBpedia):')
     stats_wikitables_dbpedia_2013.print()
+    plot(stats_wikitables_dbpedia_2013.type_distribution(), 25, 12, 11, '/plots/Wikitables-DBpedia_2013.pdf')
+
     print('\nWikitables 2019 stats (DBpedia):')
     stats_wikitables_dbpedia_2019.print()
+    plot(stats_wikitables_dbpedia_2019.type_distribution(), 25, 12, 11, '/plots/Wikitables-DBpedia_2019.pdf')

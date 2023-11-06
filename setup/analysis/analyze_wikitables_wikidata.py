@@ -28,7 +28,7 @@ def analyze_wikitables(version, kg):
         table_cells = 0
 
         with open(dir + table_file, 'r') as file:
-            reader = csv.reader(file, delimter = ',')
+            reader = csv.reader(file, delimiter = ',')
             tmp_column_size = 0
             table_id = table_file.replace('.csv', '')
             analysis_map[table_id] = dict()
@@ -37,11 +37,11 @@ def analyze_wikitables(version, kg):
 
             for line in reader:
                 rows += 1
-                analysis_map[table_file]['cells'] += len(line)
+                analysis_map[table_id]['cells'] += len(line)
                 tmp_column_size = len(line)
 
-            if len(table) > 0:
-                columns += len(table[0])
+            if tmp_column_size > 0:
+                columns += tmp_column_size
 
     with open(gt, 'r') as file:
         reader = csv.reader(file, delimiter = ',')
@@ -73,7 +73,7 @@ def analyze_wikitables(version, kg):
 
             type_distribution[type] += 1
 
-    plot(type_distribution, 25, 12, 11, '/plots/Wikitables-Wikidata_' + str(version) + '.pdf')
+    stats.set_type_distribution(type_distribution)
     return stats
 
 if __name__ == '__main__':
@@ -96,11 +96,14 @@ if __name__ == '__main__':
 
     if sys.argv[1] == 'new':
         stats_wikitables_wikidata_2013 = analyze_wikitables(2013, 'wikidata')
-        stats_wikitables_Wikidata_2019 = analyze_wikitables(2019, 'wikidata')
+        stats_wikitables_wikidata_2019 = analyze_wikitables(2019, 'wikidata')
         ss.write_stats('/plots/.Wikitables2013_Wikidata.stats', stats_wikitables_wikidata_2013)
-        ss.write_stats('/plots/.Wikitables2019_Wikidata.stats', stats_wikitables_Wikidata_2019)
+        ss.write_stats('/plots/.Wikitables2019_Wikidata.stats', stats_wikitables_wikidata_2019)
 
     print('Wikitables 2013 stats (Wikidata):')
     stats_wikitables_wikidata_2013.print()
+    plot(stats_wikitables_wikidata_2013.type_distribution(), 25, 12, 11, '/plots/Wikitables-Wikidata_2013.pdf')
+
     print('Wikitables 2019 stats (Wikidata):')
-    stats_wikitables_Wikidata_2019.print()
+    stats_wikitables_wikidata_2019.print()
+    plot(stats_wikitables_wikidata_2019.type_distribution(), 25, 12, 11, '/plots/Wikitables-Wikidata_2019.pdf')

@@ -6,6 +6,7 @@ class Stats:
         self.__entities_in_kg = 0
         self.__tables = 0
         self.__entity_density = 0
+        self.__type_distribution = None
 
     def tables(self):
         return self.__tables
@@ -22,6 +23,9 @@ class Stats:
     def entity_density(self):
         return self.__entity_density
 
+    def type_distribution(self):
+        return self.__type_distribution
+
     def set_tables(self, num):
         self.__tables = num
 
@@ -36,6 +40,9 @@ class Stats:
 
     def set_entity_density(self, density):
         self.__entity_density = density
+
+    def set_type_distribution(self, distribution):
+        self.__type_distribution = distribution
 
     def print(self):
         print('#tables: ' + str(self.__tables))

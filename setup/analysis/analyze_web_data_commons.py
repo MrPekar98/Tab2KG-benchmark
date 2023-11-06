@@ -13,8 +13,8 @@ from plot import plot
 import neo4j_connector as neo4j
 
 def analyze_web_data_commons():
-    dir = '/home/setup/webcommons/tables/'
-    gt_dir = '/home/setup/webcommons/instance/'
+    dir = '/home/benchmarks/webdatacommons/tables/'
+    gt_dir = '/home/benchmarks/webdatacommons/gt/'
     table_files = os.listdir(dir)
     gt_files = os.listdir(gt_dir)
     stats = Stats()
@@ -38,7 +38,7 @@ def analyze_web_data_commons():
                     with open(gt_dir + table_file.replace('json', 'csv'), 'r') as gt_file:
                         gt_map = dict()
                         row_index = 0
-                        handle = csv.reader(gt_file)
+                        handle = csv.reader(gt_file, delimiter = ',')
 
                         for line in handle:
                             entity = line[0]
@@ -76,7 +76,7 @@ def analyze_web_data_commons():
 
             type_distribution[type] += 1
 
-    plot(type_distribution, 25, 12, 11, '/plots/WebDataCommons.pdf')
+    stats.set_type_distribution(type_distribution)
     return stats
 
 if __name__ == '__main__':
@@ -101,3 +101,4 @@ if __name__ == '__main__':
 
     print('WebDataCommons stats:')
     stats_web_data_commons.print()
+    plot(stats_web_data_commons.type_distribution(), 25, 12, 11, '/plots/WebDataCommons.pdf')
