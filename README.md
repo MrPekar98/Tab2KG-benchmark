@@ -25,7 +25,7 @@ mkdir -p results
 docker network create evaluation
 docker pull searx/searx
 docker run --rm -d -v ${PWD}/searx:/etc/searx --network evaluation -e BASE_URL=http://localhost:3030/ searx/searx
-docker build -t tab2kg_benchmark -f evaluate.dockerfile .
+./build-images.sh
 docker run --rm --network evaluation -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/setup/:/setup -v ${PWD}/results:/results tab2kg_benchmark
 ```
 
