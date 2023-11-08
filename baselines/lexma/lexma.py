@@ -7,6 +7,8 @@ import pandas as pd
 import numpy as np
 import os
 import sys
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 
 class KG(Enum):
         DBpedia = 0
@@ -166,7 +168,7 @@ class WikidataAPI(KGLookup):
             if 'description' in element:
                 description = element['description']
 
-            kg_entity = element['concepturi']
+            kg_entity = {'uri': element['concepturi'], 'label': element['label']}
 
             #We filter according to givem URI
             if filter=='' or element['concepturi']==filter:
@@ -224,7 +226,13 @@ class DBpediaAPI(KGLookup):
             if 'description' in element:
                 description = element['description']
 
-            kg_entity = element['resource']
+            kg_entity = dict()
+
+            if len(element['resource']) > 0:
+                kg_entity['uri'] = element['resource'][0]
+
+            if len(element['label']) > 0:
+                kg_entity['label'] = element['label'][0]
 
             #We filter according to givem URI
             if filter=='' or element['resource']==filter:
@@ -260,40 +268,51 @@ def replace_space(word):
         print(word)
         return word
 
-def get_entity(df,  row_id, column_id):
-    try:
-        cell = df.iloc[row_id, column_id]
-        #cell = remove_special_signs(cell)
-        cell = capitalize_word(cell)
-        cell = replace_space(cell)
-        return cell
-    except:
-        return np.nan
+def cosine(cell, entity):
+    cell = cell.replace('_', ' ')
 
-def function_for_row(row):
-    global first_table
-    global table_dir
-    table_id = row["Table_id"]
-    if first_table == table_id:
-        df = pd.read_csv(table_dir + table_id + '.csv', header = None)
-    else:
-        df = pd.read_csv(table_dir + table_id + '.csv', header = None)
-        first_table = table_id
-    df.head()
+    for k in range(0, 1):
+        cell_list = word_tokenize(cell)
+        entity_list = word_tokenize(entity)
+        sw = stopwords.words('english')
+        cell_set = {w for w in cell_list if not w in sw}
+        entity_set = {w for w in entity_list if not w in sw}
+        rvector = cell_set.union(entity_set)
+        l1 = []
+        l2 = []
+        c = 0
+        cosines = []
 
-    row_id = row["Row_id"]
-    column_id = row["Column_id"]
-    cell = get_entity(df, row_id, column_id,)
-    row["Cell"]=cell
-    return row
+        for w in rvector:
+            if w in cell_set:
+                l1.append(1)
+
+            else:
+                l1.append(0)
+
+            if w in entity_set:
+                l2.append(1)
+
+            else:
+                l2.append(0)
+
+        for i in range(len(rvector)):
+            c += l1[i] * l2[i]
+
+        try:
+            return c / float((sum(l1) * sum(l2))**0.5)
+
+        except ZeroDivisionError:
+            return 0
 
 if __name__ == '__main__':
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 4:
         print('Specify KG and then table directory')
         exit(1)
 
     kg = sys.argv[1]
     kg_type = -1
+    candidates = int(sys.argv[3])
 
     if kg == 'wikidata':
         print(URI_KG.uris[KG.Wikidata.value])
@@ -318,27 +337,50 @@ if __name__ == '__main__':
     if not table_dir.endswith('/'):
         table_dir += '/'
 
-    df = pd.read_csv('Test/target/cea_target.csv', header=None, nrows=10)
-    df.columns=["Table_id", "Row_id", "Column_id"] # Assign the header to the dataframe
-    df["Cell"] = ""
-    df = df.sort_values("Table_id").reset_index(drop=True)
-    first_table = df["Table_id"].unique()[0]
-    df = df.apply(function_for_row, axis=1)
-    df["KG_Entity"]=''
+    df = pd.DataFrame(columns = ["Table_id", "Row_id", "Column_id"])
+    df["KG_Entity"] = ""
+    api = None
+    limit = candidates
+    type = 'item'
+    i = 0
 
-    for i in range(0, len(df.index)):
-        query = df.loc[i]["Cell"]
-        limit=1
-        type="item"
+    if kg_type == KG.Wikidata.value:
+        api = WikidataAPI()
 
-        if kg_type == KG.Wikidata.value:
-            wikidata = WikidataAPI()
-            entities = wikidata.getKGEntities(query, limit, type)
-            df["KG_Entity"][i] = entities
+    elif kg_type == KG.DBpedia.value:
+        api = DBpediaAPI()
 
-        elif kg_type == KG.DBpedia.value:
-            dbpedia = DBpediaAPI()
-            entities = dbpedia.getKGEntities(query, limit, type)
-            df["KG_Entity"][i] = entities
+    for table in os.listdir(table_dir):
+        input_table = pd.read_csv(table_dir + table)
+
+        for row_index, row in input_table.iterrows():
+            column_index = 0
+
+            for column in row:
+                if isinstance(column, (float, int)):
+                    continue
+
+                entities = api.getKGEntities(column, limit, type)
+
+                if len(entities) > 0:
+                    max_cos = -1
+                    max_entity = None
+
+                    for entity in entities:
+                        if 'uri' in entity.keys() and 'label' in entity.keys():
+                            cos = cosine(column, entity['label'])
+
+                            if cos > max_cos:
+                                max_cos = cos
+                                max_entity = entity['uri']
+
+                    if not max_entity is None:
+                        df["KG_Entity"][i] = max_entity
+                        df["Table_id"][i] = table.replace('.csv', '')
+                        df["Row_id"][i] = row_index
+                        df["Column_id"] = column_index
+                        i += 1
+
+            column_index += 1
 
     df.to_csv('result.csv')
