@@ -29,3 +29,4 @@ setup/wikitables/wikitables*/
 .*.stats
 *.pdf
 setup/analysis/__pycache__/
+baselines/emblookup/data/

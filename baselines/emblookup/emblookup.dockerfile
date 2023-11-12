@@ -4,8 +4,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt install python3 python3-pip wget gzip git
 RUN git clone https://github.com/MrPekar98/EmbLookup.git
 
 WORKDIR EmbLookup/
-RUN mkdir aliases/
-ADD aliases/ aliases/
+RUN mkdir data/
+ADD data/ data/
 
 RUN python3 -m pip install -r requirements.txt
 RUN wget https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.en.300.bin.gz
