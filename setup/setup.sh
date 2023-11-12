@@ -41,4 +41,8 @@ echo "Processing benchmarks"
 ./process_benchmarks.sh
 
 echo
+echo "Setting up baselines"
+./setup_baselines.sh
+
+echo
 echo "Done"

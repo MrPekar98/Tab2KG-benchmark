@@ -10,7 +10,7 @@ To start setting up the experiments, run the following commands
 
 ```bash
 docker build -t tab2kg_setup -f setup.dockerfile .
-docker run --rm -v ${PWD}/setup:/home -v ${PWD}/benchmarks:/benchmarks tab2kg_setup
+docker run --rm -v ${PWD}/setup:/home -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/baselines:/baselines tab2kg_setup
 ```
 
 This will setup the entire benchmark.
