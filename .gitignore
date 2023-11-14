@@ -26,6 +26,7 @@ setup/webcommons/instance/
 setup/webcommons/property/
 setup/webcommons/dbpedia/
 setup/wikitables/wikitables*/
+setup/analysis/analysis.egg-info/
 .*.stats
 *.pdf
 setup/analysis/__pycache__/

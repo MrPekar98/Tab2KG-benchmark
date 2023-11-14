@@ -2,6 +2,7 @@
 
 set -e
 
+echo
 echo "Setting up EmbLookup"
 git clone https://github.com/MrPekar98/EmbLookup.git
 mv EmbLookup/preprocess.py .
@@ -20,3 +21,32 @@ python3 preprocess.py /baselines/emblookup/data/aliases/alias_dbp12-2022.ttl /ba
 python3 preprocess.py /baselines/emblookup/data/aliases/alias_wd.ttl /baselines/emblookup/data/aliases_processed/aliases_processed_wd.csv /baselines/emblookup/data/index_mappings/kg_index_name_mapping_wd.csv
 
 rm -rf EmbLookup gen_alias_list.py embedding_learner.py utils.py preprocess.py
+
+echo
+echo "Setting up T2K Match"
+
+mkdir dbpedia-10-2016/
+mkdir dbpedia-12-2022/
+mkdir wikidata/
+
+./kg/neo4j-dbpedia-10-2016/bin/neo4j start
+sleep 1h
+python3 t2kmatch_kg_gen.py tough_tables/dbpedia/ dbpedia-10-2016/ dbpedia
+./kg/neo4j-dbpedia-10-2016/bin/neo4j stop
+sleep 1m
+
+./kg/neo4j-dbpedia-12-2022/bin/neo4j start
+sleep 1h
+python3 t2kmatch_kg_gen.py kg/dbpedia/ dbpedia-12-2022/ dbpedia
+./kg/neo4j-dbpedia-12-2022/bin/neo4j stop
+sleep 1m
+
+./kg/neo4j-wikidata/bin/neo4j start
+sleep 24h
+python3 t2kmatch_kg_gen.py tough_tables/wikidata/ wikidata/ wikidata
+./kg/neo4j-wikidata/bin/neo4j stop
+sleep 1m
+
+mv dbpedia-10-2016/ /baselines/t2kmatch/data
+mv dbpedia-12-2022/ /baselines/t2kmatch/data
+mv wikidata/ /baselines/t2kmatch/data

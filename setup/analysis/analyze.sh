@@ -2,6 +2,8 @@
 
 set -e
 
+pip3 install -e /home/setup/analysis
+
 command="new"
 kg_running="false"
 
