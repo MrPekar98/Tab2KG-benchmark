@@ -6,10 +6,10 @@ import os
 import sys
 import csv
 import statistics
-from stats import Stats
-import save_stats as ss
-from plot import plot
-import neo4j_connector as neo4j
+from analysis.stats import Stats
+import analysis.save_stats as ss
+from analysis.plot import plot
+import analysis.neo4j_connector as neo4j
 
 def analyze_wikitables(version, kg):
     stats = Stats()

@@ -8,7 +8,7 @@ import json
 import csv
 import statistics
 from analysis.stats import Stats
-import analsys.save_stats as ss
+import analysis.save_stats as ss
 from analysis.plot import plot
 import analysis.neo4j_connector as neo4j
 

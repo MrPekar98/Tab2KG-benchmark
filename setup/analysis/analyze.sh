@@ -15,7 +15,8 @@ then
 else
     /home/setup/kg/neo4j-dbpedia-12-2022/bin/neo4j start
     kg_running="true"
-    sleep 1h
+    /home/setup/kg_wait.sh /home/setup/kg/neo4j-dbpedia-12-2022/
+    #sleep 1h
 fi
 
 python3 /home/setup/analysis/analyze_wikitables_dbpedia.py ${command}
@@ -34,7 +35,8 @@ else
     command="new"
     /home/setup/kg/neo4j-wikidata/bin/neo4j start
     kg_running="true"
-    sleep 24h
+    /home/setup/kg_wait.sh /home/setup/kg/neo4j-wikidata/
+    #sleep 24h
 fi
 
 python3 /home/setup/analysis/analyze_wikitables_wikidata.py ${command}
@@ -51,7 +53,8 @@ else
     then
         /home/setup/kg/neo4j-wikidata/bin/neo4j start
         kg_running="true"
-        sleep 24h
+        /home/setup/kg_wait.sh /home/setup/kg/neo4j-wikidata/
+        #sleep 24h
     fi
 fi
 
@@ -67,7 +70,8 @@ else
     then
         /home/setup/kg/neo4j-wikidata/bin/neo4j start
         kg_running="true"
-        sleep 24h
+        /home/setup/kg_wait.sh /home/setup/kg/neo4j-wikidata/
+        #sleep 24h
     fi
 fi
 
@@ -85,7 +89,8 @@ else
     then
         /home/setup/kg/neo4j-wikidata/bin/neo4j start
         kg_running="true"
-        sleep 24h
+        /home/setup/kg_wait.sh /home/setup/kg/neo4j-wikidata/
+        #sleep 24h
     fi
 fi
 
@@ -105,7 +110,8 @@ else
     command="new"
     /home/setup/kg/neo4j-dbpedia-10-2016/bin/neo4j start
     kg_running="true"
-    sleep 1h
+    /home/setup/kg_wait.sh /home/setup/kg/neo4j-dbpedia-10-2016/
+    #sleep 1h
 fi
 
 python3 /home/setup/analysis/analyze_tough_tables_dbpedia.py ${command}
@@ -114,7 +120,8 @@ if [[ ${kg_running} == "true" ]]
 then
     /home/setup/kg/neo4j-dbpedia-10-2016/bin/neo4j stop
     kg_running="false"
-    sleep 1m
+    /home/setup/kg_wait.sh /home/setup/kg/neo4j-dbpedia-10-2016/
+    #sleep 1m
 fi
 
 # Semtab
@@ -126,7 +133,8 @@ else
     command="new"
     /home/setup/kg/neo4j-dbpedia-03-2022/bin/neo4j start
     kg_running="true"
-    sleep 6h
+    /home/setup/kg_wait.sh /home/setup/kg/neo4j-dbpedia-03-2022/
+    #sleep 6h
 fi
 
 python3 /home/setup/analysis/analyze_semtab_biodivtab_dbpedia.py ${command}
@@ -147,7 +155,8 @@ else
     command="new"
     /home/setup/kg/neo4j-dbpedia-2014/bin/neo4j start
     kg_running="true"
-    sleep 6h
+    /home/setup/kg_wait.sh /home/setup/kg/neo4j-dbpedia-2014/
+    #sleep 6h
 fi
 
 python3 /home/setup/analysis/analyze_web_data_commons.py ${command}

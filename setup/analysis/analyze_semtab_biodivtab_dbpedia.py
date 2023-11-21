@@ -7,11 +7,11 @@ import sys
 import json
 import csv
 import statistics
-from stats import Stats
+from analysis.stats import Stats
 from collections import Counter
-import save_stats as ss
-from plot import plot
-import neo4j_connector as neo4j
+import analysis.save_stats as ss
+from analysis.plot import plot
+import analysis.neo4j_connector as neo4j
 
 def analyze_semtab():
     base = '/home/benchmarks/semtab/biodivtab/dbpedia/'
