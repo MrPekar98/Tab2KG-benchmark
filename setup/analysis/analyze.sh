@@ -120,8 +120,7 @@ if [[ ${kg_running} == "true" ]]
 then
     /home/setup/kg/neo4j-dbpedia-10-2016/bin/neo4j stop
     kg_running="false"
-    /home/setup/kg_wait.sh /home/setup/kg/neo4j-dbpedia-10-2016/
-    #sleep 1m
+    sleep 1m
 fi
 
 # Semtab

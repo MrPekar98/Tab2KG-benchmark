@@ -6,7 +6,7 @@ Before setting up this benchmark, make sure you have at least 1.5T disk space av
 ## Setup
 Before executing the benchmark, the table corpora must be downloaded and processed, Wikidata and DBpedia must be downloaded, and a Neo4J instance must be setup and populated with the two knowledge graphs.
 All of this is wrapped in a single Docker file `setup.dockerfile`.
-To start setting up the experiments, run the following commands
+To start setting up the experiments, run the following commands.
 
 ```bash
 docker build -t tab2kg_setup -f setup.dockerfile .
@@ -18,18 +18,16 @@ Keep in mind this is a very slow process, as there is a lot of data to be proces
 
 ## Running Benchmark
 Executing the benchmark is simple.
-Similar to setting up the benchmark, run the following commands to start the benchmark
+Similar to setting up the benchmark, run the following commands to start the entire benchmark pipeline.
 
 ```bash
-mkdir -p results
-docker network create evaluation
-docker pull searx/searx
-docker run --rm -d -v ${PWD}/searx:/etc/searx --network evaluation -e BASE_URL=http://localhost:3030/ searx/searx
-./build-images.sh
-docker run --rm --network evaluation -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/setup/:/setup -v ${PWD}/results:/results tab2kg_benchmark
+./setup-baselines.sh
+./benchmark.sh
 ```
 
 All the results are now stored in the `results/` folder.
+
+To clean up all docker images, container, networks, etc., run the `cleanup.sh` script.
 
 ## Resources Summary
 We summarize the corpora used in this benchmark and their golden standard.

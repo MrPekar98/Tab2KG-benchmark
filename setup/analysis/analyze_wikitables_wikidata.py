@@ -102,8 +102,8 @@ if __name__ == '__main__':
 
     print('Wikitables 2013 stats (Wikidata):')
     stats_wikitables_wikidata_2013.print()
-    plot(stats_wikitables_wikidata_2013.type_distribution(), 25, 12, 11, '/plots/Wikitables-Wikidata_2013.pdf')
+    plot(stats_wikitables_wikidata_2013.type_distribution(), 25, 14, 18, '/plots/Wikitables-Wikidata_2013.pdf')
 
     print('Wikitables 2019 stats (Wikidata):')
     stats_wikitables_wikidata_2019.print()
-    plot(stats_wikitables_wikidata_2019.type_distribution(), 25, 12, 11, '/plots/Wikitables-Wikidata_2019.pdf')
+    plot(stats_wikitables_wikidata_2019.type_distribution(), 25, 14, 18, '/plots/Wikitables-Wikidata_2019.pdf')

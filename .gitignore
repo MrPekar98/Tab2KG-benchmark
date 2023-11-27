@@ -32,3 +32,4 @@ setup/analysis/analysis/__pycache__/
 *.pdf
 setup/analysis/__pycache__/
 baselines/emblookup/data/
+results/

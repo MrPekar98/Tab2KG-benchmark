@@ -102,4 +102,4 @@ if __name__ == '__main__':
 
     print('SemTab stats:')
     stats_semtab.print()
-    plot(stats_semtab.type_distribution(), 25, 12, 11, '/plots/SemTab.pdf')
+    plot(stats_semtab.type_distribution(), 25, 12, 18, '/plots/SemTab.pdf')
