@@ -28,8 +28,7 @@ setup/webcommons/dbpedia/
 setup/wikitables/wikitables*/
 setup/analysis/analysis.egg-info/
 setup/analysis/analysis/__pycache__/
-.*.stats
-*.pdf
+plots/.*.stats
 setup/analysis/__pycache__/
 baselines/emblookup/data/
 results/

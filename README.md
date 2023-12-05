@@ -72,31 +72,34 @@ docker run --rm -v ${PWD}/plots/:/plots -v ${PWD}/benchmarks:/home/benchmarks -v
 
 The plots are then saved in `plots/` as PDF files.
 
-### SemTab HardTables
+### Dataset Type Distributions
+Below are plots of type distributions of the entities within the datasets used in this benchmark.
+
+#### SemTab HardTables
 ![Wikidata](./plots/SemTab.pdf)
 
-### SemTab BioDivTab
+#### SemTab BioDivTab
 ![DBpedia](./plots/SemTab_BioDivTab_DBpedia.pdf)
 
-### SemTab tFood - Table as entity
+#### SemTab tFood - Table as entity
 ![Wikidata](./plots/SemTab_tFood_entity_Wikidata.pdf)
 
-### SemTab tFood - Row as entity
+#### SemTab tFood - Row as entity
 ![Wikidata](./plots/SemTab_tFood_horizontal_Wikidata.pdf)
 
-### Tough Tables
+#### Tough Tables
 ![DBpedia](./plots/ToughTables-DBpedia.pdf)
 
-### Tough Tables
+#### Tough Tables
 ![Wikidata](./plots/ToughTables-Wikidata.pdf)
 
-### WebDataCommons
+#### WebDataCommons
 ![DBpedia](./plots/WebDataCommons.pdf)
 
-### WikiTables 2013
+#### WikiTables 2013
 ![DBpedia](./plots/Wikitables-DBpedia_2013.pdf)
 ![Wikidata](./plots/Wikitables-Wikidata_2013.pdf)
 
-### WikiTables 2019
+#### WikiTables 2019
 ![DBpedia](./plots/Wikitables-DBpedia_2019.pdf)
 ![Wikidata](./plots/Wikitables-Wikidata_2019.pdf)
