@@ -67,7 +67,7 @@ You can now build the image and start analyzing the datasets.
 
 ```bash
 docker build -f analyze.dockerfile -t tab2kg_analysis .
-docker run --rm -v ${PWD}:/plots -v ${PWD}/benchmarks:/home/benchmarks -v ${PWD}/setup:/home/setup tab2kg_analysis
+docker run --rm -v ${PWD}/plots/:/plots -v ${PWD}/benchmarks:/home/benchmarks -v ${PWD}/setup:/home/setup tab2kg_analysis
 ```
 
 The plots are then saved in `setup/analysis/` as PDF files.

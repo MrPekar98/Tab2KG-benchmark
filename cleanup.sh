@@ -1,9 +1,9 @@
 #!/bin/bash
 
-set -e
-
 docker stop searx
 docker network rm evaluation
 docker rmi bbw
 
-#docker rmi emblookup
+docker rmi emblookup
+docker rmi magic
+docker rmi spotlight

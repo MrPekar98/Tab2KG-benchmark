@@ -16,7 +16,6 @@ else
     /home/setup/kg/neo4j-dbpedia-12-2022/bin/neo4j start
     kg_running="true"
     /home/setup/kg_wait.sh /home/setup/kg/neo4j-dbpedia-12-2022/
-    #sleep 1h
 fi
 
 python3 /home/setup/analysis/analyze_wikitables_dbpedia.py ${command}
@@ -36,7 +35,6 @@ else
     /home/setup/kg/neo4j-wikidata/bin/neo4j start
     kg_running="true"
     /home/setup/kg_wait.sh /home/setup/kg/neo4j-wikidata/
-    #sleep 24h
 fi
 
 python3 /home/setup/analysis/analyze_wikitables_wikidata.py ${command}
@@ -54,7 +52,6 @@ else
         /home/setup/kg/neo4j-wikidata/bin/neo4j start
         kg_running="true"
         /home/setup/kg_wait.sh /home/setup/kg/neo4j-wikidata/
-        #sleep 24h
     fi
 fi
 
@@ -71,7 +68,6 @@ else
         /home/setup/kg/neo4j-wikidata/bin/neo4j start
         kg_running="true"
         /home/setup/kg_wait.sh /home/setup/kg/neo4j-wikidata/
-        #sleep 24h
     fi
 fi
 
@@ -90,11 +86,28 @@ else
         /home/setup/kg/neo4j-wikidata/bin/neo4j start
         kg_running="true"
         /home/setup/kg_wait.sh /home/setup/kg/neo4j-wikidata/
-        #sleep 24h
     fi
 fi
 
 python3 /home/setup/analysis/analyze_tough_tables_wikidata.py ${command}
+
+# tFood
+
+if [[ -f "/plots/.semtab_tfood_horizontal.stats" ]]
+then
+    command="load"
+else
+    command="new"
+
+    if [[ ${kg_running} == "false" ]]
+    then
+        /home/setup/kg/neo4j-wikidata/bin/neo4j start
+        kg_running="true"
+        /home/setup/kg_wait.sh /home/setup/kg/neo4j-wikidata/
+    fi
+fi
+
+python3 /home/setup/analysis/analyze_semtab_tfood.py ${command}
 
 if [[ ${kg_running} == "true" ]]
 then
