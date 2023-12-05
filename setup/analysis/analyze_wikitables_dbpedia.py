@@ -102,8 +102,8 @@ if __name__ == '__main__':
 
     print('Wikitables 2013 stats (DBpedia):')
     stats_wikitables_dbpedia_2013.print()
-    plot(stats_wikitables_dbpedia_2013.type_distribution(), 10, 12, 18, '/plots/Wikitables-DBpedia_2013.pdf')
+    plot(stats_wikitables_dbpedia_2013.type_distribution(), 10, 14, 24, '/plots/Wikitables-DBpedia_2013.pdf')
 
     print('\nWikitables 2019 stats (DBpedia):')
     stats_wikitables_dbpedia_2019.print()
-    plot(stats_wikitables_dbpedia_2019.type_distribution(), 10, 12, 18, '/plots/Wikitables-DBpedia_2019.pdf')
+    plot(stats_wikitables_dbpedia_2019.type_distribution(), 10, 14, 24, '/plots/Wikitables-DBpedia_2019.pdf')

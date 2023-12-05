@@ -101,4 +101,4 @@ if __name__ == '__main__':
 
     print('WebDataCommons stats:')
     stats_web_data_commons.print()
-    plot(stats_web_data_commons.type_distribution(), 10, 12, 18, '/plots/WebDataCommons.pdf')
+    plot(stats_web_data_commons.type_distribution(), 10, 14, 24, '/plots/WebDataCommons.pdf')

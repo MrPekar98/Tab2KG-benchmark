@@ -21,5 +21,6 @@ def plot(type_distribution, top_k, x_size, y_size, filename):
     data['Type frequency'] = list(type_distribution.values())
     plot = sns.barplot(data, x = 'Entity types', y = 'Type frequency', ax = ax)
     plot.set_xticklabels(plot.get_xticklabels(), rotation = 30, horizontalalignment = 'right')
+    plot.set_xlabel('')
     plot.set_ylabel('Type frequency', fontdict = {'size': 30, 'weight': 'bold'})
     plt.savefig(filename)
