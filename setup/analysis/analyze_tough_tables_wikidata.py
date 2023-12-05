@@ -104,4 +104,4 @@ if __name__ == '__main__':
         ss.write_stats('/plots/.ToughTables_Wikidata.stats', stats_tough_tables_dbpedia)
 
     stats_tough_tables_dbpedia.print()
-    plot(stats_tough_tables_dbpedia.type_distribution(), 25, 12, 18, '/plots/ToughTables-Wikidata.pdf')
+    plot(stats_tough_tables_dbpedia.type_distribution(), 10, 12, 18, '/plots/ToughTables-Wikidata.pdf')

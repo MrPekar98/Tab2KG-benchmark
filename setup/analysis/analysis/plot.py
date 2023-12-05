@@ -9,11 +9,11 @@ def plot(type_distribution, top_k, x_size, y_size, filename):
     fig, ax = plt.subplots(figsize = (x_size, y_size))
 
     for tick in ax.xaxis.get_major_ticks():
-        tick.label.set_fontsize(16)
+        tick.label.set_fontsize(22)
         tick.label.set_weight('bold')
 
     for tick in ax.yaxis.get_major_ticks():
-        tick.label.set_fontsize(20)
+        tick.label.set_fontsize(24)
         tick.label.set_weight('bold')
 
     data = pd.DataFrame()
@@ -21,5 +21,5 @@ def plot(type_distribution, top_k, x_size, y_size, filename):
     data['Type frequency'] = list(type_distribution.values())
     plot = sns.barplot(data, x = 'Entity types', y = 'Type frequency', ax = ax)
     plot.set_xticklabels(plot.get_xticklabels(), rotation = 30, horizontalalignment = 'right')
-    plot.set_ylabel('Type frequency', fontdict = {'size': 24, 'weight': 'bold'})
+    plot.set_ylabel('Type frequency', fontdict = {'size': 30, 'weight': 'bold'})
     plt.savefig(filename)
