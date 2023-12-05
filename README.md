@@ -70,6 +70,33 @@ docker build -f analyze.dockerfile -t tab2kg_analysis .
 docker run --rm -v ${PWD}/plots/:/plots -v ${PWD}/benchmarks:/home/benchmarks -v ${PWD}/setup:/home/setup tab2kg_analysis
 ```
 
-The plots are then saved in `setup/analysis/` as PDF files.
+The plots are then saved in `plots/` as PDF files.
 
-// TODO: Insert plots
+### SemTab HardTables
+![Wikidata](./plots/SemTab.pdf)
+
+### SemTab BioDivTab
+![DBpedia](./plots/SemTab_BioDivTab_DBpedia.pdf)
+
+### SemTab tFood - Table as entity
+![Wikidata](./plots/SemTab_tFood_entity_Wikidata.pdf)
+
+### SemTab tFood - Row as entity
+![Wikidata](./plots/SemTab_tFood_horizontal_Wikidata.pdf)
+
+### Tough Tables
+![DBpedia](./plots/ToughTables-DBpedia.pdf)
+
+### Tough Tables
+![Wikidata](./plots/ToughTables-Wikidata.pdf)
+
+### WebDataCommons
+![DBpedia](./plots/WebDataCommons.pdf)
+
+### WikiTables 2013
+![DBpedia](./plots/Wikitables-DBpedia_2013.pdf)
+![Wikidata](./plots/Wikitables-Wikidata_2013.pdf)
+
+### WikiTables 2019
+![DBpedia](./plots/Wikitables-DBpedia_2019.pdf)
+![Wikidata](./plots/Wikitables-Wikidata_2019.pdf)
