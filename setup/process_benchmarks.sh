@@ -48,3 +48,10 @@ mv tough_tables/ToughTablesR2-WD/tables/ /benchmarks/toughtables/wikidata/
 mv tough_tables/ToughTablesR2-WD/gt/cea_gt.csv /benchmarks/toughtables/wikidata/gt/
 rm -rf tough_tables/ToughTablesR2-DBP/
 rm -rf tough_tables/ToughTablesR2-WD/
+
+echo "tFood"
+rm -rf tfood/entity/val/ tfood/horizontal/val/ tfood/entity/test/targets/ tfood/horizontal/test/targets/
+mv tfood/entity/test/* tfood/entity/
+mv tfood/horizontal/test/* tfood/horizontal/
+rmdir tfood/entity/test/ tfood/horizontal/test/
+mv tfood/ /benchmarks/semtab/

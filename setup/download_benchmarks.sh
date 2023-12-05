@@ -102,6 +102,11 @@ done
 
 rm -r tables_2019/
 
+# tFoof
+wget https://zenodo.org/records/10048187/files/tfood_wiith_test_gt.zip?download=1 -O tfood.zip
+unzip tfood.zip
+rm tfood.zip
+
 echo
 echo "Downloading DBpedia 12/2022"
 ./kg/download-files.sh kg/dbpedia_files.txt
