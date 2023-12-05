@@ -1,0 +1,8 @@
+streamlit
+stqdm
+rdflib
+rdflib-hdt
+pystardog
+scikit-learn
+bidict
+xmltodict

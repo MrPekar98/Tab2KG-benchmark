@@ -50,3 +50,17 @@ sleep 1m
 mv dbpedia-10-2016/ /baselines/t2kmatch/data
 mv dbpedia-12-2022/ /baselines/t2kmatch/data
 mv wikidata/ /baselines/t2kmatch/data
+
+echo
+echo "Setting up Magic"
+
+mkdir -p /baselines/magic/dbpedia-10-2016
+mkdir -p /baselines/magic/dbpedia-03-2022
+wget https://sourceforge.net/projects/dbpedia-spotlight/files/2016-10/en/model/en.tar.gz/download -O dbp_10_2016.tar.gz
+wget https://databus.dbpedia.org/dbpedia/spotlight/spotlight-model/2022.03.01/spotlight-model_lang=en.tar.gz -O dbp_03_2022.tar.gz
+mv dbp_10_2016.tar.gz /baselines/magic/dbpedia-10-2016
+tar -xf /baselines/magic/dbpedia-10-2016/dbp_10_2016.tar.gz
+rm /baselines/magic/dbpedia-10-2016/dbp_10_2016.tar.gz
+mv dbp_03_2022.tar.gz /baselines/magic/dbpedia-03-2022
+tar -xf /baselines/magic/dbpedia-03-2022/dbp_03_2022.tar.gz
+rm /baselines/magic/dbpedia-03-2022/dbp_03_2022.tar.gz
