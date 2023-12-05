@@ -12,23 +12,24 @@ if __name__ == '__main__':
         print('Missing table directory and/or name of output directory')
         exit(1)
 
-    try:
-        dir = sys.argv[1]
-        output = OUTPUT_DIR + sys.argv[2]
-        times = dict()
+    dir = sys.argv[1]
+    output = OUTPUT_DIR + sys.argv[2]
+    times = dict()
 
-        if not dir.endswith('/'):
-            dir += '/'
+    if not dir.endswith('/'):
+        dir += '/'
 
-        if not output.endswith('/'):
-            output += '/'
+    if not output.endswith('/'):
+        output += '/'
 
-        tables = os.listdir(dir)
+    tables = os.listdir(dir)
+    print('Linking tables in ' + dir)
 
-        if not os.path.exists(output):
-            os.mkdir(output)
+    if not os.path.exists(output):
+        os.mkdir(output)
 
-        for table in tables:
+    for table in tables:
+        try:
             start = time.time() * 1000
             df = pd.read_csv(dir + table, dtype = str)
             [cpa_list, cea_list, nomatch] = bbw.contextual_matching(bbw.preprocessing(df))
@@ -38,12 +39,12 @@ if __name__ == '__main__':
             cea.to_csv(output + table, sep = ',', index = False)
             times[table] = duration
 
-        with open(output + 'runtimes.csv', 'w') as file:
-            writer = csv.writer(file, delimiter = ',')
-            writer.writerow(['table', 'miliseconds'])
+        except Exception as e:
+            print(str(e))
 
-            for table in times.keys():
-                writer.writerow(table, times[table])
+    with open(output + 'runtimes.csv', 'w') as file:
+        writer = csv.writer(file, delimiter = ',')
+        writer.writerow(['table', 'miliseconds'])
 
-    except Exception as e:
-        print(str(e))
+        for table in times.keys():
+            writer.writerow([table, times[table]])
