@@ -66,3 +66,5 @@ mv dbp-03-2022.tar.gz /baselines/magic
 tar -xf /baselines/magic/dbp-03-2022.tar.gz
 rm /baselines/magic/dbp-03-2022.tar.gz
 mv /baselines/magic/en /baselines/magic/dbp-03-2022
+ttl-merge -i kg/dbpedia/*.ttl > dbp-12-2022.ttl
+ttl-merge -i tough_tables/dbpedia/*.ttl > dbp-10-2016.ttl
