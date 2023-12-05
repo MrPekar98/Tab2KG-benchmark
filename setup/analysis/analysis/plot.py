@@ -9,7 +9,7 @@ def plot(type_distribution, top_k, x_size, y_size, filename):
     fig, ax = plt.subplots(figsize = (x_size, y_size))
 
     for tick in ax.xaxis.get_major_ticks():
-        tick.label.set_fontsize(22)
+        tick.label.set_fontsize(30)
         tick.label.set_weight('bold')
 
     for tick in ax.yaxis.get_major_ticks():

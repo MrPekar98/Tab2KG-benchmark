@@ -105,8 +105,8 @@ if __name__ == '__main__':
 
     print('SemTab (tFood horizontal - Wikidata) stats:')
     stats_tfood_horizontal.print()
-    plot(stats_tfood_horizontal.type_distribution(), 10, 14, 24, '/plots/SemTab_tFood_horizontal_Wikidata.pdf')
+    plot(stats_tfood_horizontal.type_distribution(), 10, 14, 30, '/plots/SemTab_tFood_horizontal_Wikidata.pdf')
 
     print('SemTab (tFood entity - Wikidata) stats:')
     stats_tfood_entity.print()
-    plot(stats_tfood_entity.type_distribution(), 10, 14, 24, '/plots/SemTab_tFood_entity_Wikidata.pdf')
+    plot(stats_tfood_entity.type_distribution(), 10, 14, 30, '/plots/SemTab_tFood_entity_Wikidata.pdf')

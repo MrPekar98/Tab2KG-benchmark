@@ -102,4 +102,4 @@ if __name__ == '__main__':
 
     print('SemTab (BioDivTab - Wikidata) stats:')
     stats_semtab.print()
-    #plot(stats_semtab.type_distribution(), 10, 14, 24, '/plots/SemTab_BioDivTab_Wikidata.pdf')
+    #plot(stats_semtab.type_distribution(), 10, 14, 30, '/plots/SemTab_BioDivTab_Wikidata.pdf')
