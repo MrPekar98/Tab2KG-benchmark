@@ -24,8 +24,11 @@ docker pull searx/searx
 docker network inspect ${NETWORK} >/dev/null 2>&1 || docker network create ${NETWORK}
 
 docker build -t bbw -f ${BBW}bbw.dockerfile ${BBW}
-docker build -t spotlight -f ${MAGIC}spotlight.dockerfile --build-arg KG= ${MAGIC}
-#docker build -t magic -f ${MAGIC}magic.dockerfile ${MAGIC}
+docker build -t spotlight_dbp-10-2016 -f ${MAGIC}spotlight.dockerfile --build-arg KG="dbp-10-2016" ${MAGIC}
+docker build -t spotlight_dbp-03-2022 -f ${MAGIC}spotlight.dockerfile --build-arg KG="dbp-03-2022" ${MAGIC}
+docker build -t magic_dbp-10-2016 -f ${MAGIC}magic.dockerfile --build-arg KG="dbp-10-2016" ${MAGIC}
+docker build -t magic_dbp-03-2022 -f ${MAGIC}magic.dockerfile --build-arg KG="dbp-03-2022" ${MAGIC}
+docker build -t magic_wd -f ${MAGIC}magic.dockerfile --build-arg KG="wd" ${MAGIC}
 #docker build -t t2kmatch -f ${T2KMATCH}t2kmatch.dockerfile ${T2KMATCH}
 #docker build -t lexma -f ${LEXMA}lexma.dockerfile ${LEXMA}
 #docker build -t emblookup -f ${EMBLOOKUP}emblookup.dockerfile ${EMBLOOKUP}

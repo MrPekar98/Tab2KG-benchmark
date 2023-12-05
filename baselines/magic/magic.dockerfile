@@ -1,5 +1,7 @@
 FROM python:3.8
 
+ARG KG
+
 WORKDIR /home
 RUN apt update
 RUN apt install git -y
@@ -16,8 +18,9 @@ RUN mkdir dbpedia-10-2016/
 RUN mkdir dbpedia-03-2022/
 ADD dbpedia-10-2016/ dbpedia-10-2016/
 ADD dbpedia-03-2022/ dbpedia-03-2022/
+ADD ${KG}.hdt .
 ADD main.py .
 ADD evaluate.sh .
 ADD experiments/ .
 
-ENTRYPOINT ./evaluate.sh
+ENTRYPOINT ./evaluate.sh ${KG}

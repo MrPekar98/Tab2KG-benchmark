@@ -1,5 +1,6 @@
-FROM tab2kg_benchmark:latest
+FROM ubuntu:20.04
 
+RUN apt update
 RUN DEBIAN_FRONTEND=noninteractive apt install git openjdk-11-jdk maven tar -y
 RUN git clone https://github.com/olehmberg/T2KMatch.git
 

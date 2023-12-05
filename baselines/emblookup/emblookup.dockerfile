@@ -1,5 +1,6 @@
-FROM tab2kg_benchmark:latest
+FROM ubuntu:20.04
 
+RUN apt update
 RUN DEBIAN_FRONTEND=noninteractive apt install python3 python3-pip wget gzip git -y
 RUN git clone https://github.com/MrPekar98/EmbLookup.git
 
