@@ -76,30 +76,30 @@ The plots are then saved in `plots/` as PDF files.
 Below are plots of type distributions of the entities within the datasets used in this benchmark.
 
 #### SemTab HardTables
-<img src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/SemTab.pdf">
+<embed src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/SemTab.pdf">
 
 #### SemTab BioDivTab
-<img src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/SemTab_BioDivTab_DBpedia.pdf">
+<embed src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/SemTab_BioDivTab_DBpedia.pdf">
 
 #### SemTab tFood - Table as entity
-<img src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/SemTab_tFood_entity_Wikidata.pdf">
+<embed src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/SemTab_tFood_entity_Wikidata.pdf">
 
 #### SemTab tFood - Row as entity
-<img src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/SemTab_tFood_horizontal_Wikidata.pdf">
+<embed src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/SemTab_tFood_horizontal_Wikidata.pdf">
 
 #### Tough Tables
-<img src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/ToughTables-DBpedia.pdf">
+<embed src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/ToughTables-DBpedia.pdf">
 
 #### Tough Tables
-<img src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/ToughTables-Wikidata.pdf">
+<embed src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/ToughTables-Wikidata.pdf">
 
 #### WebDataCommons
-<img src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/WebDataCommons.pdf">
+<embed src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/WebDataCommons.pdf">
 
 #### WikiTables 2013
-<img src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/Wikitables-DBpedia_2013.pdf">
-<img src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/Wikitables-Wikidata_2013.pdf">
+<embed src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/Wikitables-DBpedia_2013.pdf">
+<embed src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/Wikitables-Wikidata_2013.pdf">
 
 #### WikiTables 2019
-<img src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/Wikitables-DBpedia_2019.pdf">
-<img src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/Wikitables-Wikidata_2019.pdf">
+<embed src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/Wikitables-DBpedia_2019.pdf">
+<embed src="https://github.com/MrPekar98/Tab2KG-benchmark/blob/main/plots/Wikitables-Wikidata_2019.pdf">
