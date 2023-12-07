@@ -99,3 +99,17 @@ with open(out_dir + 'gt/dbpedia/gt.csv', 'w') as out_gt:
 
                     writer.writerow(table_row)
                     row_idx += 1
+
+sub_out_dir = out_dir + 'tables_subset/'
+out_tables = os.listdir(out_dir + 'tables/')
+i = 0
+os.makedirs(sub_out_dir)
+
+for table in out_tables:
+    shutil.copy(out_dir + 'tables/' + table, sub_out_dir + table)
+    i += 1
+
+    if i == 10000:
+        break
+
+print('Done')

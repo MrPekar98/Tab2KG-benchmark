@@ -31,7 +31,7 @@ docker build -t magic_dbp-03-2022 -f ${MAGIC}magic.dockerfile --build-arg KG="db
 docker build -t magic_wd -f ${MAGIC}magic.dockerfile --build-arg KG="wd" ${MAGIC}
 #docker build -t t2kmatch -f ${T2KMATCH}t2kmatch.dockerfile ${T2KMATCH}
 #docker build -t lexma -f ${LEXMA}lexma.dockerfile ${LEXMA}
-#docker build -t emblookup -f ${EMBLOOKUP}emblookup.dockerfile ${EMBLOOKUP}
+docker build -t emblookup -f ${EMBLOOKUP}emblookup.dockerfile ${EMBLOOKUP}
 
 # Setup
 # Keyword-kg-linker

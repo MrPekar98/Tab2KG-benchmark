@@ -102,13 +102,14 @@ class HDTConnector(AbstractConnector):
         return query(q_str)
 
 if __name__ == '__main__':
-    if len(sys.argv) < 4:
-        print('Usage: python main.py <KG HDT FILE> <CSV CORPUS> <RESULT DIRECTORY>')
+    if len(sys.argv) < 5:
+        print('Usage: python main.py <KG> <KG HDT FILE> <CSV CORPUS> <RESULT DIRECTORY>')
         exit(1)
 
     kg = sys.argv[1]
-    corpus = sys.argv[2]
-    output = sys.argv[3]
+    hdt = sys.argv[2]
+    corpus = sys.argv[3]
+    output = sys.argv[4]
 
     if not corpus.endswith('/'):
         corpus += '/'
@@ -116,7 +117,7 @@ if __name__ == '__main__':
     if not output.endswith('/'):
         output += '/'
 
-    store = HDTStore(kg)
+    store = HDTStore(hdt)
     g = Graph(store)
     connector = HDTConnector()
     runtimes = dict()
@@ -130,11 +131,17 @@ if __name__ == '__main__':
         counter += 1
 
         name = file.split('/')[-1].split('.')[0]
+        annotator = None
         print('Linking ' + name)
 
         start = time.time() * 1000
-        #annotator = DBMagic(connector, file, 0, None, 0)
-        annotator = WikiMagic(connector, file, 0, None, 0)
+
+        if kg == 'dbpedia':
+            annotator = DBMagic(connector, file, 0, None, 0)
+
+        elif kg == 'wikidata':
+            annotator = WikiMagic(connector, file, 0, None, 0)
+
         annotator.annotate()
         annotator.export_files('test')
 
