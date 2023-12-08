@@ -4,7 +4,7 @@ ARG KG
 
 WORKDIR /spotlight
 RUN apt update
-RUN apt install wget
+RUN apt install wget -y
 RUN wget -O spotlight.jar https://sourceforge.net/projects/dbpedia-spotlight/files/latest/download
 
 RUN mkdir ${KG}

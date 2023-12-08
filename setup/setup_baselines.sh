@@ -70,9 +70,12 @@ ttl-merge -i kg/dbpedia/*.ttl > dbp-12-2022.ttl
 mv tough_tables/dbpedia/freebase_links_en.ttl tough_tables/
 ttl-merge -i tough_tables/dbpedia/*.ttl > dbp-10-2016.ttl
 mv tough_tables/freebase_links_en.ttl tough_tables/dbpedia/
-wget https://github.com/rdfhdt/hdt-java/releases/download/v3.0.10/rdfhdt.tar.gz
-tar -xf rdfhdt.tar.gz
-rm rdfhdt.tar.gz
-./hdt-java-package-3.0.10/bin/rdf2hdt.sh dbp-12-2022.ttl dbp-12-2022.hdt
-./hdt-java-package-3.0.10/bin/rdf2hdt.sh dbp-10-2016.ttl dbp-10-2016.hdt
-rm -rf hdt-java-package-3.0.10/
+git clone https://github.com/rdfhdt/hdt-cpp.git
+docker build -t hdt -f hdt-cpp/Dockerfile hdt-cpp/
+mkdir hdt-cpp/kg_data/
+mv dbp-12-2022.ttl hdt-cpp/kg_data/
+mv dbp-10-2016.ttl hdt-cpp/kg_data/
+docker run --rm -v ${PWD}/hdt-cpp/:/workdir hdt cd workdir && rdf2hdt -f turtle kg_data/dbp-10-2016.ttl kg_data/dbp-10-2016.hdt
+docker run --rm -v ${PWD}/hdt-cpp/:/workdir hdt cd workdir && rdf2hdt -f turtle kg_data/dbp-12-2022.ttl kg_data/dbp-12-2022.hdt
+mv hdt-cpp/kg_data/*.hdt /baselines/magic
+rm -rf hdt-cpp/

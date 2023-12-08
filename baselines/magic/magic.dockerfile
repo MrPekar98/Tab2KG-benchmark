@@ -14,8 +14,6 @@ WORKDIR Magic/
 RUN git clone https://github.com/IBCNServices/INK.git
 RUN pip install -e INK/
 
-RUN mkdir dbpedia-10-2016/
-RUN mkdir dbpedia-03-2022/
 ADD dbpedia-10-2016/ dbpedia-10-2016/
 ADD dbpedia-03-2022/ dbpedia-03-2022/
 ADD ${KG}.hdt .

@@ -29,8 +29,8 @@ docker build -t spotlight_dbp-03-2022 -f ${MAGIC}spotlight.dockerfile --build-ar
 docker build -t magic_dbp-10-2016 -f ${MAGIC}magic.dockerfile --build-arg KG="dbp-10-2016" ${MAGIC}
 docker build -t magic_dbp-03-2022 -f ${MAGIC}magic.dockerfile --build-arg KG="dbp-03-2022" ${MAGIC}
 docker build -t magic_wd -f ${MAGIC}magic.dockerfile --build-arg KG="wd" ${MAGIC}
-#docker build -t t2kmatch -f ${T2KMATCH}t2kmatch.dockerfile ${T2KMATCH}
-#docker build -t lexma -f ${LEXMA}lexma.dockerfile ${LEXMA}
+docker build -t t2kmatch -f ${T2KMATCH}t2kmatch.dockerfile ${T2KMATCH}
+docker build -t lexma -f ${LEXMA}lexma.dockerfile ${LEXMA}
 docker build -t emblookup -f ${EMBLOOKUP}emblookup.dockerfile ${EMBLOOKUP}
 
 # Setup
