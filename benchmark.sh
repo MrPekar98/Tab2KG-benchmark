@@ -23,6 +23,4 @@ docker run --rm --network evaluation -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/
 
 # Keyword-kg-linker
 
-# T2K Match
-
 # LexMa
