@@ -6,7 +6,6 @@ HOME=${PWD}
 NETWORK="evaluation"
 
 BBW="baselines/bbw/"
-T2KMATCH="baselines/t2kmatch/"
 KEYWORD_KG_LINKER="baselines/keyword-kg-linker/"
 LEXMA="baselines/lexma/"
 EMBLOOKUP="baselines/emblookup/"
@@ -17,7 +16,6 @@ mkdir -p results/bbw/
 mkdir -p results/emblookup/
 mkdir -p results/keyword-kg-linker/
 mkdir -p results/lexma/
-mkdir -p results/t2kmatch/
 mkdir -p results/magic/
 
 docker pull searx/searx
