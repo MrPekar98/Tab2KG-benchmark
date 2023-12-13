@@ -6,16 +6,16 @@ BENCHMARK_DIR="/benchmarks/"
 DATA_DIR="data/"
 
 # SemTab HardTables
-mkdir -p /results/emblookup/semtab_hardtables
+#mkdir -p /results/emblookup/semtab_hardtables
 
-python3 main.py "${BENCHMARK_DIR}semtab/HardTables/tables/" "${DATA_DIR}aliases/alias_wd.ttl" "${DATA_DIR}index_mappings/kg_index_name_mapping_wd.csv" "${DATA_DIR}aliases_processed/aliases_processed_wd.csv" -h
-mv runtimes.csv /results/emblookup/semtab_hardtables
-mv results.csv /results/emblookup/semtab_hardtables
+#python3 main.py "${BENCHMARK_DIR}semtab/HardTables/tables/" "${DATA_DIR}aliases/alias_wd.ttl" "${DATA_DIR}index_mappings/kg_index_name_mapping_wd.csv" "${DATA_DIR}aliases_processed/aliases_processed_wd.csv" -h
+#mv runtimes.csv /results/emblookup/semtab_hardtables
+#mv results.csv /results/emblookup/semtab_hardtables
 
 # tFood
 mkdir -p /results/emblookup/tfood
 
-python3 main.py "${BENCHMARK_DIR}semtab/tfood/horizontal/tables/" "${DATA_DIR}aliases/alias_wd.ttl" "${DATA_DIR}index_mapping/kg_index_name_mapping_wd.csv" "${DATA_DIR}aliases_processed/aliases_processed_wd.csv" -h
+python3 main.py "${BENCHMARK_DIR}semtab/tfood/horizontal/tables/" "${DATA_DIR}aliases/alias_wd.ttl" "${DATA_DIR}index_mappings/kg_index_name_mapping_wd.csv" "${DATA_DIR}aliases_processed/aliases_processed_wd.csv" -h
 mv runtimes.csv /results/emblookup/tfood
 mv results.csv /results/emblookup/tfood
 
