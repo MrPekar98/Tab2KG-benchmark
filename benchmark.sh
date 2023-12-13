@@ -12,14 +12,14 @@ docker stop searx
 
 # Magic
 docker run --rm --network evaluation -d --name dbpedia-spotlight spotlight_dbp-10-2016
-docker run --rm --network evaluation -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results magic_dbp-10-2016
+docker run --rm --network evaluation -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results dbp-10-2016
 docker stop dbpedia-spotlight
 
 docker run --rm --network evaluation -d --name dbpedia-spotlight spotlight_dbp-03-2022
-docker run --rm --network evaluation -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results magic_dbp-03-2022
+docker run --rm --network evaluation -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results dbp-12-2022
 docker stop dbpedia-spotlight
 
-docker run --rm --network evaluation -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results magic_wd
+docker run --rm --network evaluation -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results wd
 
 # Keyword-kg-linker
 

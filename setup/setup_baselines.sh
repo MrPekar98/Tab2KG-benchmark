@@ -36,7 +36,7 @@ mv /baselines/magic/en /baselines/magic/dbp-10-2016
 mv dbp-03-2022.tar.gz /baselines/magic
 tar -xf /baselines/magic/dbp-03-2022.tar.gz
 rm /baselines/magic/dbp-03-2022.tar.gz
-mv /baselines/magic/en /baselines/magic/dbp-03-2022
+mv /baselines/magic/en /baselines/magic/dbp-12-2022
 ttl-merge -i kg/dbpedia/*.ttl > dbp-12-2022.ttl
 mv tough_tables/dbpedia/freebase_links_en.ttl tough_tables/
 ttl-merge -i tough_tables/dbpedia/*.ttl > dbp-10-2016.ttl

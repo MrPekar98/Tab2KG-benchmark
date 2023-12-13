@@ -143,7 +143,7 @@ if __name__ == '__main__':
             annotator = WikiMagic(connector, file, 0, None, 0)
 
         annotator.annotate()
-        annotator.export_files('test')
+        annotator.export_files('results')
 
         duration = time.time() * 1000 - start
         runtimes[name] = duration
