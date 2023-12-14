@@ -35,3 +35,5 @@ baselines/magic/dbp-10-2016/
 baselines/magic/dbp-12-2022/
 baselines/magic/*.hdt
 results/
+measure/__pycache__/
+measure/*.csv

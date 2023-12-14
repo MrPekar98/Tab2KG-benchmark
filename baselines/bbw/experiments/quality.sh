@@ -7,6 +7,9 @@ BENCHMARK_DIR="/benchmarks/"
 # Tough Tables
 python3 bbwWrapper.py "${BENCHMARK_DIR}toughtables/wikidata/tables/" toughtables_wd
 
+# tFood
+python3 bbwWrapper.py "${BENCHMARK_DIR}semtab/tfood/horizontal/tables/" tfood
+
 # SemTab HardTables
 python3 bbwWrapper.py "${BENCHMARK_DIR}semtab/HardTables/tables/" semtab_hardtables
 
