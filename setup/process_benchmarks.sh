@@ -19,6 +19,9 @@ python3 wikitables/wikitables_wikidata.py 19
 ./kg/neo4j-dbpedia-12-2022/bin/neo4j stop
 sleep 1m
 
+python3 wikitables_subset.py 10000 2013
+python3 wikitables_subset.py 10000 2019
+
 echo "Semtab"
 mkdir -p /benchmarks/semtab/HardTables/gt/
 mkdir -p /benchmarks/semtab/biodivtab/dbpedia/gt/
