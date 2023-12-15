@@ -3,6 +3,7 @@ from data import *
 import read_results as rr
 import precision
 import recall
+from quality import *
 
 print('Reading experiment results...')
 
@@ -40,51 +41,43 @@ results_hardtables = {
     'bbw': bbw_hardtables,
     'EMBLOOKUP': emblookup_hardtables
 }
-precision.write('/measure/precision_hardtables.csv', results_hardtables, hardtables_gt)
-recall.write('/measure/recall_hardtables.csv', results_hardtables, hardtables_gt)
+evaluate_quality('/measure', 'hardtables', results_hardtables, hardtables_gt)
 
 results_tfood = {
     'bbw': bbw_tfood,
     'EMBLOOKUP': emblookup_tfood
 }
-precision.write('/measure/precision_tfood.csv', results_tfood, tfood_gt)
-recall.write('/measure/recall_tfood.csv', results_tfood, tfood_gt)
+evaluate_quality('/measure', 'tfood', results_tfood, tfood_gt)
 
 results_toughtables_wd = {
     'bbw': bbw_toughtables,
     'EMBLOOKUP': emblookup_toughtables_wd
 }
-precision.write('/measure/precision_toughtables_wd.csv', results_toughtables_wd, toughtables_wd)
-recall.write('/measure/recall_toughtables_wd.csv', results_toughtables_wd, toughtables_wd)
+evaluate_quality('/measure', 'toughtables_wd', results_toughtables_wd, toughtables_wd)
 
 results_toughtables_dbp = {
     'EMBLOOKUP': emblookup_toughtables_dbp
 }
-precision.write('/measure/precision_toughtables_dbp.csv', results_toughtables_dbp, toughtables_dbp)
-recall.write('/measure/recall_toughtables_dbp.csv' results_toughtables_dbp, toughtables_dbp)
+evaluate_quality('/measure', 'toughtables_dbp', results_toughtables_dbp, toughtables_dbp)
 
 results_wikitables_2013_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2013_dbp
 }
-precision.write('/measure/precision_wikitables_2013_dbp.csv', results_wikitables_2013_dbp, wikitables_2013_dbp)
-recall.write('/measure/recall_wikitables_2013_dbp.csv', results_wikitables_2013_dbp, wikitables_2013_dbp)
+evaluate_quality('/measure', 'wikitables_2013_dbp', results_wikitables_2013_dbp, wikitables_2013_dbp)
 
 results_wikitables_2013_wd = {
     'EMBLOOKUP': emblookup_wikitables_2013_wd
 }
-precision.write('/measure/precision_wikitables_2013_wd.csv', results_wikitables_2013_wd, wikitables_2013_wd)
-recall.write('/measure/recall_wikitables_2013_wd.csv', results_wikitables_2013_wd, wikitables_2013_wd)
+evaluate_quality('/measure', 'wikitables_2013_wd', results_wikitables_2013_wd, wikitables_2013_wd)
 
 results_wikitables_2019_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2019_dbp
 }
-precision.write('/measure/precision_wikitables_2019_dbp.csv', results_wikitables_2019_dbp, wikitables_2019_dbp)
-recall.write('/measure/recall_wikitables_2019_dbp.csv', results_wikitables_2019_dbp, wikitables_2019_dbp)
+evaluate_quality('/measure', 'wikitables_2019_dbp', results_wikitables_2019_dbp, wikitables_2019_dbp)
 
 results_wikitables_2019_wd = {
     'EMBLOOKUP': emblookup_wikitables_2019_wd
 }
-precision.write('/measure/precision_wikitables_2019_wd.csv', results_wikitables_2019_wd, wikitables_2019_wd)
-recall.write('/measure/recall_wikitables_2019_wd.csv', results_wikitables_2019_wd, wikitables_2019_wd)
+evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, wikitables_2019_wd)
 
 print('Done')

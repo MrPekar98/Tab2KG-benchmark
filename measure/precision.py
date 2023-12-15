@@ -71,3 +71,5 @@ def write(output_file, results, ground_truth):
 
         for row in rows:
             writer.writerows([row])
+
+    return precision_results
