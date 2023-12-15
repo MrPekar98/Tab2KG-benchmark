@@ -46,7 +46,7 @@ def read_bbw(files_dir):
 
     for file in files:
         with open(files_dir + '/' + file, 'r') as input:
-            reader = csv.reader(input, delimiter = 'r')
+            reader = csv.reader(input)
             header_skipped = False
 
             for row in reader:
@@ -54,7 +54,7 @@ def read_bbw(files_dir):
                     header_skipped = True
                     continue
 
-                tuple = [file.replace('.csv', ''), row[1], row[2], row[3]]
+                tuple = [file.replace('.csv', ''), int(row[1]), int(row[2]), row[3]]
                 results.append(tuple)
 
     return results

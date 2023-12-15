@@ -36,8 +36,9 @@ def ground_truth(gt_path):
             if table_id not in gt.keys():
                 gt[table_id] = list()
 
-            if gt_path == TOUGH_TABLES_DBPEDIA_GT:
+            if gt_path in (TOUGH_TABLES_DBPEDIA_GT, TOUGH_TABLES_WIKIDATA_GT):
                 tuple += row[3].split(' ')
+                tuple[0] -= 1
 
             else:
                 tuple.append(row[3])
