@@ -27,7 +27,7 @@ def read_emblookup(file_path, kg):
             else:
                 parsed_row = row
 
-            tuple = [parsed_row[0], int(parsed_row[1]), int(parsed_row[2])]
+            tuple = [parsed_row[0], int(parsed_row[1]) + 1, int(parsed_row[2])]
 
             if kg == 'wikidata':
                 tuple.append('http://www.wikidata.org/entity/' + parsed_row[3])
