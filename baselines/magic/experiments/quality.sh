@@ -26,7 +26,7 @@ fi
 
 if [[ "${KG}" = "dbp-10-2016" ]]
 then
-    mkdir -o ${RESULT_DIR}magic/tough_tables_dbp/
+    mkdir -p ${RESULT_DIR}magic/tough_tables_dbp/
     python3 main.py dbpedia ${KG}.hdt ${BENCHMARK_DIR}toughtables/dbpedia/tables/ ${RESULT_DIR}magic/tough_tables_dbp/
 fi
 
