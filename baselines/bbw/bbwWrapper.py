@@ -31,7 +31,7 @@ if __name__ == '__main__':
     for table in tables:
         try:
             start = time.time() * 1000
-            df = pd.read_csv(dir + table, dtype = str)
+            df = pd.read_csv(dir + table, header = None, dtype = str)
             [cpa_list, cea_list, nomatch] = bbw.contextual_matching(bbw.preprocessing(df))
             [cpa, cea, cta] = bbw.postprocessing(cpa_list, cea_list)
             duration = time.time() * 1000 - start
