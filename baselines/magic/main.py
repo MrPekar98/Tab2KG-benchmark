@@ -22,30 +22,22 @@ skip_list_wiki = ['http://schema.org/', 'http://www.w3.org/2004/02/skos/core', '
 global g
 
 class DBMagic(Magic):
-    def __init__(self, connector, structured_file, header, index_col, main_col):
+    def __init__(self, endpoint_ip, connector, structured_file, header, index_col, main_col):
         super().__init__(connector, structured_file, header, index_col, main_col,'http://dbpedia.org/property/','http://www.w3.org/1999/02/22-rdf-syntax-ns#type§', skip_list_db)
+        self.endpoint = endpoint_ip
 
     def search_entity_api(self, entity):
         try:
-            data = {'confidence': 0.1, 'text': entity}
-            headers = {
-                'Accept': 'application/json',
-            }
-            response = requests.post('http://localhost:2222/rest/candidates', headers=headers, data=data)
+            response = requests.get('http://' + self.endpoint + ':7000/search?query=' + entity.replace(' ', '%20'))
             js = json.loads(response.text)
 
-            if isinstance(js['annotation']['surfaceForm'],list):
-                data = []
-                for s in js['annotation']['surfaceForm']:
-                    if isinstance(s['resource'], list):
-                        data.extend(['http://dbpedia.org/resource/'+r['@uri'] for r in s['resource']])
-                    else:
-                        data.extend(['http://dbpedia.org/resource/'+s['resource']['@uri']])
+            if 'output' in js.keys():
+                for output in js['output']:
+                    entity = output['entity']
+                    data.append(entity)
+
             else:
-                if isinstance(js['annotation']['surfaceForm']['resource'], list):
-                    data = ['http://dbpedia.org/resource/' + r['@uri'] for r in js['annotation']['surfaceForm']['resource']]
-                else:
-                    data = ['http://dbpedia.org/resource/' + js['annotation']['surfaceForm']['resource']['@uri']]
+                data = []
 
         except:
             data = []
@@ -101,14 +93,15 @@ class HDTConnector(AbstractConnector):
         return query(q_str)
 
 if __name__ == '__main__':
-    if len(sys.argv) < 5:
-        print('Usage: python main.py <KG> <KG HDT FILE> <CSV CORPUS> <RESULT DIRECTORY>')
+    if len(sys.argv) < 6:
+        print('Usage: python main.py <KG> <KG HDT FILE> <CSV CORPUS> <RESULT DIRECTORY> <KEYWORD SEARCH ENDPOINT IP>')
         exit(1)
 
     kg = sys.argv[1]
     hdt = sys.argv[2]
     corpus = sys.argv[3]
     output = sys.argv[4]
+    endpoint_ip = sys.argv[5]
 
     if not corpus.endswith('/'):
         corpus += '/'
@@ -129,7 +122,7 @@ if __name__ == '__main__':
         start = time.time() * 1000
 
         if kg == 'dbpedia':
-            annotator = DBMagic(connector, file, 0, None, 0)
+            annotator = DBMagic(endpoint_ip, connector, file, 0, None, 0)
 
         elif kg == 'wikidata':
             annotator = WikiMagic(connector, file, 0, None, 0)

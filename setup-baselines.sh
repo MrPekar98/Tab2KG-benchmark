@@ -22,8 +22,6 @@ docker pull searx/searx
 docker network inspect ${NETWORK} >/dev/null 2>&1 || docker network create ${NETWORK}
 
 docker build -t bbw -f ${BBW}bbw.dockerfile ${BBW}
-docker build -t spotlight_dbp-10-2016 -f ${MAGIC}spotlight.dockerfile --build-arg KG="dbp-10-2016" ${MAGIC}
-docker build -t spotlight_dbp-03-2022 -f ${MAGIC}spotlight.dockerfile --build-arg KG="dbp-03-2022" ${MAGIC}
 docker build -t magic_dbp-10-2016 -f ${MAGIC}magic.dockerfile --build-arg KG="dbp-10-2016" ${MAGIC}
 docker build -t magic_dbp-03-2022 -f ${MAGIC}magic.dockerfile --build-arg KG="dbp-03-2022" ${MAGIC}
 docker build -t magic_wd -f ${MAGIC}magic.dockerfile --build-arg KG="wd" ${MAGIC}
@@ -37,3 +35,31 @@ docker build -t emblookup -f ${EMBLOOKUP}emblookup.dockerfile ${EMBLOOKUP}
 #cd ${HOME}
 
 # TODO: Setup the other baselines
+
+git clone https://github.com/MrPekar98/kg-lookup.git
+cd kg-lookup/
+echo "Loading DBpedia 2016..."
+./load.sh ../setup/tough_tables/dbpedia/
+mv tdb/ ../baselines/magic/tdb_dbp_2016/
+
+echo "Loading DBpedia 2022..."
+./load.sh ../setup/kg/dbpedia/
+mv tdb/ ../baselines/magic/tdb_dbp_2022/
+
+docker build -t kg-lookup .
+cd ..
+
+mkdir -p baselines/magic/lucene_dbp_2016/
+mkdir -p baselines/magic/lucene_dbp_2022/
+
+docker run -d -v ${PWD}/baselines/magic/tdb_dbp_2016/:/tdb -v ${PWD}/baselines/magic/lucene_dbp_2016/:/lucene -p 7000:7000 --name kg-lookup-service kg-lookup
+sleep 2m
+curl http://localhost:7000/index
+docker stop kg-lookup-service
+docker container rm kg-lookup-service
+
+docker run -d -v ${PWD}/baselines/magic/tdb_dbp_2022/:/tdb -v ${PWD}/baselines/magic/lucene_dbp_2022/:/lucene -p 7000:7000 --name kg-lookup-service kg-lookup
+sleep 2m
+curl http://localhost:7000/index
+docker stop kg-lookup-service
+docker container rm kg-lookup-service

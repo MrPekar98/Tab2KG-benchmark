@@ -1,6 +1,7 @@
 FROM python:3.8
 
 ARG KG
+ENV KG=${KG}
 
 WORKDIR /home
 RUN apt update
