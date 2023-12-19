@@ -61,7 +61,6 @@ class WikiMagic(Magic):
         try:
             entity = entity.split(',')[0]
             data = ['http://www.wikidata.org/entity/' + x for x in self.crawler.search(entity)]
-            print('DATA', data)
 
         except:
             data = []
@@ -122,14 +121,7 @@ if __name__ == '__main__':
     connector = HDTConnector()
     runtimes = dict()
 
-    counter = 0
-
     for file in tqdm(glob.glob(corpus + '*.csv')):
-        if counter > 3:
-            break
-
-        counter += 1
-
         name = file.split('/')[-1].split('.')[0]
         annotator = None
         print('Linking ' + name)
@@ -143,7 +135,7 @@ if __name__ == '__main__':
             annotator = WikiMagic(connector, file, 0, None, 0)
 
         annotator.annotate()
-        annotator.export_files('results')
+        annotator.export_files(output + name)
 
         duration = time.time() * 1000 - start
         runtimes[name] = duration

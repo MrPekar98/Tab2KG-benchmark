@@ -28,14 +28,12 @@ mv tough-tables/ tough_tables/repo/
 mv files tough_tables/dbpedia/
 
 # Tough Tables (Wikidata)
-./kg/neo4j-dbpedia-12-2022/bin/neo4j start
-mkdir -p tough_tables/ToughTablesR2-WD/tables/
-mkdir -p tough_tables/ToughTablesR2-WD/gt/
-cp tough_tables/ToughTablesR2-DBP/Test/tables/* tough_tables/ToughTablesR2-WD/tables/
-sleep 1h
-python3 create_wikidata_dataset.py
-./kg/neo4j-dbpedia-12-2022/bin/neo4j stop
-sleep 1m
+wget -O 2T_wd.zip https://zenodo.org/records/7419275/files/ToughTables-WD_v3.zip?download=1
+unzip 2T_wd.zip
+rm 2T_wd.zip
+rm CEA_WD_Evaluator.py CTA_WD_Evaluator.py
+mv DataSets/ToughTablesR2-WD/ tough_tables/
+rmdir DataSets/
 wget https://zenodo.org/record/6643443/files/wikidata-20220521-truthy.nt.bz2?download=1
 mv 'wikidata-20220521-truthy.nt.bz2?download=1' wikidata.nt.bz2
 bzip2 -dk wikidata.nt.bz2

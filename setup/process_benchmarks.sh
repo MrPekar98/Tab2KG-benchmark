@@ -47,10 +47,9 @@ mkdir -p /benchmarks/toughtables/dbpedia/gt/
 mkdir -p /benchmarks/toughtables/wikidata/gt/
 mv tough_tables/ToughTablesR2-DBP/Test/tables/ /benchmarks/toughtables/dbpedia/
 mv tough_tables/ToughTablesR2-DBP/Test/gt/cea_gt.csv /benchmarks/toughtables/dbpedia/gt/
-mv tough_tables/ToughTablesR2-WD/tables/ /benchmarks/toughtables/wikidata/
-mv tough_tables/ToughTablesR2-WD/gt/cea_gt.csv /benchmarks/toughtables/wikidata/gt/
-rm -rf tough_tables/ToughTablesR2-DBP/
-rm -rf tough_tables/ToughTablesR2-WD/
+mv tough_tables/ToughTablesR2-WD/Test/tables/ /benchmarks/toughtables/wikidata/
+mv tough_tables/ToughTablesR2-WD/Test/gt/cea_gt.csv /benchmarks/toughtables/wikidata/gt/
+rm -rf tough_tables/ToughTablesR2-DBP/ tough_tables/ToughTablesR2-WD/
 
 echo "tFood"
 rm -rf tfoof/entity/ tfood/horizontal/val/ tfood/horizontal/test/targets/
