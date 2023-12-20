@@ -46,20 +46,28 @@ echo "Loading DBpedia 2022..."
 ./load.sh ../setup/kg/dbpedia/
 mv tdb/ ../baselines/magic/tdb_dbp_2022/
 
+echo "Loading Wikidata..."
+./load.sh ../setup/tough_tables/wikidata/
+mv tdb/ ../baselines/lexma/tdb_wd/
+
 docker build -t kg-lookup .
 cd ..
 
 mkdir -p baselines/magic/lucene_dbp_2016/
 mkdir -p baselines/magic/lucene_dbp_2022/
+mkdir -p baselines/lexma/lucene_wd/
 
-docker run -d -v ${PWD}/baselines/magic/tdb_dbp_2016/:/tdb -v ${PWD}/baselines/magic/lucene_dbp_2016/:/lucene -p 7000:7000 --name kg-lookup-service kg-lookup
+docker run --rm -d -v ${PWD}/baselines/magic/tdb_dbp_2016/:/tdb -v ${PWD}/baselines/magic/lucene_dbp_2016/:/lucene -p 7000:7000 --name kg-lookup-service kg-lookup
 sleep 2m
 curl http://localhost:7000/index
 docker stop kg-lookup-service
-docker container rm kg-lookup-service
 
-docker run -d -v ${PWD}/baselines/magic/tdb_dbp_2022/:/tdb -v ${PWD}/baselines/magic/lucene_dbp_2022/:/lucene -p 7000:7000 --name kg-lookup-service kg-lookup
+docker run --rm -d -v ${PWD}/baselines/magic/tdb_dbp_2022/:/tdb -v ${PWD}/baselines/magic/lucene_dbp_2022/:/lucene -p 7000:7000 --name kg-lookup-service kg-lookup
 sleep 2m
 curl http://localhost:7000/index
 docker stop kg-lookup-service
-docker container rm kg-lookup-service
+
+docker run --rm -d -v ${PWD}/baselines/lexma/tdb_wd/:/tdb -v ${PWD}/baselines/lexma/lucene_wd/:/lucene -p 7000:7000 --name kg-lookup-service kg-lookup
+sleep 2m
+curl http://localhost:7000/index
+docker stop kg-lookup-service
