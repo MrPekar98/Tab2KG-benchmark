@@ -9,6 +9,7 @@ import os
 import sys
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+import csv
 
 class KG(Enum):
         DBpedia = 0
@@ -130,23 +131,21 @@ class WikidataAPI(KGLookup):
     '''
     classdocs
     '''
-    def __init__(self):
+    def __init__(self, endpoint):
         '''
         Constructor
         '''
+        self._endpoint = endpoint
         super().__init__(self.getURL())
 
     def getURL(self):
-        return "https://www.wikidata.org/w/api.php"
+        return self._endpoint + 'search'
 
     def __createParams(self, query, limit, type='item'):
         params = {
-            'action': 'wbsearchentities',
             'format' : 'json',
-            'search': query,
-            'type': type,
-            'limit': limit,
-            'language' : 'en'
+            'query': query.replace(' ', '%20'),
+            'k': limit,
         }
 
         return params
@@ -160,7 +159,7 @@ class WikidataAPI(KGLookup):
     def __extractKGEntities(self, json, filter=''):
         entities = list()
 
-        for element in json['search']:
+        for element in json['output']:
             #empty list of type from wikidata lookup
             types = set()
 
@@ -168,11 +167,12 @@ class WikidataAPI(KGLookup):
             if 'description' in element:
                 description = element['description']
 
-            kg_entity = {'uri': element['concepturi'], 'label': element['label']}
+            label=''
+            if 'label' in element:
+                label = element['label']
 
-            #We filter according to givem URI
-            if filter=='' or element['concepturi']==filter:
-                entities.append(kg_entity)
+            kg_entity = {'uri': element['entity'], 'label': label, 'description': description}
+            entities.append(kg_entity)
 
         #for entity in entities:
         #    print(entity)
@@ -191,23 +191,24 @@ class DBpediaAPI(KGLookup):
     '''
     classdocs
     '''
-    def __init__(self):
+    def __init__(self, endpoint):
         '''
         Constructor
         '''
+        self._endpoint = endpoint
         super().__init__(self.getURL())
 
     def getURL(self):
-        return "https://lookup.dbpedia.org/api/search"
+        return self._endpoint + 'search'
 
     def getKGName(self):
         return 'DBpedia'
 
     def __createParams(self, query, limit, type='item'):
         params = {
-            'format' : 'json',
-            'query': query,
-            'type': type,
+            'k' : limit,
+            'query': query.replace(' ', '%20'),
+            'format': 'json',
         }
 
         return params
@@ -218,7 +219,7 @@ class DBpediaAPI(KGLookup):
     def __extractKGEntities(self, json, filter=''):
         entities = list()
 
-        for element in json['docs']:
+        for element in json['output']:
             #empty list of type from wikidata lookup
             types = set()
 
@@ -226,17 +227,11 @@ class DBpediaAPI(KGLookup):
             if 'description' in element:
                 description = element['description']
 
-            kg_entity = dict()
+            label=''
+            if 'label' in element:
+                label = element['label']
 
-            if len(element['resource']) > 0:
-                kg_entity['uri'] = element['resource'][0]
-
-            if len(element['label']) > 0:
-                kg_entity['label'] = element['label'][0]
-
-            #We filter according to givem URI
-            if filter=='' or element['resource']==filter:
-                entities.append(kg_entity)
+            entities.append({'uri': element['entity'], 'label': label, 'description': description})
 
         #for entity in entities:
         #    print(entity)
@@ -306,13 +301,15 @@ def cosine(cell, entity):
             return 0
 
 if __name__ == '__main__':
-    if len(sys.argv) < 4:
-        print('Specify KG and then table directory')
+    if len(sys.argv) < 6:
+        print('Specify KG, table directory, output directory, number of candidates to generate, and endpoint hostname')
         exit(1)
 
     kg = sys.argv[1]
     kg_type = -1
-    candidates = int(sys.argv[3])
+    output_dir = sys.argv[3]
+    candidates = int(sys.argv[4])
+    endpoint = sys.argv[5]
 
     if kg == 'wikidata':
         print(URI_KG.uris[KG.Wikidata.value])
@@ -337,21 +334,24 @@ if __name__ == '__main__':
     if not table_dir.endswith('/'):
         table_dir += '/'
 
-    df = pd.DataFrame(columns = ["Table_id", "Row_id", "Column_id"])
-    df["KG_Entity"] = ""
+    if not output_dir.endswith('/'):
+        output_dir += '/'
+
+    runtimes = dict()
     api = None
     limit = candidates
     type = 'item'
-    i = 0
+    linked_rows = list()
 
     if kg_type == KG.Wikidata.value:
-        api = WikidataAPI()
+        api = WikidataAPI(endpoint)
 
     elif kg_type == KG.DBpedia.value:
-        api = DBpediaAPI()
+        api = DBpediaAPI(endpoint)
 
     for table in os.listdir(table_dir):
         input_table = pd.read_csv(table_dir + table)
+        start = time.time() * 1000
 
         for row_index, row in input_table.iterrows():
             column_index = 0
@@ -375,12 +375,22 @@ if __name__ == '__main__':
                                 max_entity = entity['uri']
 
                     if not max_entity is None:
-                        df["KG_Entity"][i] = max_entity
-                        df["Table_id"][i] = table.replace('.csv', '')
-                        df["Row_id"][i] = row_index
-                        df["Column_id"] = column_index
-                        i += 1
+                        linked_rows.append([table.replace('.csv', ''), row_index, column_index, max_entity])
 
-            column_index += 1
+                column_index += 1
 
-    df.to_csv('result.csv')
+        duration = time.time() * 1000 - start
+        runtimes[table.replace('.csv', '')] = duration
+
+    with open(output_dir + table, 'w') as file:
+        writer = csv.writer(file, delimiter = ',')
+
+        for row in linked_rows:
+            writer.writerow(row)
+
+    with open(output_dir + 'runtimes.csv', 'w') as file:
+        writer = csv.writer(file, delimiter = ',')
+        writer.writerow(['table', 'miliseconds'])
+
+        for table in runtimes.keys():
+            writer.writerow([table, runtimes[table]])

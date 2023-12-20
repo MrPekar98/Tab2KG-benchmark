@@ -28,14 +28,6 @@ docker build -t magic_wd -f ${MAGIC}magic.dockerfile --build-arg KG="wd" ${MAGIC
 docker build -t lexma -f ${LEXMA}lexma.dockerfile ${LEXMA}
 docker build -t emblookup -f ${EMBLOOKUP}emblookup.dockerfile ${EMBLOOKUP}
 
-# Setup
-# Keyword-kg-linker
-#cd ${KEYWORD_KG_LINKER}
-#./setup.sh
-#cd ${HOME}
-
-# TODO: Setup the other baselines
-
 git clone https://github.com/MrPekar98/kg-lookup.git
 cd kg-lookup/
 echo "Loading DBpedia 2016..."
