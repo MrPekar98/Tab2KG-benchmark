@@ -15,7 +15,6 @@ WORKDIR Magic/
 RUN git clone https://github.com/IBCNServices/INK.git
 RUN pip install -e INK/
 
-ADD ${KG}.hdt .
 ADD main.py .
 ADD evaluate.sh .
 ADD experiments/ .
