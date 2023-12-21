@@ -37,3 +37,4 @@ baselines/magic/*.hdt
 results/
 measure/__pycache__/
 measure/*.csv
+kg-lookup/
