@@ -1,8 +1,5 @@
 FROM python:3.8
 
-ARG KG
-ENV KG=${KG}
-
 WORKDIR /home
 RUN apt update
 RUN apt install git -y
@@ -19,4 +16,4 @@ ADD main.py .
 ADD evaluate.sh .
 ADD experiments/ .
 
-ENTRYPOINT ./evaluate.sh ${KG}
+ENTRYPOINT ./evaluate.sh

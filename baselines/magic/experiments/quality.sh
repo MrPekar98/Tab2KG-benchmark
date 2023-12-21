@@ -4,7 +4,6 @@ set -e
 
 BENCHMARK_DIR="/benchmarks/"
 RESULT_DIR="/results/"
-KG=$1	# TODO: Pass this as argument to main.py
 
 # SemTab HardTables
 
