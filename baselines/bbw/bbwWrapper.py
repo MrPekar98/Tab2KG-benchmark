@@ -1,4 +1,4 @@
-from bbw import bbw
+import bbw
 import sys
 import os
 import pandas as pd

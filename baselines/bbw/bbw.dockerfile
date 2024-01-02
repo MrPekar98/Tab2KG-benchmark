@@ -2,7 +2,7 @@ FROM python:3.8
 
 RUN apt update
 RUN apt install git -y
-RUN pip install pandas
+RUN pip install pandas requests
 
 WORKDIR /bbw
 ADD bbwWrapper.py .
