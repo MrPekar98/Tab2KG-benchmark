@@ -34,7 +34,11 @@ baselines/emblookup/data/
 baselines/magic/dbp-10-2016/
 baselines/magic/dbp-12-2022/
 baselines/magic/*.hdt
+baselines/magic/lucene*/
+baselines/lexma/tdb_wd/
+baselines/magic/tdb*/
 results/
 measure/__pycache__/
 measure/*.csv
 kg-lookup/
+jena-fuseki-server-4.10.0.jar

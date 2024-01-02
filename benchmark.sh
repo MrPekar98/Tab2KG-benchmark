@@ -11,8 +11,10 @@ docker run --rm -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results embl
 
 # bbw
 docker run --rm -d -v ${PWD}/searx:/etc/searx --network evaluation --name searx -e BASE_URL=http://localhost:3030/ searx/searx
+docker run --rm -d -v ${PWD}/baselines/lexma/tdb_wd/:/tdb --name fuseki-service fuseki
 docker run --rm --network evaluation -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results bbw
 docker stop searx
+docker stop fuseki-service
 
 # Magic
 docker run --rm --network evaluation -d -v ${PWD}/baselines/magic/tdb_dbp_2016/:/tdb -v ${PWD}/baselines/magic/lucene_dbp_2016/:/lucene -p 7000:7000 --name kg-lookup-service kg-lookup

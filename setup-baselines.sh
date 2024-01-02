@@ -21,6 +21,7 @@ mkdir -p results/magic/
 docker pull searx/searx
 docker network inspect ${NETWORK} >/dev/null 2>&1 || docker network create ${NETWORK}
 
+docker build -t fuseki -f ${BBW}fuseki.dockerfile ${BBW}
 docker build -t bbw -f ${BBW}bbw.dockerfile ${BBW}
 docker build -t magic -f ${MAGIC}magic.dockerfile ${MAGIC}
 docker build -t lexma -f ${LEXMA}lexma.dockerfile ${LEXMA}
@@ -51,11 +52,13 @@ docker run --rm -d -v ${PWD}/baselines/magic/tdb_dbp_2016/:/tdb -v ${PWD}/baseli
 sleep 2m
 curl http://localhost:7000/index
 docker stop kg-lookup-service
+sleep 2m
 
 docker run --rm -d -v ${PWD}/baselines/magic/tdb_dbp_2022/:/tdb -v ${PWD}/baselines/magic/lucene_dbp_2022/:/lucene -p 7000:7000 --name kg-lookup-service kg-lookup
 sleep 2m
 curl http://localhost:7000/index
 docker stop kg-lookup-service
+sleep 2m
 
 docker run --rm -d -v ${PWD}/baselines/lexma/tdb_wd/:/tdb -v ${PWD}/baselines/lexma/lucene_wd/:/lucene -p 7000:7000 --name kg-lookup-service kg-lookup
 sleep 2m
