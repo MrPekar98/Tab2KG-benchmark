@@ -38,7 +38,7 @@ echo "Loading DBpedia 2022..."
 mv tdb/ ../baselines/magic/tdb_dbp_2022/
 
 echo "Loading Wikidata..."
-./load.sh ../setup/tough_tables/wikidata/
+./load.sh ../setup/kg/sub_wikidata/
 mv tdb/ ../baselines/lexma/tdb_wd/
 
 docker build -t kg-lookup .

@@ -43,6 +43,11 @@ mv wikidata.nt tough_tables/wikidata/
 python3 tough_tables/split.py
 rm /home/tough_tables/wikidata/wikidata.nt
 ln -s /home/tough_tables/wikidata /home/kg/wikidata
+mkdir -p /home/kg/sub_wikidata
+cp /home/tough_tables/wikidata/P31.nt /home/kg/sub_wikidata
+cp /home/tough_tables/wikidata/rdf-schema#label.nt /home/kg/sub_wikidata
+cp /home/tough_tables/wikidata/description.nt /home/kg/sub_wikidata
+cp /home/tough_tables/wikidata/P910.nt /home/kg/sub_wikidata
 
 # SemTab 2023
 mkdir -p semtab

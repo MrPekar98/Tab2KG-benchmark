@@ -10,6 +10,7 @@ setup/kg/neo4j-dbpedia-2014/
 setup/kg/neo4j-wikidata/
 setup/kg/dbpedia/
 setup/kg/wikidata
+setup/kg/sub_wikidata/
 setup/semtab/HardTablesR2/
 setup/semtab/wikidata
 setup/semtab/BiodivTab_DBpedia/
