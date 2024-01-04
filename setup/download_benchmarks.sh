@@ -48,6 +48,7 @@ cp /home/tough_tables/wikidata/P31.nt /home/kg/sub_wikidata
 cp /home/tough_tables/wikidata/rdf-schema#label.nt /home/kg/sub_wikidata
 cp /home/tough_tables/wikidata/description.nt /home/kg/sub_wikidata
 cp /home/tough_tables/wikidata/P910.nt /home/kg/sub_wikidata
+cp /home/tough_tables/wikidata/name.nt /home/kg/sub_wikidata
 
 # SemTab 2023
 mkdir -p semtab
