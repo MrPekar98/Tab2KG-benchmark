@@ -1,0 +1,6 @@
+*
+!download_nltk.py
+!evaluate.sh
+!/experiments/*
+!lexma.dockerfile
+!lexma.py

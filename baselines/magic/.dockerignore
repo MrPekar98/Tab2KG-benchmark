@@ -1,3 +1,6 @@
-dbp-12-2022/
-dbp-10-2016/
-*.hdt
+*
+!magic.dockerfile
+!main.py
+!requirements.txt
+!evaluate.sh
+!/experiments/*

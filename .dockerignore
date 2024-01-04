@@ -1,3 +1,7 @@
 setup/
 benchmarks/
+measure/
+plots/
+results/
 kg-lookup/
+baselines/
