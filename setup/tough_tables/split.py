@@ -1,25 +1,24 @@
 base = '/home/tough_tables/'
 filename = base + 'wikidata/wikidata.nt'
-split_size = 10000000	# 10M
-split_index = 1
+line_counter = 1
+entities = set()
 
-def write_nt(index, lines):
-    with open(base + 'wikidata/wikidata_' + str(index) + '.nt', 'w') as out_file:
-        for line in lines:
-            out_file.write(line + '\n')
+with open(filename, 'r') as input:
+    for line in input:
+        split = line.split(' ')
+        subject = split[0]
+        predicate = split[1]
+        object = split[2]
+        pred_type = predicate.split('/')[-1].replace('>', '')
+        entities.add(subject)
 
-with open(filename, 'r') as in_file:
-    lines = list()
-    i = 0
+        with open(base + 'wikidata/' + pred_type + '.nt', 'a') as output:
+            output.write(line)
 
-    for line in in_file:
-        lines.append(line.strip())
-        i += 1
+        print(' ' * 100, end = '\r')
+        print('Line', line_counter, end = '\r')
+        line_counter += 1
 
-        if i ==	split_size:
-            write_nt(split_index, lines)
-            i = 0
-            split_index += 1
-            lines = list()
-
-    write_nt(split_index, lines)
+with open(base + 'wikidata/entities.nt', 'w') as entity_file:
+    for entity in entities:
+        entity_file.write(entity + ' <http://xmlns.com/foaf/0.1/name> "null" .\n')
