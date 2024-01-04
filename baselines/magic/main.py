@@ -27,6 +27,8 @@ class DBMagic(Magic):
         self.endpoint = endpoint_ip
 
     def search_entity_api(self, entity):
+        data = []
+
         try:
             response = requests.get('http://' + self.endpoint + ':7000/search?query=' + entity.replace(' ', '%20'))
             js = json.loads(response.text)
