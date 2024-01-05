@@ -94,6 +94,43 @@ class HDTConnector(AbstractConnector):
     def inv_query(self, q_str):
         return query(q_str)
 
+def file_columns(file):
+    with open(file, 'r') as file:
+        reader = csv.reader(file)
+        return len(next(reader))
+
+def create_temp_file_by_column(file, column):
+    dir = file.split
+    new_name = file.replace('.csv', '_column-' + str(column) + '.csv')
+
+    with open(file, 'r') as file:
+        with open(new_name, 'w') as temp_file:
+            reader = csv.reader(file)
+            writer = csv.writer(temp_file, delimiter = ',')
+
+            for row in reader:
+                writer.writerow(row[column:])
+
+    return new_name
+
+def delete_temp_file(file, column):
+    os.remove(file.replace('.csv', '_column-' + str(column) + '.csv'))
+
+def clean_empty_results(dir):
+    files = os.listdir(dir)
+
+    for file in files:
+        row_count = 0
+
+        with open(dir + file, 'r') as _csvfile:
+            reader = csv.reader(csv_file)
+
+            for row in reader:
+                row_count += 1
+
+        if row_count == 0:
+            os.remove(dir + file)
+
 if __name__ == '__main__':
     if len(sys.argv) < 6:
         print('Usage: python main.py <KG> <KG HDT FILE> <CSV CORPUS> <RESULT DIRECTORY> <KEYWORD SEARCH ENDPOINT IP>')
@@ -117,27 +154,36 @@ if __name__ == '__main__':
     runtimes = dict()
 
     for file in tqdm(glob.glob(corpus + '*.csv')):
+        column_count = file_columns(file)
         name = file.split('/')[-1].split('.')[0]
         annotator = None
+        runtime_sum = 0
         print('Linking ' + name)
 
-        start = time.time() * 1000
+        for i in range(column_count):
+            sub_file = create_temp_file_by_column(file, i)
+            start = time.time() * 1000
 
-        if kg == 'dbpedia':
-            annotator = DBMagic(endpoint_ip, connector, file, 0, None, 0)
+            if kg == 'dbpedia':
+                annotator = DBMagic(endpoint_ip, connector, sub_file, 0, None, 0)
 
-        elif kg == 'wikidata':
-            annotator = WikiMagic(connector, file, 0, None, 0)
+            elif kg == 'wikidata':
+                annotator = WikiMagic(connector, sub_file, 0, None, 0)
 
-        annotator.annotate()
-        annotator.export_files(output + name)
+            annotator.annotate()
+            annotator.export_files(output + name + '_column-' + str(i))
 
-        duration = time.time() * 1000 - start
+            runtime_sum += time.time() * 1000 - start
+            delete_temp_file(file, i)
+
+        duration = runtime_sum
         runtimes[name] = duration
 
-    with open(output + 'runtimes.csv', 'w') as file:
-        writer = csv.writer(file, delimiter = ',')
-        writer.writerow(['table', 'miliseconds'])
+        with open(output + 'runtimes.csv', 'w') as file:
+            writer = csv.writer(file, delimiter = ',')
+            writer.writerow(['table', 'miliseconds'])
 
-        for table in runtimes.keys():
-            writer.writerow([table, runtimes[table]])
+            for table in runtimes.keys():
+                writer.writerow([table, runtimes[table]])
+
+    clean_empty_results(output)
