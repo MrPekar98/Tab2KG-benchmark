@@ -122,7 +122,7 @@ def clean_empty_results(dir):
     for file in files:
         row_count = 0
 
-        with open(dir + file, 'r') as _csvfile:
+        with open(dir + file, 'r') as csv_file:
             reader = csv.reader(csv_file)
 
             for row in reader:

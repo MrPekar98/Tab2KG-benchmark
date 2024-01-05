@@ -3,6 +3,7 @@ FROM python:3.8
 WORKDIR /home
 RUN apt update
 RUN apt install git -y
+RUN pip install --upgrade pip
 RUN git clone https://github.com/IBCNServices/Magic.git
 
 ADD requirements.txt .
