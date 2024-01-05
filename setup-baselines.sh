@@ -41,7 +41,7 @@ echo "Loading Wikidata..."
 ./load.sh ../setup/kg/sub_wikidata/
 mv tdb/ ../baselines/lexma/tdb_wd/
 
-docker build -t kg-lookup .
+docker build -t kg-lookup --build-arg MEM=200g .
 cd ..
 
 mkdir -p baselines/magic/lucene_dbp_2016/
