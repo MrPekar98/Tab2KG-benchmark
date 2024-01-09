@@ -1,13 +1,13 @@
 import csv
 
-BASE = '/results/'
+BASE = '../results/'
 BBW = BASE + 'bbw/'
 EMBLOOKUP = BASE + 'emblookup/'
 KEYWORD_KG_LINKER = BASE + 'keyword-kg-linker/'
 LEXMA = BASE + 'lexma/'
 MAGIC = BASE + 'magic/'
 
-BENCHMARKS_BASE = '/benchmarks/'
+BENCHMARKS_BASE = '../benchmarks/'
 SEMTAB_HARDTABLES_GT = BENCHMARKS_BASE + 'semtab/HardTables/gt/cea_gt.csv'
 SEMTAB_TFOOD_GT = BENCHMARKS_BASE + 'semtab/tfood/horizontal/gt/cea_gt.csv'
 TOUGH_TABLES_DBPEDIA_GT = BENCHMARKS_BASE + 'toughtables/dbpedia/gt/cea_gt.csv'
