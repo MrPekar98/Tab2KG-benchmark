@@ -53,7 +53,7 @@ def _measure_quality(predictions, gt):
 
 def _write(output_file, scores):
     methods = list(scores.keys())
-    max_results = max([len(scores[method]['precision']) for method in methods.keys()])
+    max_results = max([len(scores[method]['precision']) for method in methods])
     rows_precicion = list()
     rows_recall = list()
     rows_f1 = list()
