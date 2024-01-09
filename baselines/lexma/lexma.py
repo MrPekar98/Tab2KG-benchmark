@@ -382,7 +382,7 @@ if __name__ == '__main__':
         duration = time.time() * 1000 - start
         runtimes[table.replace('.csv', '')] = duration
 
-    with open(output_dir + table, 'w') as file:
+    with open(output_dir + 'output.csv', 'w') as file:
         writer = csv.writer(file, delimiter = ',')
 
         for row in linked_rows:
