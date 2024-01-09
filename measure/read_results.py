@@ -13,7 +13,7 @@ import os
 # Results of EmbLookup
 def read_emblookup(file_path, kg):
     with open(file_path, 'r') as input:
-        reader = csv.reader(input, delimiter = 'r')
+        reader = csv.reader(input)
         results = list()
 
         for row in reader:
@@ -64,8 +64,17 @@ def read_keyword_kg_linker():
     pass
 
 # Results of LexMa
-def read_lexma():
-    pass
+def read_lexma(result_file):
+    results = list()
+
+    with open(result_file, 'r') as input:
+        reader = csv.reader(input)
+
+        for row in reader:
+            tuple = [row[0], int(row[1]) + 1, int(row[2]), row[3]]
+            results.append(tuple)
+
+    return results
 
 # Results of MAGIC
 def read_magic():
