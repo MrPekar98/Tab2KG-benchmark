@@ -105,23 +105,6 @@ def file_columns(file):
         reader = csv.reader(file)
         return len(next(reader))
 
-def create_temp_file_by_column(file, column):
-    dir = file.split
-    new_name = file.replace('.csv', '_column-' + str(column) + '.csv')
-
-    with open(file, 'r') as file:
-        with open(new_name, 'w') as temp_file:
-            reader = csv.reader(file)
-            writer = csv.writer(temp_file, delimiter = ',')
-
-            for row in reader:
-                writer.writerow(row[column:])
-
-    return new_name
-
-def delete_temp_file(file, column):
-    os.remove(file.replace('.csv', '_column-' + str(column) + '.csv'))
-
 def clean_empty_results(dir):
     files = os.listdir(dir)
 
@@ -167,20 +150,18 @@ if __name__ == '__main__':
         print('Linking ' + name)
 
         for i in range(column_count):
-            sub_file = create_temp_file_by_column(file, i)
             start = time.time() * 1000
 
             if kg == 'dbpedia':
-                annotator = DBMagic(endpoint_ip, connector, sub_file, 0, None, 0)
+                annotator = DBMagic(endpoint_ip, connector, file, 0, None, i)
 
             elif kg == 'wikidata':
-                annotator = WikiMagic(connector, sub_file, 0, None, 0)
+                annotator = WikiMagic(connector, file, 0, None, i)
 
             annotator.annotate()
             annotator.export_files(output + name + '_column-' + str(i))
 
             runtime_sum += time.time() * 1000 - start
-            delete_temp_file(file, i)
 
         duration = runtime_sum
         runtimes[name] = duration
