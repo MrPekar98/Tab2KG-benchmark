@@ -2,7 +2,6 @@ from MAGIC import Magic
 from rdflib_hdt import HDTStore
 from ink.base.connectors import AbstractConnector
 from rdflib import Graph
-import awena
 import glob
 import pandas as pd
 from tqdm import tqdm
@@ -38,23 +37,30 @@ class DBMagic(Magic):
                     entity = output['entity']
                     data.append(entity)
 
-            else:
-                data = []
-
         except:
             data = []
 
         return data
 
 class WikiMagic(Magic):
-    def __init__(self, connector, structured_file, header, index_col, main_col):
+    def __init__(self, endpoint_ip, connector, structured_file, header, index_col, main_col):
         super().__init__(connector, structured_file, header, index_col, main_col,'http://www.wikidata.org/prop/direct/', 'http://www.wikidata.org/prop/direct/P31§', skip_list_wiki)
-        self.crawler = awena.Crawler('en', connector)
+        self.endpoint_ip = endpoint_ip
 
     def search_entity_api(self, entity):
+        data = []
+
         try:
-            entity = entity.split(',')[0]
-            data = ['http://www.wikidata.org/entity/' + x for x in self.crawler.search(entity)]
+            response = requests.get('http://' + self.endpoint + ':7000/search?query=' + entity.replace(' ', '%20'))
+            js = json.loads(response.text)
+
+            if 'output' in js.keys():
+                for output in js['output']:
+                    entity = output['entity']
+                    data.append(entity)
+
+            #entity = entity.split(',')[0]
+            #data = ['http://www.wikidata.org/entity/' + x for x in self.crawler.search(entity)]
 
         except:
             data = []
