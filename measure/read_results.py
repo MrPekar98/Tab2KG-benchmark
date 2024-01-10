@@ -64,15 +64,17 @@ def read_keyword_kg_linker():
     pass
 
 # Results of LexMa
-def read_lexma(result_file):
+def read_lexma(result_files_dir):
     results = list()
+    files = os.listdir(result_files_dir)
 
-    with open(result_file, 'r') as input:
-        reader = csv.reader(input)
+    for result_file in files:
+        with open(result_file, 'r') as input:
+            reader = csv.reader(input)
 
-        for row in reader:
-            tuple = [row[0], int(row[1]) + 1, int(row[2]), row[3]]
-            results.append(tuple)
+            for row in reader:
+                tuple = [result_file.replace('.csv', ''), int(row[1]) + 1, int(row[2]), row[3]]
+                results.append(tuple)
 
     return results
 

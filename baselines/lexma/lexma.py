@@ -99,7 +99,7 @@ class KGLookup(object):
     def __init__(self, lookup_url):
         self.service_url = lookup_url
 
-    def getJSONRequest(self, params, attempts=3):
+    def getJSONRequest(self, params, attempts=1):
         try:
             #urllib has been split up in Python 3.
             #The urllib.urlencode() function is now urllib.parse.urlencode(),
@@ -341,7 +341,8 @@ if __name__ == '__main__':
     api = None
     limit = candidates
     type = 'item'
-    linked_rows = list()
+    table_list = os.listdir(table_dir)
+    table_counter = 1
 
     if kg_type == KG.Wikidata.value:
         api = WikidataAPI(endpoint)
@@ -349,7 +350,8 @@ if __name__ == '__main__':
     elif kg_type == KG.DBpedia.value:
         api = DBpediaAPI(endpoint)
 
-    for table in os.listdir(table_dir):
+    for table in table_list:
+        linked_rows = list()
         input_table = pd.read_csv(table_dir + table)
         start = time.time() * 1000
 
@@ -375,18 +377,22 @@ if __name__ == '__main__':
                                 max_entity = entity['uri']
 
                     if not max_entity is None:
-                        linked_rows.append([table.replace('.csv', ''), row_index, column_index, max_entity])
+                        linked_rows.append([row_index, column_index, max_entity])
 
                 column_index += 1
 
         duration = time.time() * 1000 - start
         runtimes[table.replace('.csv', '')] = duration
 
-    with open(output_dir + 'output.csv', 'w') as file:
-        writer = csv.writer(file, delimiter = ',')
+        print(' ' * 100, end = '\r')
+        print('Table ' + str(table_counter) + '/' + str(len(table_list)), end = '\r')
+        table_counter += 1
 
-        for row in linked_rows:
-            writer.writerow(row)
+        with open(output_dir + table, 'w') as result_file:
+            writer = csv.writer(result_file, delimiter = ',')
+
+            for row in linked_rows:
+                writer.writerow(row)
 
     with open(output_dir + 'runtimes.csv', 'w') as file:
         writer = csv.writer(file, delimiter = ',')
