@@ -12,7 +12,9 @@ docker run --rm -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results embl
 # bbw
 docker run --rm -d -v ${PWD}/searx:/etc/searx --network evaluation --name searx -e BASE_URL=http://localhost:3030/ searx/searx
 docker run --rm -d -v ${PWD}/baselines/lexma/tdb_wd/:/tdb --network evaluation --name fuseki-service fuseki
-docker run --rm --network evaluation -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results bbw
+sleep 2s
+FUSEKI_IP=$(docker exec fuseki-service hostname -I)
+docker run --rm --network -e FUSEKI=${FUSEKI_IP} evaluation -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results bbw
 docker stop searx
 docker stop fuseki-service
 

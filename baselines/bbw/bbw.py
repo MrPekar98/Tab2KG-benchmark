@@ -17,6 +17,8 @@ import string
 import os
 import langid
 
+fuseki = os.environ['FUSEKI']
+
 def get_parallel(a, n):
     """Get input for GNU parallel based on a-list of filenames and n-chunks.
     The a-list is split into n-chunks. Offset and amount are provided."""
@@ -43,14 +45,14 @@ def get_language(string):
         return 'en'
 
 def get_SPARQL_dataframe(name, language, 
-                         url="http://localhost:8884/wikidata/sparql", extra=''):
+                         url="http://" + fuseki + ":8884/wikidata/sparql", extra=''):
     """
     Parameters
     ----------
     name : str
         Possible mention in wikidata.
     url : str, optional
-        SPARQL-endpoint. The default is "http://localhost:8884/wikidata/sparql".
+        SPARQL-endpoint. The default is "http://" + fuseki + ":8884/wikidata/sparql".
     extra : str
         An extra parameter that will be also SELECTed in the SPARQL query.
     Returns
@@ -110,14 +112,14 @@ def get_SPARQL_dataframe(name, language,
 
 
 def get_SPARQL_dataframe_item(name, language, 
-                              url="http://localhost:8884/wikidata/sparql"):
+                              url="http://" + fuseki + ":8884/wikidata/sparql"):
     """
     Parameters
     ----------
     name : str
         Possible item in wikidata.
     url : str, optional
-        SPARQL-endpoint. The default is "http://localhost:8884/wikidata/sparql".
+        SPARQL-endpoint. The default is "http://" + fuseki + ":8884/wikidata/sparql".
     Returns
     -------
     output : pd.DataFrame
@@ -162,7 +164,7 @@ def get_SPARQL_dataframe_item(name, language,
     return output
 
 
-def get_SPARQL_dataframe_prop(prop, value, url="http://localhost:8884/wikidata/sparql"):
+def get_SPARQL_dataframe_prop(prop, value, url="http://" + fuseki + ":8884/wikidata/sparql"):
     value = [val.replace('"', '\\\"') for val in value]
     subquery = []
     subquery.extend([""" wdt:""" + str(prop) + """ [ ?p """ + '"' + str(value) + '"' + """@en ] ;
@@ -212,7 +214,7 @@ def get_SPARQL_dataframe_prop(prop, value, url="http://localhost:8884/wikidata/s
     return output
 
 
-def get_SPARQL_dataframe_type(name, datatype, language, url="http://localhost:8884/wikidata/sparql"):
+def get_SPARQL_dataframe_type(name, datatype, language, url="http://" + fuseki + ":8884/wikidata/sparql"):
     name = name.replace('"', '\\\"')
     if language:
         lang = language
@@ -248,7 +250,7 @@ def get_SPARQL_dataframe_type(name, datatype, language, url="http://localhost:88
     return output
 
 
-def get_SPARQL_dataframe_type2(datatype, language, url="http://localhost:8884/wikidata/sparql"):
+def get_SPARQL_dataframe_type2(datatype, language, url="http://" + fuseki + ":8884/wikidata/sparql"):
     if datatype=="Q5":
         limit = "LIMIT 350000"
     else:
@@ -586,14 +588,14 @@ def isfloat(value):
         return False
 
 
-def get_common_class(classes, url="http://localhost:8884/wikidata/sparql"):
+def get_common_class(classes, url="http://" + fuseki + ":8884/wikidata/sparql"):
     """
     Parameters
     ----------
     classes : list
         List of Wikidata entities.
     url : str, optional
-        SPARQL-endpoint. The default is "http://localhost:8884/wikidata/sparql".
+        SPARQL-endpoint. The default is "http://" + fuseki + ":8884/wikidata/sparql".
     Returns
     -------
     output : str
