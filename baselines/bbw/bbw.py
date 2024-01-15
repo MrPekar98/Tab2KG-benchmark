@@ -16,8 +16,10 @@ import random
 import string
 import os
 import langid
+import json
 
 fuseki = os.environ['FUSEKI']
+endpoint = os.environ['ENDPOINT']
 
 def get_parallel(a, n):
     """Get input for GNU parallel based on a-list of filenames and n-chunks.
@@ -327,55 +329,18 @@ def get_wikidata_URL(name):
         The best suggestion returned by Wikidata API-service.
     """
 
-    url = "https://www.wikidata.org/w/api.php"
-    params = {"action": "query",
-              "srlimit": "1",
-              "format": "json",
-              "list": "search",
-              "srqiprofile": "wsum_inclinks_pv",
-              "srsearch": name}
+    url = "http://" + endpoint + ":7000/search&query=" + name + "&k=1"
 
     try:
-        r = requests.get(url=url, params=params, headers={'User-Agent': random_user_agent()}, timeout=1)
-        results = r.json()
-        if len(results) != 0:
-            query = results.get('query')
-            if query:
-                search = query.get('search')
-                if len(search) > 0:
-                    bestname = search[0].get("title")
-                    if bestname:
-                        URL = 'http://www.wikidata.org/entity/' + bestname
+        r = requests.get(url=url, headers={'User-Agent': random_user_agent()}, timeout=1)
+        results = json.loads(r.text)
+        if "output" in results.keys() and len(result["output"]) > 0:
+            URL = result["output"][0]["entity"]
         if not URL:
             URL = None
     except Exception:
         URL = None
     return URL
-
-
-def get_get_wikidata_title(url):
-    """
-    Parameters
-    ----------
-    url : str
-        URL of a Wikidata page.
-    Returns
-    -------
-    title: str
-        Title of a Wikidata page.
-    """
-    try:
-        url = url.replace('http://www.wikidata.org/prop/direct/', 'http://www.wikidata.org/entity/')
-        params = {"action": "wbgetentities",
-                  "format": "json",
-                  "props": "labels",
-                  "ids": url.split('/')[-1]}
-        r = requests.get(url, params=params, headers={'User-Agent': random_user_agent()}, timeout=5).json()
-        title = r.get('entities').get(url.split('/')[-1]).get('labels').get('en').get('value')
-    except Exception:
-        title = ''
-    return title
-
 
 def get_title(url):
     """
@@ -436,22 +401,14 @@ def get_wikipedia2wikidata_title(wikipedia_title):
     bestname : str
         The title of the corresponding entity in Wikidata.
     """
-    url = "https://en.wikipedia.org/w/api.php"
-    params = {"action": "query",
-              "prop": "pageprops",
-              "ppprop": "wikibase_item",
-              "redirects": "1",
-              "titles": wikipedia_title,
-              "format": "json"}
+    url = "http://" + endpoint + ":7000/search&query=" + wikipedia_title + "&k=1"
 
     try:
-        r = requests.get(url=url, params=params, headers={'User-Agent': random_user_agent()}, timeout=1)
-        pages = r.json().get('query').get('pages')
-        if pages.get('-1'):
-            bestname = None
-        else:
-            # bestname = [k for k in pages.values()][0].get('title')
-            wikidataID = [k for k in pages.values()][0].get('pageprops').get('wikibase_item')
+        r = requests.get(url=url, timeout=1)
+        result = json.loads(r.text)
+        if "output" in results.keys() and len(result["output"]) > 0:
+            entity = result["output"][0]["entity"]
+            wikidataID = entity.split('/')[-1]
             bestname = get_title("https://www.wikidata.org/wiki/" + wikidataID).replace(' - Wikidata', '')
     except Exception:
         bestname = None
