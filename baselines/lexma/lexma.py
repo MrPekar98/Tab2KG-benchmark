@@ -179,7 +179,7 @@ class WikidataAPI(KGLookup):
         return entities
 
     def getKGEntities(self, query, limit, type='item', filter=''):
-        json = self.getJSONRequest(self.__createParams(query, limit, type), 3)
+        json = self.getJSONRequest(self.__createParams(query, limit, type))
 
         if json==None:
             print("None results for", query)
@@ -238,7 +238,7 @@ class DBpediaAPI(KGLookup):
         return entities
 
     def getKGEntities(self, query, limit, type='item', filter=''):
-        json = self.getJSONRequest(self.__createParams(query, limit, type), 3)
+        json = self.getJSONRequest(self.__createParams(query, limit, type))
 
         if json==None:
             print("None results for", query)
