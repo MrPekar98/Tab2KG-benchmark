@@ -31,12 +31,15 @@ git clone https://github.com/MrPekar98/kg-lookup.git
 cd kg-lookup/
 echo "Loading DBpedia 2016..."
 ./load.sh ../setup/tough_tables/dbpedia/ dbp_2016
+rm -rf import/
 
 echo "Loading DBpedia 2022..."
 ./load.sh ../setup/kg/dbpedia/ dbp_2022
+rm -rf import/
 
 echo "Loading Wikidata..."
 ./load.sh ../setup/kg/sub_wikidata/ wd
+rm -rf import/
 
 docker build -t kg-lookup .
 cd ..

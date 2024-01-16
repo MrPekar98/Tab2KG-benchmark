@@ -12,13 +12,13 @@ with open(filename, 'r') as input:
         pred_type = predicate.split('/')[-1].replace('>', '')
         entities.add(subject)
 
-        with open(base + 'wikidata/' + pred_type + '.nt', 'a') as output:
+        with open(base + 'wikidata/' + pred_type + '.ttl', 'a') as output:
             output.write(line)
 
         print(' ' * 100, end = '\r')
         print('Line', line_counter, end = '\r')
         line_counter += 1
 
-with open(base + 'wikidata/entities.nt', 'w') as entity_file:
+with open(base + 'wikidata/entities.ttl', 'w') as entity_file:
     for entity in entities:
         entity_file.write(entity + ' <http://xmlns.com/foaf/0.1/name> "null" .\n')
