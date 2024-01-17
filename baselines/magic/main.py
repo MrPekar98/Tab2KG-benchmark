@@ -156,7 +156,7 @@ if __name__ == '__main__':
                 annotator = DBMagic(endpoint_ip, connector, file, 0, None, i)
 
             elif kg == 'wikidata':
-                annotator = WikiMagic(connector, file, 0, None, i)
+                annotator = WikiMagic(endpoint_ip, connector, file, 0, None, i)
 
             annotator.annotate()
             annotator.export_files(output + name + '_column-' + str(i))
