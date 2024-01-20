@@ -37,10 +37,8 @@ baselines/magic/dbp-12-2022/
 baselines/magic/*.hdt
 baselines/magic/lucene*/
 baselines/magic/*.index.*
-baselines/lexma/tdb_wd/
-baselines/magic/tdb*/
+baselines/lexma/lucene*/
 results/
 measure/__pycache__/
 measure/*.csv
 kg-lookup/
-jena-fuseki-server-4.10.0.jar
