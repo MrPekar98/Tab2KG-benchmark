@@ -91,3 +91,4 @@ docker run --rm -d --network kg-lookup-network \
 sleep 2m
 curl http://localhost:7000/index
 docker stop kg-lookup-service
+docker stop vos
