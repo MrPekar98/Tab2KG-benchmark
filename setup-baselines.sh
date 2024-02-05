@@ -18,7 +18,7 @@ mkdir -p results/keyword-kg-linker/
 mkdir -p results/lexma/
 mkdir -p results/magic/
 
-#docker pull searx/searx
+docker pull searx/searx
 docker network inspect ${NETWORK} >/dev/null 2>&1 || docker network create ${NETWORK}
 
 docker build -t fuseki -f ${BBW}fuseki.dockerfile ${BBW}
@@ -29,6 +29,7 @@ docker build -t emblookup -f ${EMBLOOKUP}emblookup.dockerfile ${EMBLOOKUP}
 
 git clone https://github.com/MrPekar98/kg-lookup.git
 cd kg-lookup/
+
 echo "Loading DBpedia 2016..."
 ./load.sh ../setup/tough_tables/dbpedia/ dbp_2016
 docker stop vos

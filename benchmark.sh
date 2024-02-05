@@ -11,13 +11,24 @@ docker run --rm -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results embl
 
 # bbw
 docker run --rm -d -v ${PWD}/searx:/etc/searx --network evaluation --name searx -e BASE_URL=http://localhost:3030/ searx/searx
-docker run --rm -d -v ${PWD}/baselines/lexma/tdb_wd/:/tdb --network evaluation --name fuseki-service fuseki
-docker run --rm --network evaluation -d -v ${PWD}/baselines/lexma/tdb_wd/:/tdb -v ${PWD}/baselines/lexma/lucene_wd/:/lucene -p 7000:7000 -e MEM=200g --name kg-lookup-service kg-lookup
+docker run --rm --name vos -d \
+           --network evaluation \
+           -v ${PWD}/kg-lookup/database:/database \
+           -v ${PWD}/kg-lookup/import:/import \
+           -t -p 1111:1111 -p 8890:8890 -i openlink/virtuoso-opensource-7:7
+sleep 30s
+VIRTUOSO_IP=$(docker exec vos bash -c "hostname -I")
+docker run -it --network evaluation \
+        -v ${PWD}/baselines/lexma/lucene_wd/:/lucene \
+        -p 7000:7000 \
+        -e MEM=wd \
+        -e GRAPH=200g \
+        -e VIRTUOSO=${VIRUTOSO_IP} \
+        --name kg-lookup-service kg-lookup
 sleep 2m
-FUSEKI_IP=$(docker exec fuseki-service hostname -I)
-docker run --rm --network -e ENDPOINT=${IP} -e FUSEKI=${FUSEKI_IP} evaluation -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results bbw
+docker run --rm --network evaluation -e ENDPOINT=${IP} -e VIRTUOSO=${VIRTUOSO_IP} -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results bbw
 docker stop searx
-docker stop fuseki-service
+docker stop vos
 
 # Magic
 docker run -it --rm -d --network kg-lookup-network \
@@ -86,3 +97,5 @@ docker run -it --rm -d --network kg-lookup-network \
 sleep 2m
 docker run --rm --network kg-lookup-network -e ENDPOINT=${IP} -e KG=wd -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results lexma
 docker stop kg-lookup-service
+
+docker stop vos
