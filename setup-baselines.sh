@@ -21,7 +21,6 @@ mkdir -p results/magic/
 docker pull searx/searx
 docker network inspect ${NETWORK} >/dev/null 2>&1 || docker network create ${NETWORK}
 
-docker build -t fuseki -f ${BBW}fuseki.dockerfile ${BBW}
 docker build -t bbw -f ${BBW}bbw.dockerfile ${BBW}
 docker build -t magic -f ${MAGIC}magic.dockerfile ${MAGIC}
 docker build -t lexma -f ${LEXMA}lexma.dockerfile ${LEXMA}
