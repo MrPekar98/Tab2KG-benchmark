@@ -3,16 +3,9 @@
 set -e
 
 BENCHMARK_DIR="/benchmarks/"
-TOUGH_TABLES_DBP=${BENCHMARK_DIR}toughtables/dbpedia/tables/
 TOUGH_TABLES_WD=${BENCHMARK_DIR}toughtables/wikidata/tables/
-WIKITABLES=${BENCHMARK_DIR}/tables/
+WIKITABLES=${BENCHMARK_DIR}wikitables_2013/tables/
 SLEEP=8h
-
-# Tough Tables - DBpedia
-python bbwWrapper.py ${TOUGH_TABLES_DBP} toughtables_dbp_scalability &
-PID=$!
-sleep ${SLEEP}
-kill ${PID}
 
 # Tough Tables - Wikidata
 python bbwWrapper.py ${TOUGH_TABLES_WD} toughtables_wd_scalability &

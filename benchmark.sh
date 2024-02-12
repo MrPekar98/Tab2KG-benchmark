@@ -18,11 +18,11 @@ docker run --rm --name vos -d \
            -t -p 1111:1111 -p 8890:8890 -i openlink/virtuoso-opensource-7:7
 sleep 30s
 VIRTUOSO_IP=$(docker exec vos bash -c "hostname -I")
-docker run -it --network evaluation \
+docker run --rm -d --network evaluation \
         -v ${PWD}/baselines/lexma/lucene_wd/:/lucene \
         -p 7000:7000 \
-        -e MEM=wd \
-        -e GRAPH=200g \
+        -e MEM=200g \
+        -e GRAPH=wd \
         -e VIRTUOSO=${VIRUTOSO_IP} \
         --name kg-lookup-service kg-lookup
 sleep 2m

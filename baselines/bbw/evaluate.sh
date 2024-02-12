@@ -10,5 +10,5 @@ echo "Linking quality experiment"
 ./quality.sh
 
 echo
-echo "Linkin scalability experiment"
+echo "Linking scalability experiment"
 ./scalability.sh
