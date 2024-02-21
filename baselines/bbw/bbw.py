@@ -69,21 +69,20 @@ def get_SPARQL_dataframe(name, language,
         lang = get_language(name)
     if extra:
         subquery = """
-        ?item rdfs:label ?itemLabel.
+        ?item <http://www.w3.org/2000/01/rdf-schema#label> ?itemLabel.
         FILTER (lang(?itemLabel) = """ + '"' + lang + '").'
     else:
         subquery = ""
     query = "SELECT DISTINCT ?item " + extra + """?itemType ?p1 ?p2 ?value ?valueType ?valueLabel ?psvalueLabel WHERE {
                 ?item ?p1 """ + '"' + name + '"' + "@" + lang + """;
                 ?p2 ?value.""" + subquery + """
-                OPTIONAL { ?item wdt:P31 ?itemType. }
-                OPTIONAL { ?value wdt:P31 ?valueType. }
+                OPTIONAL { ?item <http://www.wikidata.org/prop/direct/P31> ?itemType. }
+                OPTIONAL { ?value <http://www.wikidata.org/prop/direct/P31> ?valueType. }
                 OPTIONAL {
-                    ?wdproperty wikibase:claim ?p2 ;
-                        wikibase:statementProperty ?psproperty .
+                    ?wdproperty <http://wikiba.se/ontology#claim> ?p2 ;
+                        <http://wikiba.se/ontology#statementProperty> ?psproperty .
                     ?value ?psproperty ?psvalue .
                 }
-                SERVICE wikibase:label { bd:serviceParam wikibase:language """+ '"' + lang + '"' + """. }
             }
             LIMIT 100000
             """
@@ -133,11 +132,11 @@ def get_SPARQL_dataframe_item(name, language,
     else:
         lang = get_language(name)
     query = """SELECT REDUCED ?value ?valueType ?p2 ?item ?itemType ?itemLabel WHERE {
-                ?value rdfs:label """ + '"' + name + '"@' + lang + """;
-                wdt:P31 ?valueType.
+                ?value <http://www.w3.org/2000/01/rdf-schema#label> """ + '"' + name + '"@' + lang + """;
+                <http://www.wikidata.org/prop/direct/P31> ?valueType.
                 ?item ?p2 [ ?x """ + '"' + name + '"@' + lang + """].
-                ?item wdt:P31 ?itemType.
-                ?item rdfs:label ?itemLabel.
+                ?item <http://www.wikidata.org/prop/direct/P31> ?itemType.
+                ?item <http://www.w3.org/2000/01/rdf-schema#label> ?itemLabel.
                 FILTER((LANG(?itemLabel)) = "en").
             }
             LIMIT 10000
@@ -169,24 +168,23 @@ def get_SPARQL_dataframe_item(name, language,
 def get_SPARQL_dataframe_prop(prop, value, url="http://" + virtuoso + ":1111/sparql"):
     value = [val.replace('"', '\\\"') for val in value]
     subquery = []
-    subquery.extend([""" wdt:""" + str(prop) + """ [ ?p """ + '"' + str(value) + '"' + """@en ] ;
-        wdt:""" + str(prop) + " ?value" + str(ind) + ";" for ind, (prop, value) in enumerate(zip(prop, value))])
+    subquery.extend([""" <http://www.wikidata.org/prop/direct/""" + str(prop) + """> [ ?p """ + '"' + str(value) + '"' + """@en ] ;
+        <http://www.wikidata.org/prop/direct/""" + str(prop) + "> ?value" + str(ind) + ";" for ind, (prop, value) in enumerate(zip(prop, value))])
     subquery = ' '.join(subquery)
     # wdt:"""+ str(prop) + """ [ ?p """ + '"' + str(value) + '"' + """@en ] ;
-    #    wdt:"""+ str(prop) + """ ?value0;
+    #    <http://www.wikidata.org/prop/direct/"""+ str(prop) + """> ?value0;
     query = """
     SELECT REDUCED ?item ?itemType ?itemLabel ?p2 ?value ?valueType ?valueLabel ?psvalueLabel WHERE {
   ?item """ + subquery + """
         ?p2 ?value.
-  ?item wdt:P31 ?itemType;
-        rdfs:label ?itemLabel.
+  ?item <http://www.wikidata.org/prop/direct/P31> ?itemType;
+        <http://www.w3.org/2000/01/rdf-schema#label> ?itemLabel.
   FILTER (lang(?itemLabel) = "en").
   OPTIONAL {
-  ?value wdt:P31 ?valueType .}
-  OPTIONAL {?wdproperty wikibase:claim ?p2 ;
-                        wikibase:statementProperty ?psproperty .
+  ?value <http://www.wikidata.org/prop/direct/P31> ?valueType .}
+  OPTIONAL {?wdproperty <http://wikiba.se/ontology#claim> ?p2 ;
+                        <http://wikiba.se/ontology#statementProperty> ?psproperty .
             ?value ?psproperty ?psvalue .}
-   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
    }
     LIMIT 50000
     """
@@ -223,9 +221,8 @@ def get_SPARQL_dataframe_type(name, datatype, language, url="http://" + virtuoso
     else:
         lang = get_language(name)
     query = """SELECT DISTINCT ?item ?itemLabel WHERE {
-        {?item  (rdfs:label|skos:altLabel) """ + '"' + name + '"@' + lang + """.}
-        ?item wdt:P31 wd:""" + datatype + """.
-        SERVICE wikibase:label { bd:serviceParam wikibase:language """ + '"' + lang + '"' + """. }
+        {?item  (<http://www.w3.org/2000/01/rdf-schema#label>|<http://www.w3.org/2004/02/skos/core#altLabel>) """ + '"' + name + '"@' + lang + """.}
+        ?item <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/prop/direct/""" + datatype + """> .
         }
         LIMIT 10000"""
     try:
@@ -262,10 +259,8 @@ def get_SPARQL_dataframe_type2(datatype, language, url="http://" + virtuoso + ":
     else:
         lang = "en"
     query = """SELECT REDUCED ?itemLabel WHERE {
-        hint:Query hint:maxParallel 50 .
-        hint:Query hint:chunkSize 1000 .
-        []  wdt:P31 wd:""" + datatype + """;
-              (rdfs:label|skos:altLabel) ?itemLabel.
+        []  <http://www.wikidata.org/prop/direct/P31> wd:""" + datatype + """;
+              (<http://www.w3.org/2000/01/rdf-schema#label>|<http://www.w3.org/2004/02/skos/core#altLabel>) ?itemLabel.
         FILTER (lang(?itemLabel) = """ + '"' + lang + '"' + """).
         }
         """+limit
@@ -566,17 +561,6 @@ def get_common_class(classes, url="http://" + virtuoso + ":1111/sparql"):
     length = '(' + ' + '.join(lengths) + ' as ?length)'
     subquery = []
     for entity, Qlength in zip(classes, lengths):
-        subquery.append("""
-    SERVICE gas:service {
-        gas:program gas:gasClass "com.bigdata.rdf.graph.analytics.SSSP" ;
-                    gas:in wd:""" + entity + """ ;
-                    gas:traversalDirection "Forward" ;
-                    gas:out ?super ;
-                    gas:out1 """ + Qlength + """ ;
-                    gas:maxIterations 10 ;
-                    gas:linkType wdt:P279 .
-      }
-    """)
     subquery = ' '.join(subquery)
     query = """PREFIX gas: <http://www.bigdata.com/rdf/gas#>
     SELECT ?super """ + length + """ WHERE {""" + subquery + """
