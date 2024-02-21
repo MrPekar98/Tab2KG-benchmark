@@ -47,7 +47,7 @@ def get_language(string):
         return 'en'
 
 def get_SPARQL_dataframe(name, language, 
-                         url="http://" + virtuoso + ":1111/sparql", extra=''):
+                         url="http://" + virtuoso + ":8890/sparql", extra=''):
     """
     Parameters
     ----------
@@ -113,14 +113,14 @@ def get_SPARQL_dataframe(name, language,
 
 
 def get_SPARQL_dataframe_item(name, language, 
-                              url="http://" + virtuoso + ":1111/sparql"):
+                              url="http://" + virtuoso + ":8890/sparql"):
     """
     Parameters
     ----------
     name : str
         Possible item in wikidata.
     url : str, optional
-        SPARQL-endpoint. The default is "http://" + virtuoso + ":1111/sparql".
+        SPARQL-endpoint. The default is "http://" + virtuoso + ":8890/sparql".
     Returns
     -------
     output : pd.DataFrame
@@ -165,7 +165,7 @@ def get_SPARQL_dataframe_item(name, language,
     return output
 
 
-def get_SPARQL_dataframe_prop(prop, value, url="http://" + virtuoso + ":1111/sparql"):
+def get_SPARQL_dataframe_prop(prop, value, url="http://" + virtuoso + ":8890/sparql"):
     value = [val.replace('"', '\\\"') for val in value]
     subquery = []
     subquery.extend([""" <http://www.wikidata.org/prop/direct/""" + str(prop) + """> [ ?p """ + '"' + str(value) + '"' + """@en ] ;
@@ -214,7 +214,7 @@ def get_SPARQL_dataframe_prop(prop, value, url="http://" + virtuoso + ":1111/spa
     return output
 
 
-def get_SPARQL_dataframe_type(name, datatype, language, url="http://" + virtuoso + ":1111/sparql"):
+def get_SPARQL_dataframe_type(name, datatype, language, url="http://" + virtuoso + ":8890/sparql"):
     name = name.replace('"', '\\\"')
     if language:
         lang = language
@@ -249,7 +249,7 @@ def get_SPARQL_dataframe_type(name, datatype, language, url="http://" + virtuoso
     return output
 
 
-def get_SPARQL_dataframe_type2(datatype, language, url="http://" + virtuoso + ":1111/sparql"):
+def get_SPARQL_dataframe_type2(datatype, language, url="http://" + virtuoso + ":8890/sparql"):
     if datatype=="Q5":
         limit = "LIMIT 350000"
     else:
@@ -540,14 +540,14 @@ def isfloat(value):
         return False
 
 
-def get_common_class(classes, url="http://" + virtuoso + ":1111/sparql"):
+def get_common_class(classes, url="http://" + virtuoso + ":8890/sparql"):
     """
     Parameters
     ----------
     classes : list
         List of Wikidata entities.
     url : str, optional
-        SPARQL-endpoint. The default is "http://" + virtuoso + ":1111/sparql".
+        SPARQL-endpoint. The default is "http://" + virtuoso + ":8890/sparql".
     Returns
     -------
     output : str
