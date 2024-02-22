@@ -560,7 +560,6 @@ def get_common_class(classes, url="http://" + virtuoso + ":8890/sparql"):
     lengths = ['?len' + entity for entity in classes]
     length = '(' + ' + '.join(lengths) + ' as ?length)'
     subquery = []
-    for entity, Qlength in zip(classes, lengths):
     subquery = ' '.join(subquery)
     query = """PREFIX gas: <http://www.bigdata.com/rdf/gas#>
     SELECT ?super """ + length + """ WHERE {""" + subquery + """

@@ -10,7 +10,7 @@ IP=${ARRAY[0]}
 docker run --rm -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results emblookup
 
 # bbw
-docker run --rm -d -v ${PWD}/searx:/etc/searx --network evaluation --name searx -e BASE_URL=http://localhost:3030/ searx/searx
+docker run --rm -d -v ${PWD}/searx:/etc/searx --network evaluation --name searx -p 8080:8080 -e BASE_URL=http://localhost:8080/ searx/searx
 docker run --rm --name vos -d \
            --network evaluation \
            -v ${PWD}/kg-lookup/database:/database \
@@ -18,6 +18,7 @@ docker run --rm --name vos -d \
            -t -p 1111:1111 -p 8890:8890 -i openlink/virtuoso-opensource-7:7
 sleep 30s
 VIRTUOSO_IP=$(docker exec vos bash -c "hostname -I")
+SEARX_IP=$(docker exec searx sh -c "hostname -i")
 docker run --rm -d --network evaluation \
         -v ${PWD}/baselines/lexma/lucene_wd/:/lucene \
         -p 7000:7000 \
@@ -26,7 +27,7 @@ docker run --rm -d --network evaluation \
         -e VIRTUOSO=${VIRUTOSO_IP} \
         --name kg-lookup-service kg-lookup
 sleep 2m
-docker run --rm --network evaluation -e ENDPOINT=${IP} -e VIRTUOSO=${VIRTUOSO_IP} -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results bbw
+docker run --rm --network evaluation -e ENDPOINT=${IP} -e VIRTUOSO=${VIRTUOSO_IP} -e BBW_SEARX_URL="http://${SEARX_IP}:8080" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results bbw
 docker stop searx
 docker stop vos
 
