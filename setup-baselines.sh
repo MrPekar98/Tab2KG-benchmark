@@ -18,7 +18,7 @@ mkdir -p results/keyword-kg-linker/
 mkdir -p results/lexma/
 mkdir -p results/magic/
 
-docker pull searx/searx
+#docker pull searx/searx
 docker network inspect ${NETWORK} >/dev/null 2>&1 || docker network create ${NETWORK}
 
 docker build -t bbw -f ${BBW}bbw.dockerfile ${BBW}
@@ -61,7 +61,7 @@ mkdir -p ${LUCENE_WD}
 echo "Loading Lucene of DBpedia 2016"
 docker run --rm -d --network kg-lookup-network \
            -v ${PWD}/${LUCENE_DBP_2016}:/lucene \
-           -v ${PWD}/${DBP_16_DIR}:/kg
+           -v ${PWD}/${DBP_16_DIR}:/kg \
            -p 7000:7000 \
            -e MEM=200g \
            -e GRAPH=dbp_2016 \
@@ -75,7 +75,7 @@ sleep 2m
 echo "Loading Lucene of DBpedia 2022"
 docker run --rm -d --network kg-lookup-network \
            -v ${PWD}/${LUCENE_DBP_2022}:/lucene \
-           -v ${PWD}/${DBP_22_DIR}:/kg
+           -v ${PWD}/${DBP_22_DIR}:/kg \
            -p 7000:7000 \
            -e MEM=200g \
            -e GRAPH=dbp_2022 \
@@ -89,7 +89,7 @@ sleep 2m
 echo "Loading Lucene of Wikidata"
 docker run --rm -d --network kg-lookup-network \
            -v ${PWD}/${LUCENE_WD}:/lucene \
-           -v ${PWD}/${WD_DIR}:/kg
+           -v ${PWD}/${WD_DIR}:/kg \
            -p 7000:7000 \
            -e MEM=200g \
            -e GRAPH=wd \
