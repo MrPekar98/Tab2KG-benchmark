@@ -18,7 +18,7 @@ mkdir -p results/keyword-kg-linker/
 mkdir -p results/lexma/
 mkdir -p results/magic/
 
-#docker pull searx/searx
+docker pull searx/searx
 docker network inspect ${NETWORK} >/dev/null 2>&1 || docker network create ${NETWORK}
 
 docker build -t bbw -f ${BBW}bbw.dockerfile ${BBW}
