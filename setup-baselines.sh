@@ -26,21 +26,25 @@ docker build -t magic -f ${MAGIC}magic.dockerfile ${MAGIC}
 docker build -t lexma -f ${LEXMA}lexma.dockerfile ${LEXMA}
 docker build -t emblookup -f ${EMBLOOKUP}emblookup.dockerfile ${EMBLOOKUP}
 
+DBP_16_DIR="setup/tough_tables/dbpedia/"
+DBP_22_DIR="setup/kg/dbpedia/"
+WD_DIR="setup/tough_tables/wikidata/"
+
 git clone https://github.com/MrPekar98/kg-lookup.git
 cd kg-lookup/
 
 echo "Loading DBpedia 2016..."
-./load.sh ../setup/tough_tables/dbpedia/ dbp_2016
+./load.sh ../${DBP_16_DIR} dbp_2016
 docker stop vos
 rm -rf import/
 
 echo "Loading DBpedia 2022..."
-./load.sh ../setup/kg/dbpedia/ dbp_2022
+./load.sh ../${DBP_22_DIR} dbp_2022
 docker stop vos
 rm -rf import/
 
 echo "Loading Wikidata..."
-./load.sh ../setup/tough_tables/wikidata/ wd
+./load.sh ../${WD_DIR} wd
 rm -rf import/
 
 docker build -t kg-lookup . --no-cache
@@ -57,6 +61,7 @@ mkdir -p ${LUCENE_WD}
 echo "Loading Lucene of DBpedia 2016"
 docker run --rm -d --network kg-lookup-network \
            -v ${PWD}/${LUCENE_DBP_2016}:/lucene \
+           -v ${PWD}/${DBP_16_DIR}:/kg
            -p 7000:7000 \
            -e MEM=200g \
            -e GRAPH=dbp_2016 \
@@ -70,6 +75,7 @@ sleep 2m
 echo "Loading Lucene of DBpedia 2022"
 docker run --rm -d --network kg-lookup-network \
            -v ${PWD}/${LUCENE_DBP_2022}:/lucene \
+           -v ${PWD}/${DBP_22_DIR}:/kg
            -p 7000:7000 \
            -e MEM=200g \
            -e GRAPH=dbp_2022 \
@@ -83,6 +89,7 @@ sleep 2m
 echo "Loading Lucene of Wikidata"
 docker run --rm -d --network kg-lookup-network \
            -v ${PWD}/${LUCENE_WD}:/lucene \
+           -v ${PWD}/${WD_DIR}:/kg
            -p 7000:7000 \
            -e MEM=200g \
            -e GRAPH=wd \
