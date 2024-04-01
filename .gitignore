@@ -38,6 +38,13 @@ baselines/magic/*.hdt
 baselines/magic/lucene*/
 baselines/magic/*.index.*
 baselines/lexma/lucene*/
+baselines/keyword-kg-linker/.gitignore
+baselines/keyword-kg-linker/src/
+baselines/keyword-kg-linker/Dockefile
+baselines/keyword-kg-linker/README.md
+baselines/keyword-kg-linker/linker.sh
+baselines/keyword-kg-linker/load.sh
+baselines/keyword-kg-linker/pom.xml
 results/
 measure/__pycache__/
 measure/*.csv
