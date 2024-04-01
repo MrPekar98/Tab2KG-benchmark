@@ -1,0 +1,13 @@
+.dbpedia_2016_entities_unique.tmp
+.dbpedia_2022_entities_unique.tmp
+.hardtables_entities_unique.tmp
+.tfood_entities_unique.tmp
+.toughtables_dbp_entities_unique.tmp
+.toughtables_wd_entities_unique.tmp
+.wikidata_entities_unique.tmp
+.wikitables_2013_dbp_entities_unique.tmp
+.wikitables_2013_wd_entities_unique.tmp
+.wikitables_2019_dbp_entities_unique.tmp
+.wikitables_2019_wd_entities_unique.tmp
+.exists
+.not_exists

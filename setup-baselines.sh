@@ -82,9 +82,9 @@ docker run --rm -d --network kg-lookup-network \
            -e VIRTUOSO=$(docker exec vos bash -c "hostname -I") \
            --name kg-lookup-service kg-lookup
 sleep 2m
-#curl http://localhost:7000/index
-#docker stop kg-lookup-service
-#sleep 2m
+curl http://localhost:7000/index
+docker stop kg-lookup-service
+sleep 2m
 
 echo "Loading Lucene of Wikidata"
 docker run --rm -d --network kg-lookup-network \

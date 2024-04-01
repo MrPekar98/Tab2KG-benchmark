@@ -16,6 +16,21 @@ docker run --rm -v ${PWD}/setup:/home -v ${PWD}/benchmarks:/benchmarks -v ${PWD}
 This will setup the entire benchmark.
 Keep in mind this is a very slow process, as there is a lot of data to be processed!
 
+Enter the directory `setup/existence/`, build the Docker image and run a container to perform existence checking of ground truth entities in KG files, the Virtuoso instance, and the keyword lookup service by running the following set of commands.
+
+```bash
+docker build -t existence .
+docker run --rm --network kg-lookup-network -v ${PWD}:/home \
+                -v ${PWD}/../../benchmarks/:/benchmarks \
+                -v ${PWD}/../tough_tables/dbpedia/:/dbpedia_16 \
+                -v ${PWD}/../kg/dbpedia/:/dbpedia_22 \
+                -v ${PWD}/../tough_tables/wikidata/:/wikidata \
+                -e VIRTUOSO_URL="http://$(docker exec vos_existence bash -c 'hostname -I'):8890/sparql" \
+                --name existence_checking existence
+```
+
+The container will also remove ground truth entities that do not exist in the Virtuoso instance.
+
 ## Running Benchmark
 Executing the benchmark is simple.
 Similar to setting up the benchmark, run the following commands to start the entire benchmark pipeline.
@@ -81,6 +96,9 @@ docker run --rm -v ${PWD}/plots/:/plots -v ${PWD}/benchmarks:/home/benchmarks -v
 ```
 
 The plots are then saved in `plots/` as PDF files.
+
+You can check for ground truth existence by running `./existence.sh` in the `setup/` directory.
+This script will check how many of the ground truth entities in each dataset exist in the KG dumps, Virtuoso instance, and Lucene indexes in the KG lookup service.
 
 ### Dataset Type Distributions
 Below are plots of type distributions of the entities within the datasets used in this benchmark.
