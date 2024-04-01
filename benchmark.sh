@@ -100,3 +100,10 @@ docker run --rm --network kg-lookup-network -e ENDPOINT=${IP} -e KG=wd -v ${PWD}
 docker stop kg-lookup-service
 
 docker stop vos
+
+# keyword-kg-linker
+KEYWORD_KG_LINKER="baselines/keyword-kg-linker/"
+ROOT=${PWD}
+cd ${KEYWORD_KG_LINKER}
+./evaluate.sh
+cd ${ROOT}

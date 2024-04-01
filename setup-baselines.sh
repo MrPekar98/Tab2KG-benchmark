@@ -82,9 +82,9 @@ docker run --rm -d --network kg-lookup-network \
            -e VIRTUOSO=$(docker exec vos bash -c "hostname -I") \
            --name kg-lookup-service kg-lookup
 sleep 2m
-curl http://localhost:7000/index
-docker stop kg-lookup-service
-sleep 2m
+#curl http://localhost:7000/index
+#docker stop kg-lookup-service
+#sleep 2m
 
 echo "Loading Lucene of Wikidata"
 docker run --rm -d --network kg-lookup-network \
@@ -99,3 +99,27 @@ sleep 2m
 curl http://localhost:7000/index
 docker stop kg-lookup-service
 docker stop vos
+
+# Setup of our own naive keyword-based entity linker
+IDX_DIR_DBP_16="dbp_16/"
+IDX_DIR_DBP_22="dbp_22/"
+IDX_DIR_WD="wd/"
+git clone https://github.com/MrPekar98/keyword-kg-linker.git
+rm keyword-kg-linker/neo4j.sh keyword-kg-linker/config.json
+mv keyword-kg-linker/* ${KEYWORD_KG_LINKER}
+ROOT=${PWD}
+cd ${KEYWORD_KG_LINKER}
+mkdir -p ${IDX_DIR_DBP_16} ${IDX_DIR_DBP_22} ${IDX_DIR_WD}
+export CONTAINER_NAME=neo4j_dbp16
+./neo4j.sh ${ROOT}${DBP_16_DIR}
+./linker.sh -dir ${IDX_DIR_DBP_16} -config config.json
+docker stop ${CONTAINER_NAME}
+export CONTAINER_NAME=neo4j_dbp22
+./neo4j.sh ${ROOT}${DBP_22_DIR}
+./linker.sh -dir ${IDX_DIR_DBP_22} -config config.json
+docker stop ${CONTAINER_NAME}
+export CONTAINER_NAME=neo4j_wd
+./neo4j.sh ${ROOT}${WD_DIR}
+./linker.sh -dir ${IDX_DIR_WD} -config config.json
+docker stop ${CONTAINER_NAME}
+cd ${ROOT}
