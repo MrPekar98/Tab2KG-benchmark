@@ -29,6 +29,9 @@ setup/webcommons/dbpedia/
 setup/wikitables/wikitables*/
 setup/analysis/analysis.egg-info/
 setup/analysis/analysis/__pycache__/
+setup/existence/.*.tmp
+setup/existence/.exists
+setup/existence/.not_exists
 plots/.*.stats
 setup/analysis/__pycache__/
 baselines/emblookup/data/
