@@ -8,5 +8,6 @@ RUN pip3 install SPARQLWrapper
 
 ADD *.py ./
 ADD *.sh ./
+COPY .dockerignore .*.tmp ./
 
 ENTRYPOINT ./existence.sh

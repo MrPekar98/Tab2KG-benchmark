@@ -20,16 +20,21 @@ Enter the directory `setup/existence/`, build the Docker image and run a contain
 
 ```bash
 docker build -t existence .
+docker network inspect kg-lookup-network >/dev/null 2>&1 || docker network create kg-lookup-network
+docker run --rm --name vos_existence -d \
+           --network kg-lookup-network \
+           -v ${PWD}/../../kg-lookup/database:/database \
+           -v ${PWD}/../../kg-lookup/import:/import \
+           -t -p 1111:1111 -p 8890:8890 -i openlink/virtuoso-opensource-7:7
 docker run --rm --network kg-lookup-network -v ${PWD}:/home \
                 -v ${PWD}/../../benchmarks/:/benchmarks \
                 -v ${PWD}/../tough_tables/dbpedia/:/dbpedia_16 \
                 -v ${PWD}/../kg/dbpedia/:/dbpedia_22 \
                 -v ${PWD}/../tough_tables/wikidata/:/wikidata \
-                -e VIRTUOSO_URL="http://$(docker exec vos_existence bash -c 'hostname -I'):8890/sparql" \
                 --name existence_checking existence
 ```
 
-The container will also remove ground truth entities that do not exist in the Virtuoso instance.
+The container will also remove ground truth entities that do not exist in the KG files.
 
 ## Running Benchmark
 Executing the benchmark is simple.
