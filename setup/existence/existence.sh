@@ -48,4 +48,3 @@ echo "Filtering ground truth files from non-existent entities"
 
 echo
 echo "Complete"
-docker stop vos_existence

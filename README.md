@@ -32,6 +32,7 @@ docker run --rm --network kg-lookup-network -v ${PWD}:/home \
                 -v ${PWD}/../kg/dbpedia/:/dbpedia_22 \
                 -v ${PWD}/../tough_tables/wikidata/:/wikidata \
                 --name existence_checking existence
+docker stop vos_existence
 ```
 
 The container will also remove ground truth entities that do not exist in the KG files.
