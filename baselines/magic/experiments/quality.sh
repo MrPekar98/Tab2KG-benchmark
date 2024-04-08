@@ -10,7 +10,7 @@ RESULT_DIR="/results/"
 if [[ "${KG}" = "wd" ]]
 then
     mkdir -p ${RESULT_DIR}magic/HardTables/
-    python3 main.py wikidata /hdt/${KG}.hdt ${BENCHMARK_DIR}semtab/HardTables/tables/ ${RESULT_DIR}magic/HardTables/ ${ENDPOINT}
+    python3 main.py wikidata /hdt/${KG}.hdt ${BENCHMARK_DIR}semtab/HardTables/tables_subset/ ${RESULT_DIR}magic/HardTables/ ${ENDPOINT}
 fi
 
 # tFood
@@ -18,7 +18,7 @@ fi
 if [[ "${KG}" = "wd" ]]
 then
     mkdir -p ${RESULT_DIR}magic/tfood/
-    python3 main.py wikidata /hdt/${KG}.hdt ${BENCHMARK_DIR}semtab/tfood/horizontal/tables/ ${RESULT_DIR}magic/tfood/ ${ENDPOINT}
+    python3 main.py wikidata /hdt/${KG}.hdt ${BENCHMARK_DIR}semtab/tfood/horizontal/tables_subset/ ${RESULT_DIR}magic/tfood/ ${ENDPOINT}
 fi
 
 # Tough Tables - DBpedia
@@ -26,7 +26,7 @@ fi
 if [[ "${KG}" = "dbp-10-2016" ]]
 then
     mkdir -p ${RESULT_DIR}magic/tough_tables_dbp/
-    python3 main.py dbpedia /hdt/${KG}.hdt ${BENCHMARK_DIR}toughtables/dbpedia/tables/ ${RESULT_DIR}magic/tough_tables_dbp/ ${ENDPOINT}
+    python3 main.py dbpedia /hdt/${KG}.hdt ${BENCHMARK_DIR}toughtables/dbpedia/tables_subset/ ${RESULT_DIR}magic/tough_tables_dbp/ ${ENDPOINT}
 fi
 
 # Tough Tables - Wikidata
@@ -34,7 +34,7 @@ fi
 if [[ "${KG}" = "wd" ]]
 then
     mkdir -p ${RESULT_DIR}magic/tough_tables_wd/
-    python3 main.py wikidata /hdt/${KG}.hdt ${BENCHMARK_DIR}toughtables/wikidata/tables/ ${RESULT_DIR}magic/tough_tables_wd/ ${ENDPOINT}
+    python3 main.py wikidata /hdt/${KG}.hdt ${BENCHMARK_DIR}toughtables/wikidata/tables_subset/ ${RESULT_DIR}magic/tough_tables_wd/ ${ENDPOINT}
 fi
 
 # Wikitables 2013 - DBpedia

@@ -9,15 +9,15 @@ if [[ "${KG}" = "wd" ]]
 then
     # HardTables
     mkdir -p ${RESULT_DIR}lexma/hardtables/
-    python lexma.py wikidata ${BENCHMARK_DIR}semtab/HardTables/tables/ ${RESULT_DIR}lexma/hardtables/ 10 "http://${ENDPOINT}:7000/"
+    python lexma.py wikidata ${BENCHMARK_DIR}semtab/HardTables/tables_subset/ ${RESULT_DIR}lexma/hardtables/ 10 "http://${ENDPOINT}:7000/"
 
     # tFood
     mkdir -o {RESULT_DIR}lexma/tfood/
-    python lexma.py wikidata ${BENCHMARK_DIR}semtab/tfood/horizontal/tables/ ${RESULT_DIR}lexma/tfood/ 10 "http://${ENDPOINT}:7000/"
+    python lexma.py wikidata ${BENCHMARK_DIR}semtab/tfood/horizontal/tables_subset/ ${RESULT_DIR}lexma/tfood/ 10 "http://${ENDPOINT}:7000/"
 
     # Tough Tables - Wikidata
     mkdir -p ${RESULT_DIR}lexma/toughtables_wd/
-    python lexma.py wikidata ${BENCHMARK_DIR}toughtables/wikidata/tables/ ${RESULT_DIR}lexma/toughtables_wd/ 10 "http://${ENDPOINT}:7000/"
+    python lexma.py wikidata ${BENCHMARK_DIR}toughtables/wikidata/tables_subset/ ${RESULT_DIR}lexma/toughtables_wd/ 10 "http://${ENDPOINT}:7000/"
 
     # Wikitables 2013 - Wikidata
     mkdir -p ${RESULT_DIR}lexma/wikitables_2013_wd/
@@ -32,7 +32,7 @@ if [[ "${KG}" = "dbp_16" ]]
 then
     # Tough Tables - DBpedia
     mkdir -p ${RESULT_DIR}lexma/toughtables_dbp/
-    python lexma.py dbpedia ${BENCHMARK_DIR}toughtables/dbpedia/tables/ ${RESULT_DIR}lexma/toughtables_dbp/ 10 "http://${ENDPOINT}:7000/"
+    python lexma.py dbpedia ${BENCHMARK_DIR}toughtables/dbpedia/tables_subset/ ${RESULT_DIR}lexma/toughtables_dbp/ 10 "http://${ENDPOINT}:7000/"
 fi
 
 if [[ "${KG}" = "dbp_22" ]]
