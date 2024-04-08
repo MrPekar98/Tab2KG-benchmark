@@ -6,11 +6,11 @@ BENCHMARK_DIR="/benchmarks/"
 DATA_DIR="data/"
 
 # SemTab HardTables
-#mkdir -p /results/emblookup/semtab_hardtables
+mkdir -p /results/emblookup/semtab_hardtables
 
-#python3 main.py "${BENCHMARK_DIR}semtab/HardTables/tables/" "${DATA_DIR}aliases/alias_wd.ttl" "${DATA_DIR}index_mappings/kg_index_name_mapping_wd.csv" "${DATA_DIR}aliases_processed/aliases_processed_wd.csv" -h
-#mv runtimes.csv /results/emblookup/semtab_hardtables
-#mv results.csv /results/emblookup/semtab_hardtables
+python3 main.py "${BENCHMARK_DIR}semtab/HardTables/tables/" "${DATA_DIR}aliases/alias_wd.ttl" "${DATA_DIR}index_mappings/kg_index_name_mapping_wd.csv" "${DATA_DIR}aliases_processed/aliases_processed_wd.csv" -h
+mv runtimes.csv /results/emblookup/semtab_hardtables
+mv results.csv /results/emblookup/semtab_hardtables
 
 # tFood
 mkdir -p /results/emblookup/tfood
@@ -37,8 +37,8 @@ mv results.csv /results/emblookup/toughtables_wd
 mkdir -p /results/emblookup/wikitables_2013_dbp
 
 python3 main.py "${BENCHMARK_DIR}wikitables_2013/tables_subset/" "${DATA_DIR}aliases/alias_dbp12-2022.ttl" "${DATA_DIR}index_mappings/kg_index_name_mapping_dbp12-2022.csv" "${DATA_DIR}aliases_processed/aliases_processed_dbp12-2022.csv" -h
-mv runtimes.csv /results/emblookup/wikitables_2013-dbp/
-mv results.csv /results/emblookup/wikitables_2013-dbp/
+mv runtimes.csv /results/emblookup/wikitables_2013_dbp/
+mv results.csv /results/emblookup/wikitables_2013_dbp/
 
 # Wikitables 2013 - Wikidata
 mkdir -p /results/emblookup/wikitables_2013_wd
