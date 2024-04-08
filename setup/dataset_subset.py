@@ -3,9 +3,8 @@ import shutil
 import os
 
 subset_size = int(sys.argv[1])
-version = sys.argv[2]
-benchmark_dir = '/benchmarks/wikitables_' + str(version) + '/'
-table_dir = benchmark_dir + 'tables/'
+benchmark_dir = sys.argv[2]
+table_dir = benchmark_dir + '/tables/'
 output_table_dir = benchmark_dir + 'tables_subset/'
 tables = list(os.listdir(table_dir))
 

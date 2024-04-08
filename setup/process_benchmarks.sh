@@ -19,8 +19,8 @@ python3 wikitables/wikitables_wikidata.py 19
 ./kg/neo4j-dbpedia-12-2022/bin/neo4j stop
 sleep 1m
 
-python3 wikitables_subset.py 10000 2013
-python3 wikitables_subset.py 10000 2019
+python3 dataset_subset.py 1000 /benchmarks/wikitables_2013/
+python3 dataset_subset.py 1500 /benchmarks/wikitables_2019/
 
 echo "Semtab"
 mkdir -p /benchmarks/semtab/HardTables/gt/
@@ -50,9 +50,12 @@ mv tough_tables/ToughTablesR2-DBP/Test/gt/cea_gt.csv /benchmarks/toughtables/dbp
 mv tough_tables/ToughTablesR2-WD/Test/tables/ /benchmarks/toughtables/wikidata/
 mv tough_tables/ToughTablesR2-WD/Test/gt/cea_gt.csv /benchmarks/toughtables/wikidata/gt/
 rm -rf tough_tables/ToughTablesR2-DBP/ tough_tables/ToughTablesR2-WD/
+python3 dataset_subset.py 50 /benchmarks/toughtables/dbpedia/
+python3 dataset_subset.py 50 /benchmarks/toughtables/wikidata/
 
 echo "tFood"
 rm -rf tfoof/entity/ tfood/horizontal/val/ tfood/horizontal/test/targets/
 mv tfood/horizontal/test/* tfood/horizontal/
 rmdir tfood/horizontal/test/
 mv tfood/ /benchmarks/semtab/
+python3 dataset_subset.py 2000 /benchmarks/semtab/tfood/horizontal/
