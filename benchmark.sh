@@ -27,7 +27,10 @@ docker run --rm -d --network evaluation \
         -e VIRTUOSO=${VIRUTOSO_IP} \
         --name kg-lookup-service kg-lookup
 sleep 2m
-docker run --rm --network evaluation -e ENDPOINT=${IP} -e VIRTUOSO=${VIRTUOSO_IP} -e BBW_SEARX_URL="http://${SEARX_IP}:8080" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results bbw
+
+ENDPOINT_IP=$(docker exec kg-lookup-service hostname -I)
+docker run --rm --network evaluation -e ENDPOINT=${ENDPOINT_IP} -e VIRTUOSO=${VIRTUOSO_IP} -e BBW_SEARX_URL="http://${SEARX_IP}:8080" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results bbw
+docker stop kg-lookup-service
 docker stop searx
 docker stop vos
 
@@ -40,7 +43,9 @@ docker run -it --rm -d --network kg-lookup-network \
            -e VIRTUOSO=$(docker exec vos bash -c "hostname -I") \
            --name kg-lookup-service kg-lookup
 sleep 2m
-docker run --rm --network kg-lookup-network -e ENDPOINT=${IP} -e KG="dbp-10-2016" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/baselines/magic/:/hdt -v ${PWD}/results:/results magic
+
+ENDPOINT_IP=$(docker exec kg-lookup-service hostname -I)
+docker run --rm --network kg-lookup-network -e ENDPOINT=${ENDPOINT_IP} -e KG="dbp-10-2016" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/baselines/magic/:/hdt -v ${PWD}/results:/results magic
 docker stop kg-lookup-service
 
 docker run -it --rm -d --network kg-lookup-network \
@@ -51,7 +56,9 @@ docker run -it --rm -d --network kg-lookup-network \
            -e VIRTUOSO=$(docker exec vos bash -c "hostname -I") \
            --name kg-lookup-service kg-lookup
 sleep 2m
-docker run --rm --network kg-lookup-network -e ENDPOINT=${IP} -e KG="dbp-12-2022" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/baselines/magic/:/hdt -v ${PWD}/results:/results magic
+
+ENDPOINT_IP=$(docker exec kg-lookup-service hostname -I)
+docker run --rm --network kg-lookup-network -e ENDPOINT=${ENDPOINT_IP} -e KG="dbp-12-2022" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/baselines/magic/:/hdt -v ${PWD}/results:/results magic
 docker stop kg-lookup-service
 
 docker run -it --rm -d --network kg-lookup-network \
@@ -62,7 +69,9 @@ docker run -it --rm -d --network kg-lookup-network \
            -e VIRTUOSO=$(docker exec vos bash -c "hostname -I") \
            --name kg-lookup-service kg-lookup
 sleep 2m
-docker run --rm --network evaluation -e ENDPOINT=${IP} -e KG="wd" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/baselines/magic/:/hdt -v ${PWD}/results:/results magic
+
+ENDPOINT_IP=$(docker exec kg-lookup-service hostname -I)
+docker run --rm --network evaluation -e ENDPOINT=${ENDPOINT_IP} -e KG="wd" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/baselines/magic/:/hdt -v ${PWD}/results:/results magic
 docker stop kg-lookup-service
 
 # LexMa
@@ -74,7 +83,9 @@ docker run -it --rm -d --network kg-lookup-network \
            -e VIRTUOSO=$(docker exec vos bash -c "hostname -I") \
            --name kg-lookup-service kg-lookup
 sleep 2m
-docker run --rm --network kg-lookup-network -e ENDPOINT=${IP} -e KG=dbp_16 -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results lexma
+
+ENDPOINT_IP=$(docker exec kg-lookup-service hostname -I)
+docker run --rm --network kg-lookup-network -e ENDPOINT=${ENDPOINT_IP} -e KG=dbp_16 -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results lexma
 docker stop kg-lookup-service
 
 docker run -it --rm -d --network kg-lookup-network \
@@ -85,7 +96,9 @@ docker run -it --rm -d --network kg-lookup-network \
            -e VIRTUOSO=$(docker exec vos bash -c "hostname -I") \
            --name kg-lookup-service kg-lookup
 sleep 2m
-docker run --rm --network kg-lookup-network -e ENDPOINT=${IP} -e KG=dbp_22 -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results lexma
+
+ENDPOINT_IP=$(docker exec kg-lookup-service hostname -I)
+docker run --rm --network kg-lookup-network -e ENDPOINT=${ENDPOINT_IP} -e KG=dbp_22 -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results lexma
 docker stop kg-lookip-service
 
 docker run -it --rm -d --network kg-lookup-network \
@@ -96,7 +109,9 @@ docker run -it --rm -d --network kg-lookup-network \
            -e VIRTUOSO=$(docker exec vos bash -c "hostname -I") \
            --name kg-lookup-service kg-lookup
 sleep 2m
-docker run --rm --network kg-lookup-network -e ENDPOINT=${IP} -e KG=wd -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results lexma
+
+ENDPOINT_IP=$(docker exec kg-lookup-service hostname -I)
+docker run --rm --network kg-lookup-network -e ENDPOINT=${ENDPOINT_IP} -e KG=wd -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results lexma
 docker stop kg-lookup-service
 
 docker stop vos
