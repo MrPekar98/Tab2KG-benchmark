@@ -99,7 +99,7 @@ sleep 2m
 
 ENDPOINT_IP=$(docker exec kg-lookup-service hostname -I)
 docker run --rm --network kg-lookup-network -e ENDPOINT=${ENDPOINT_IP} -e KG=dbp_22 -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results lexma
-docker stop kg-lookip-service
+docker stop kg-lookup-service
 
 docker run -it --rm -d --network kg-lookup-network \
            -v ${PWD}/baselines/lexma/lucene_wd/:/lucene \
