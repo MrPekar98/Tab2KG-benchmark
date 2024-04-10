@@ -68,7 +68,7 @@ docker run --rm -d --network kg-lookup-network \
            -e VIRTUOSO=$(docker exec vos bash -c "hostname -I") \
            --name kg-lookup-service kg-lookup
 sleep 2m
-curl http://localhost:7000/index
+curl http://localhost:7000/index?domain=dbpedia
 docker stop kg-lookup-service
 sleep 2m
 
@@ -82,7 +82,7 @@ docker run --rm -d --network kg-lookup-network \
            -e VIRTUOSO=$(docker exec vos bash -c "hostname -I") \
            --name kg-lookup-service kg-lookup
 sleep 2m
-curl http://localhost:7000/index
+curl http://localhost:7000/index?domain=dbpedia
 docker stop kg-lookup-service
 sleep 2m
 
@@ -96,7 +96,7 @@ docker run --rm -d --network kg-lookup-network \
            -e VIRTUOSO=$(docker exec vos bash -c "hostname -I") \
            --name kg-lookup-service kg-lookup
 sleep 2m
-curl http://localhost:7000/index
+curl http://localhost:7000/index?domain=wikidata
 docker stop kg-lookup-service
 docker stop vos
 
