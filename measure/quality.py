@@ -15,25 +15,25 @@ def _measure_quality(predictions, gt):
                 continue
 
             elif table_id not in table_group.keys():
-                table_group[table_id] = dict()
-                table_group[table_id]['predictions'] = 0
-                table_group[table_id]['correct'] = 0
-                table_group[table_id]['wrong'] = 0
-                table_group[table_id]['gt size'] = len(gt[table_id])
+                table_group[table_id] = {'predictions': 0, 'correct': 0, 'wrong': 0, 'gt size': len(gt[table_id])}
 
             row = result[1]
             column = result[2]
-            prediction = result[3]
+            prediction = result[3].split('/')[-1].lower()
             table_group[table_id]['predictions'] += 1
 
             for truth in gt[table_id]:
                 if row == truth[0] and column == truth[1]:
                     gt_entities = truth[2:]
+                    found = False
 
-                    if prediction in gt_entities:
-                        table_group[table_id]['correct'] += 1
+                    for gt_entity in gt_entities:
+                        if prediction in gt_entity.split('/').lower():
+                            found = True
+                            table_group[table_id]['correct'] += 1
+                            break
 
-                    else:
+                    if not found:
                         table_group[table_id]['wrong'] += 1
 
         for table in table_group.keys():
@@ -109,4 +109,4 @@ def _write(output_file, scores):
 
 def evaluate_quality(base_dir, result_name, predictions, gt):
     results = _measure_quality(predictions, gt)
-    _write(base_dir + result_name, results)
+    _write(base_dir + '/' + result_name, results)

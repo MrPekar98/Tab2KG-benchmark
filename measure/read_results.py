@@ -28,6 +28,7 @@ def read_emblookup(file_path, kg):
                 parsed_row = row
 
             tuple = [parsed_row[0], int(parsed_row[1]) + 1, int(parsed_row[2])]
+            entity = parsed_row[3].replace('"', '').replace('<', '').replace('>', '')
 
             if kg == 'wikidata':
                 tuple.append('http://www.wikidata.org/entity/' + parsed_row[3])
@@ -69,15 +70,32 @@ def read_lexma(result_files_dir):
     files = os.listdir(result_files_dir)
 
     for result_file in files:
-        with open(result_file, 'r') as input:
+        if 'runtime' in result_file:
+            continue
+
+        with open(result_files_dir + result_file, 'r') as input:
             reader = csv.reader(input)
 
             for row in reader:
-                tuple = [result_file.replace('.csv', ''), int(row[1]) + 1, int(row[2]), row[3]]
+                tuple = [result_file.replace('.csv', ''), int(row[0]) + 1, int(row[1]), row[2]]
                 results.append(tuple)
 
     return results
 
 # Results of MAGIC
-def read_magic():
-    pass
+def read_magic(result_files_dir):
+    results = list()
+    files = os.listdir(result_files_dir)
+
+    for result_file in files:
+        if not 'cea' in result_file:
+            continue
+
+        with open(result_files_dir + result_file, 'r') as input:
+            reader = csv.reader(input)
+
+            for row in reader:
+                tuple = [row[0], int(row[1]) + 1, int(row[2]), row[3]]
+                results.append(tuple)
+
+    return results
