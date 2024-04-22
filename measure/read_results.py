@@ -29,13 +29,7 @@ def read_emblookup(file_path, kg):
 
             tuple = [parsed_row[0], int(parsed_row[1]) + 1, int(parsed_row[2])]
             entity = parsed_row[3].replace('"', '').replace('<', '').replace('>', '').lower()
-
-            if kg == 'wikidata':
-                tuple.append('http://www.wikidata.org/entity/' + entity)
-
-            else:
-                tuple.append('http://dbpedia.org/resource/' + entity)
-
+            tuple.append(entity)
             results.append(tuple)
 
         return results
