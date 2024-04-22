@@ -28,13 +28,13 @@ def read_emblookup(file_path, kg):
                 parsed_row = row
 
             tuple = [parsed_row[0], int(parsed_row[1]) + 1, int(parsed_row[2])]
-            entity = parsed_row[3].replace('"', '').replace('<', '').replace('>', '')
+            entity = parsed_row[3].replace('"', '').replace('<', '').replace('>', '').lower()
 
             if kg == 'wikidata':
-                tuple.append('http://www.wikidata.org/entity/' + parsed_row[3])
+                tuple.append('http://www.wikidata.org/entity/' + entity)
 
             else:
-                tuple.append('http://dbpedia.org/resource/' + parsed_row[3])
+                tuple.append('http://dbpedia.org/resource/' + entity)
 
             results.append(tuple)
 
@@ -55,7 +55,7 @@ def read_bbw(files_dir):
                     header_skipped = True
                     continue
 
-                tuple = [file.replace('.csv', ''), int(row[1]), int(row[2]), row[3]]
+                tuple = [file.replace('.csv', ''), int(row[1]), int(row[2]), row[3].lower()]
                 results.append(tuple)
 
     return results
@@ -77,7 +77,7 @@ def read_lexma(result_files_dir):
             reader = csv.reader(input)
 
             for row in reader:
-                tuple = [result_file.replace('.csv', ''), int(row[0]) + 1, int(row[1]), row[2]]
+                tuple = [result_file.replace('.csv', ''), int(row[0]) + 1, int(row[1]), row[2].lower()]
                 results.append(tuple)
 
     return results
@@ -95,7 +95,7 @@ def read_magic(result_files_dir):
             reader = csv.reader(input)
 
             for row in reader:
-                tuple = [row[0], int(row[1]) + 1, int(row[2]), row[3]]
+                tuple = [row[0], int(row[1]) + 1, int(row[2]), row[3].lower()]
                 results.append(tuple)
 
     return results

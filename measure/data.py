@@ -37,10 +37,10 @@ def ground_truth(gt_path):
                 gt[table_id] = list()
 
             if gt_path in (TOUGH_TABLES_DBPEDIA_GT, TOUGH_TABLES_WIKIDATA_GT):
-                tuple += row[3].split(' ')
+                tuple.extend(entity.lower() for entity in row[3].split(' '))
 
             else:
-                tuple.append(row[3])
+                tuple.append(row[3].lower())
 
             if gt_path in (WIKITABLES_2013_DBPEDIA_GT, WIKITABLES_2013_WIKIDATA_GT, WIKITABLES_2019_DBPEDIA_GT, WIKITABLES_2019_WIKIDATA_GT):
                 tuple[0] += 1

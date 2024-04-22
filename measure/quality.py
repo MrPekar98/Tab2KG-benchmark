@@ -1,5 +1,6 @@
 import csv
 
+# Measure scores per table
 def _measure_quality(predictions, gt):
     scores = dict()
 
@@ -107,6 +108,58 @@ def _write(output_file, scores):
         for row in rows_f1:
             writer.writerow(row)
 
+# Measures all metrics as a single value across all tables
+def _measure_total_quality(predictions, gt):
+    gt_cell_ent = dict()
+
+    for table_id in gt.keys():
+        for gt_cell in gt[table_id]:
+            cell = '%s %s %s' % (table_id, gt_cell[0], gt_cell[1])
+            gt_cell_ent[cell] = gt_cell[2:]
+
+    scores = dict()
+
+    for method in predictions.keys():
+        correct_cells, annotated_cells = set(), set()
+        results = predictions[method]
+
+        for result in results:
+            result_table_id = result[0]
+            result_row = result[1]
+            result_column = result[2]
+            annotation = result[3].lower()
+            result_cell = '%s %s %s' % (result_table_id, result_row, result_column)
+
+            if result_cell in gt_cell_ent:
+                if result_cell in annotated_cells:
+                    raise Exception("Duplicate cells in the submission file")
+
+                else:
+                    annotated_cells.add(result_cell)
+
+                if not annotation:
+                    if gt_cell_ent[result_cell] == 'nil':
+                        correct_cells.add(result_cell)
+
+                else:
+                    if annotation in gt_cell_ent[result_cell]:
+                        correct_cells.add(result_cell)
+
+        precision = len(correct_cells) / len(annotated_cells) if len(annotated_cells) > 0 else 0.0
+        recall = len(correct_cells) / len(gt_cell_ent.keys())
+        f1 = (2 * precision * recall) / (precision + recall) if (precision + recall) > 0 else 0.0
+        scores[method] = {'precision': precision, 'recall': recall, 'f1': f1}
+
+    return scores
+
 def evaluate_quality(base_dir, result_name, predictions, gt):
     results = _measure_quality(predictions, gt)
     _write(base_dir + '/' + result_name, results)
+
+    total_scores = _measure_total_quality(predictions, gt)
+
+    for method in total_scores.keys():
+        print(method)
+        print('Precision:', total_scores[method]['precision'])
+        print('Recall:', total_scores[method]['recall'])
+        print('F1-score:', total_scores[method]['f1'], '\n')
