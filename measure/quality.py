@@ -29,7 +29,7 @@ def _measure_quality(predictions, gt):
                     found = False
 
                     for gt_entity in gt_entities:
-                        if prediction in gt_entity.split('/').lower():
+                        if prediction in gt_entity.lower():
                             found = True
                             table_group[table_id]['correct'] += 1
                             break
