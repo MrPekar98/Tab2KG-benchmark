@@ -45,7 +45,7 @@ class DBMagic(Magic):
 class WikiMagic(Magic):
     def __init__(self, endpoint_ip, connector, structured_file, header, index_col, main_col):
         super().__init__(connector, structured_file, header, index_col, main_col,'http://www.wikidata.org/prop/direct/', 'http://www.wikidata.org/prop/direct/P31§', skip_list_wiki)
-        self.endpoint_ip = endpoint_ip
+        self.endpoint = endpoint_ip
 
     def search_entity_api(self, entity):
         data = []
