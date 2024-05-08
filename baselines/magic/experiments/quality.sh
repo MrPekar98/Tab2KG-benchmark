@@ -50,7 +50,7 @@ fi
 if [[ "${KG}" = "wd" ]]
 then
     mkdir -p ${RESULT_DIR}magic/wikitables-2013_wd/
-    python3 main.py wikidata /hdt/${KG}.hdt ${BENCHMARK_DIR}wikitables_2013/tables_subset/ ${RESULT_DIR}magic/wikitables_2013_wd/ ${ENDPOINT}
+    python3 main.py wikidata /hdt/${KG}.hdt ${BENCHMARK_DIR}wikitables_2013/tables_subset/ ${RESULT_DIR}magic/wikitables-2013_wd/ ${ENDPOINT}
 fi
 
 # Wikitables 2019 - DBpedia
