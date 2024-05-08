@@ -71,7 +71,7 @@ docker run -it --rm -d --network kg-lookup-network \
 sleep 2m
 
 ENDPOINT_IP=$(docker exec kg-lookup-service hostname -I)
-docker run --rm --network evaluation -e ENDPOINT=${ENDPOINT_IP} -e KG="wd" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/baselines/magic/:/hdt -v ${PWD}/results:/results magic
+docker run --rm --network kg-lookup-network -e ENDPOINT=${ENDPOINT_IP} -e KG="wd" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/baselines/magic/:/hdt -v ${PWD}/results:/results magic
 docker stop kg-lookup-service
 
 # LexMa
