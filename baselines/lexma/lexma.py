@@ -146,6 +146,7 @@ class WikidataAPI(KGLookup):
             'format' : 'json',
             'query': query.replace(' ', '%20'),
             'k': limit,
+            'fuzzy': 'true'
         }
 
         return params
@@ -209,6 +210,7 @@ class DBpediaAPI(KGLookup):
             'k' : limit,
             'query': query.replace(' ', '%20'),
             'format': 'json',
+            'fuzzy': 'true'
         }
 
         return params
