@@ -67,19 +67,6 @@ unzip BioDivTab_DBP.zip
 rm BioDivTab_DBP.zip
 mv BiodivTab_DBpedia semtab/
 
-query=$(curl -H "Accept:text/sparql" https://databus.dbpedia.org/dbpedia/collections/dbpedia-snapshot-2022-03)
-files=$(curl -X POST -H "Accept: text/csv" --data-urlencode "query=${query}" https://databus.dbpedia.org/sparql | tail -n +2 | sed 's/\r$//' | sed 's/"//g')
-while IFS= read -r file ; do wget $file; done <<< "$files"
-mkdir semtab/dbpedia_2022-03/
-
-for FILE in *.bzip2 ;\
-do
-    bzip2 -dk ${FILE} -k -c > semtab/dbpedia_2022-03/${FILE:0:-6}
-    rm ${FILE}
-done
-
-rm "*=*"
-
 # WikiTables (2013)
 git clone https://github.com/EDAO-Project/SemanticTableSearchDataset.git
 mv SemanticTableSearchDataset/table_corpus/tables_2013/ .
@@ -125,27 +112,11 @@ sleep 30s
 sleep 30s
 
 echo
-echo "Importing DBpedia 03/2022"
-./kg/neo4j-dbpedia-03-2022/bin/neo4j start
-sleep 30s
-./kg/import.sh semtab/dbpedia_2022-03 kg/neo4j-dbpedia-03-2022
-./kg/neo4j-dbpedia-03-2022/bin/neo4j stop
-sleep 30s
-
-echo
 echo "Importing DBpedia 10/2016"
 ./kg/neo4j-dbpedia-10-2016/bin/neo4j start
 sleep 30s
 ./kg/import.sh tough_tables/dbpedia kg/neo4j-dbpedia-10-2016
 ./kg/neo4j-dbpedia-10-2016/bin/neo4j stop
-sleep 30s
-
-echo
-echo "Importing DBpedia 2014"
-./kg/neo4j-dbpedia-2014/bin/neo4j start
-sleep 30s
-./kg/import.sh webcommons/dbpedia kg/neo4j-dbpedia-2014
-./kg/neo4j-dbpedia-2014/bin/neo4j stop
 sleep 30s
 
 echo
