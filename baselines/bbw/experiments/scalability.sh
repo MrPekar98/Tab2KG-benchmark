@@ -11,10 +11,10 @@ SLEEP=8h
 python bbwWrapper.py ${TOUGH_TABLES_WD} toughtables_wd_scalability &
 PID=$1
 sleep ${SLEEP}
-kill ${PID}
+kill -9 ${PID}
 
 # Wikitables
 python bbwWrapper.py ${WIKITABLES} wikitables_scalability &
 PID=$1
 sleep ${SLEEP}
-kill ${PID}
+kill -9 ${PID}

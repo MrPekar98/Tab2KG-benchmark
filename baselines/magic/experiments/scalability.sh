@@ -17,7 +17,7 @@ then
     python3 main.py dbpedia "/hdt/${KG}.hdt" "${TOUGH_TABLES_DBP}" "${RESULTS}" ${ENDPOINT} &
     PID=$1
     sleep ${SLEEP}
-    kill ${PID}
+    kill -9 ${PID}
 fi
 
 # ToughTables - Wikidata
@@ -29,7 +29,7 @@ then
     python3 main.py wikidata "/hdt/${KG}.hdt" "${TOUGH_TABLES_WD}" "${RESULTS}" ${ENDPOINT} &
     PID=$1
     sleep ${SLEEP}
-    kill ${PID}
+    kill -9 ${PID}
 fi
 
 # Wikitables
@@ -41,5 +41,5 @@ then
     python3 main.py dbpedia "/hdt/${KG}.hdt" "${WIKITABLES}" "${RESULTS}" ${ENDPOINT} &
     PID=$1
     sleep ${SLEEP}
-    kill ${PID}
+    kill -9 ${PID}
 fi

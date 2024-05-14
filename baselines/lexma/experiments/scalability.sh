@@ -17,7 +17,7 @@ then
     python lexma.py dbpedia "${TOUGH_TABLES_DBP}" ${RESULTS} 10 "http://${ENDPOINT}:7000/" &
     PID=$1
     sleep ${SLEEP}
-    kill ${PID}
+    kill -9 ${PID}
 fi
 
 # ToughTables - Wikidata
@@ -29,7 +29,7 @@ then
     python lexma.py wikidata "${TOUGH_TABLES_WD}" ${RESULTS} 10 "http://${ENDPOINT}:7000/" &
     PID=$1
     sleep ${SLEEP}
-    kill ${PID}
+    kill -9 ${PID}
 fi
 
 # Wikitables
@@ -41,5 +41,5 @@ then
     python lexma.py dbpedia "${WIKITABLES}" ${RESULTS} 10 "http://${ENDPOINT}:7000/" &
     PID=$1
     sleep ${SLEEP}
-    kill ${PID}
+    kill -9 ${PID}
 fi
