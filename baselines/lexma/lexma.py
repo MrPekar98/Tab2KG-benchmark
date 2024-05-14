@@ -146,6 +146,7 @@ class WikidataAPI(KGLookup):
             'format' : 'json',
             'query': query.replace(' ', '%20'),
             'k': limit,
+            'postfix_scoring': 'false',
             'fuzzy': 'true'
         }
 

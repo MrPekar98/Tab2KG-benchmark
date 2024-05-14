@@ -51,7 +51,7 @@ class WikiMagic(Magic):
         data = []
 
         try:
-            response = requests.get('http://' + self.endpoint + ':7000/search?query=' + entity.replace(' ', '%20') + '&fuzzy=true')
+            response = requests.get('http://' + self.endpoint + ':7000/search?query=' + entity.replace(' ', '%20') + '&postfix_scoring=false&fuzzy=true')
             js = json.loads(response.text)
 
             if 'output' in js.keys():
