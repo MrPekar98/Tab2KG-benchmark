@@ -11,13 +11,20 @@ mkdir -p /benchmarks/wikitables_2019/gt/dbpedia/
 mkdir -p /benchmarks/wikitables_2019/gt/wikidata/
 
 ./kg/neo4j-dbpedia-12-2022/bin/neo4j start
-sleep 10m
+./kg_wait.sh /home/setup/kg/neo4j-dbpedia-12-2022/
 python3 wikitables/wikitables_dbpedia.py 13
 python3 wikitables/wikitables_dbpedia.py 19
 python3 wikitables/wikitables_wikidata.py 13
 python3 wikitables/wikitables_wikidata.py 19
+python3 extend_gt.py /benchmarks/wikitables_2013/gt/dbpedia/gt.csv dbpedia
+python3 extend_gt.py /benchmarks/wikitables_2019/gt/dbpedia/gt.csv dbpedia
 ./kg/neo4j-dbpedia-12-2022/bin/neo4j stop
 sleep 1m
+
+./kg/neo4j-wikidata/bin/neo4j start
+./kg_wait.sh /home/setup/kg/neo4j-wikidata/
+python3 extend_gt.py /benchmarks/wikitables_2013/gt/wikidata/gt.csv wikidata
+python3 extend_gt.py /benchmarks/wikitables_2019/gt/wikidata/gt.csv wikidata
 
 python3 dataset_subset.py 0.2 /benchmarks/wikitables_2013/
 python3 dataset_subset.py 0.2 /benchmarks/wikitables_2019/
@@ -36,6 +43,7 @@ rm -rf semtab/HardTablesR2/
 rm -rf semtab/BiodivTab_DBpedia/
 rm -rf semtab/biodivtab_benchmark/
 python3 dataset_subset.py 0.2 /benchmarks/semtab/HardTables/
+python3 extend_gt.py /benchmarks/HardTables/gt/cea_gt.csv wikidata
 
 echo "WebDataCommons"
 mkdir -p /benchmarks/webdatacommons/gt/
@@ -60,3 +68,6 @@ mv tfood/horizontal/test/* tfood/horizontal/
 rmdir tfood/horizontal/test/
 mv tfood/ /benchmarks/semtab/
 python3 dataset_subset.py 0.2 /benchmarks/semtab/tfood/horizontal/
+python3 extend_gt.py /benchmarks/semtab/tfood/horizontal/gt/cea_gt.csv wikidata
+./kg/neo4j-wikidata/bin/neo4j stop
+sleep 1m
