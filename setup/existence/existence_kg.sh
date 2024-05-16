@@ -2,8 +2,6 @@
 
 set -e
 
-# TODO: Remove ground truth entities that do not exist in the KG
-
 # Generate files of ground truth entities
 echo "Processing ground truth and KG files..."
 
