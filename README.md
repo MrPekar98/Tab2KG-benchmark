@@ -6,6 +6,7 @@ Before setting up this benchmark, make sure you have at least 1.5T disk space av
 ## Setup
 Before executing the benchmark, the table corpora must be downloaded and processed, Wikidata and DBpedia must be downloaded, and a Neo4J instance must be setup and populated with the two knowledge graphs.
 All of this is wrapped in a single Docker file `setup.dockerfile`.
+Before setting up the experiments, open `settings.sh` to decide on which datasets to setup and to be included when executing the experiments.
 To start setting up the experiments, run the following commands.
 
 ```bash
@@ -38,6 +39,9 @@ docker stop vos_existence
 The container will also remove ground truth entities that do not exist in the KG files.
 
 ## Running Benchmark
+First, open `settings.sh` to select which datasets to use in the experiments.
+Make sure to not include a dataset that wasn't included when setting up the setup.
+
 Executing the benchmark is simple.
 Similar to setting up the benchmark, run the following commands to start the entire benchmark pipeline.
 

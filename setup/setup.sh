@@ -2,6 +2,8 @@
 
 set -e
 
+/settings/setting.sh
+
 echo
 echo "Installing Neo4J"
 ./kg/install.sh
