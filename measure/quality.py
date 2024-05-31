@@ -67,6 +67,7 @@ def _measure_quality(predictions, gt):
 
 def evaluate_quality(base_dir, result_name, predictions, gt):
     scores = _measure_quality(predictions, gt)
+    print(result_name)
 
     for method in scores.keys():
         print(method)

@@ -58,7 +58,7 @@ To clean up all docker images, container, networks, etc., run the `cleanup.sh` s
 To evaluate the results, run the following command:
 
 ```bash
-docker run --rm -v ${PWD}/results/:/results -v ${PWD}/benchmarks/:/benchmarks -v ${PWD}/measure/:/measure python:3.8 python /measure/measure.py
+docker run --rm -v ${PWD}/results/:/results -v ${PWD}/benchmarks/:/benchmarks -v ${PWD}/measure/:/measure amancevice/pandas:slim-2.2.2 python /measure/measure.py
 ```
 
 This will generate CSV files for different measurement metrics, including precision, recall, F1-score, and runtime.
