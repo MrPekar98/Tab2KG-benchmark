@@ -20,7 +20,7 @@ then
     ./kg/neo4j-wikidata/bin/neo4j start
     ./kg_wait.sh /home/setup/kg/neo4j-wikidata/
     python3 extend_gt.py /benchmarks/wikitables_2013/gt/wikidata/gt.csv wikidata
-    python3 dataset_subset.py 0.05 /benchmarks/wikitables_2013/
+    python3 dataset_subset.py 0.01 /benchmarks/wikitables_2013/
     ./kg/neo4j-wikidata/bin/neo4j stop
     sleep 1m
 fi
@@ -43,7 +43,7 @@ then
     ./kg/neo4j-wikidata/bin/neo4j start
     ./kg_wait.sh /home/setup/kg/neo4j-wikidata/
     python3 extend_gt.py /benchmarks/wikitables_2019/gt/wikidata/gt.csv wikidata
-    python3 dataset_subset.py 0.05 /benchmarks/wikitables_2019/
+    python3 dataset_subset.py 0.01 /benchmarks/wikitables_2019/
     ./kg/neo4j-wikidata/bin/neo4j stop
     sleep 1m
 fi
