@@ -1,4 +1,5 @@
 import csv
+import target_cell_identifiability as tci
 
 # Only consider ground truth for tables that have been processed by the entity linker
 def _filter_gt(gt, predictions):
@@ -67,10 +68,20 @@ def _measure_quality(predictions, gt):
 
 def evaluate_quality(base_dir, result_name, predictions, gt):
     scores = _measure_quality(predictions, gt)
+    target_identifiability = tci.identifiability(predictions, gt)
     print(result_name)
+    print('Entity linking quality')
 
     for method in scores.keys():
         print(method)
         print('Precision:', scores[method]['precision'])
         print('Recall:', scores[method]['recall'])
         print('F1-score:', scores[method]['f1'], '\n')
+
+    print('\nTarget cell identifiability')
+
+    for method in target_identifiability:
+        print(method)
+        print('Precision:', target_identifiability[method]['precision'])
+        print('Recall:', target_identifiability[method]['recall'])
+        print('F1-score:', target_identifiability[method]['f1'])
