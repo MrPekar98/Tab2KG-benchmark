@@ -44,6 +44,38 @@ def read_emblookup(file_path, kg):
 
         return results
 
+# Read candidate generation results of EmbLookup
+def read_emblookup_candidates(file_path, kg):
+    with open(file_path, 'r') as input:
+        reader = csv.reader(input)
+        results = list()
+
+        for row in reader:
+            parsed_row = None
+
+            if len(row) == 1:
+                parsed_row = row[0].split(',')
+                parsed_row[1] = int(parsed_row[1])
+                parsed_row[2] = int(parsed_row[2])
+
+            else:
+                parsed_row = row
+
+            tuple = [parsed_row[0], int(parsed_row[1]) + 1, int(parsed_row[2])]
+            prefix = 'http://dbpedia.org/resource/'
+
+            if kg == 'wikidata':
+                prefix = 'http://www.wikidata.org/entity/'
+
+            elif kg != 'dbpedia':
+                raise Exception('KG not recognized')
+
+            candidates = [(prefix + entity.replace('"', '').replace('<', '').replace('>', '').lower()) for entity in parsed_row[3].split(' ')]
+            tuple.append(candidates)
+            results.append(tuple)
+
+        return results
+
 # Results of bbw
 def read_bbw(files_dir):
     results = list()
@@ -64,8 +96,32 @@ def read_bbw(files_dir):
 
     return results
 
+# Candidate generation results of bbw
+def read_bbw_candidates(files_dir):
+    results = list()
+    files = os.listdir(files_dir)
+
+    for file in files:
+        with open(files_dir + '/' + file, 'r') as input:
+            reader = csv.reader(input)
+            header_skipped = False
+
+            for row in reader:
+                if not header_skipped:
+                    header_skipped = True
+                    continue
+
+                tuple = [file.replace('.csv', ''), int(row[1]), int(row[2]), [entity.lower() for entity in row[3].split(' ')]]
+                results.append(tuple)
+
+    return results
+
 # Results of keyword-kg-linker
 def read_keyword_kg_linker():
+    pass
+
+# Results key-kg-linker candidate generation
+def read_keyword_kg_linker_candidates():
     pass
 
 # Results of LexMa
@@ -86,6 +142,21 @@ def read_lexma(result_files_dir):
 
     return results
 
+# Results of LexMa candidate generation
+def read_lexma_candidates(result_files_dir):
+    results = list()
+    files = os.listdir(result_files_dir)
+
+    for result_file in files:
+        with open(result_files_dir + result_file, 'r') as input:
+            reader = csv.reader(input)
+
+            for row in reader:
+                tuple = [result_file.replace('.csv', ''), int(row[0]) + 1, int(row[1]), [entity.lower() for entity in row[2].split(' ')]]
+                results.append(tuple)
+
+    return results
+
 # Results of MAGIC
 def read_magic(result_files_dir):
     results = list()
@@ -100,6 +171,21 @@ def read_magic(result_files_dir):
 
             for row in reader:
                 tuple = [row[0], int(row[1]) + 1, int(row[2]), row[3].lower()]
+                results.append(tuple)
+
+    return results
+
+# Results of MAGIC candidate generation
+def read_magic_candidates(result_file_dir):
+    results = list()
+    files = os.listdir(result_file_dir)
+
+    for result_file in files:
+        with open(result_files_dir + result_file, 'r') as input:
+            reader = csv.reader(input)
+
+            for row in reader:
+                tuple = [row[0], int(row[1]) + 1, int(row[2]), [entity.lower() for entity in row[3].split(' ')]]
                 results.append(tuple)
 
     return results

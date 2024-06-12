@@ -31,14 +31,15 @@ lexma_wikitables_2019_wd = rr.read_lexma(LEXMA + 'wikitables_2019_wd/')
 
 magic_hardtables = rr.read_magic(MAGIC + 'HardTables/')
 magic_tfood = rr.read_magic(MAGIC + 'tfood/')
+magic_tfood_candidates = rr.read_magic_candidates(MAGIC + 'tfood_candidates/')
 magic_toughtables_dbp = rr.read_magic(MAGIC + 'tough_tables_dbp/')
+magic_toughtables_dbp_candidates = rr.read_magic(MAGIC + 'tough_tables_candidates/')
 magic_toughtables_wd = rr.read_magic(MAGIC + 'tough_tables_wd/')
 magic_wikitables_2013_dbp = rr.read_magic(MAGIC + 'wikitables-2013_dbp/')
-magic_wikitables_2013_wd = rr.read_magic(MAGIC + 'wikitables-2013_wd')
+magic_wikitables_2013_wd = rr.read_magic(MAGIC + 'wikitables-2013_wd/')
+magic_wikitables_2013_wd_candidates = rr.read_magic(MAGIC + 'wikitables-2013_wd_candidates')
 magic_wikitables_2019_dbp = rr.read_magic(MAGIC + 'wikitables-2019_dbp/')
 magic_wikitables_2019_wd = rr.read_magic(MAGIC + 'wikitables-2019_wd')
-
-# TODO: Add the rest
 
 print('Reading ground truth...')
 
@@ -59,7 +60,7 @@ results_hardtables = {
     'LexMa': lexma_hardtables,
     'MAGIC': magic_hardtables
 }
-evaluate_quality('/measure', 'hardtables', results_hardtables, hardtables_gt)
+evaluate_quality('/measure', 'hardtables', results_hardtables, None, hardtables_gt)
 
 results_tfood = {
     'bbw': bbw_tfood,
@@ -67,7 +68,13 @@ results_tfood = {
     'LexMa': lexma_tfood,
     'MAGIC': magic_tfood
 }
-evaluate_quality('/measure', 'tfood', results_tfood, tfood_gt)
+candidates_tfood = {
+    #'bbw':
+    #'EMBLOOKUP'
+    #'LexMa'
+    'MAGIC': magic_tfood_candidates
+}
+evaluate_quality('/measure', 'tfood', results_tfood, candidates_tfood, tfood_gt)
 
 results_toughtables_wd = {
     'bbw': bbw_toughtables,
@@ -75,21 +82,27 @@ results_toughtables_wd = {
     'LexMa': lexma_toughtables_wd,
     'MAGIC': magic_toughtables_wd
 }
-evaluate_quality('/measure', 'toughtables_wd', results_toughtables_wd, toughtables_wd)
+evaluate_quality('/measure', 'toughtables_wd', results_toughtables_wd, None, toughtables_wd)
 
 results_toughtables_dbp = {
     'EMBLOOKUP': emblookup_toughtables_dbp,
     'LexMa': lexma_toughtables_dbp,
     'MAGIC': magic_toughtables_dbp
 }
-evaluate_quality('/measure', 'toughtables_dbp', results_toughtables_dbp, toughtables_dbp)
+candidates_toughtables_dbp = {
+    #'bbw':
+    #'EMBLOOKUP'
+    #'LexMa'
+    'MAGIC': magic_toughtables_dbp_candidates
+}
+evaluate_quality('/measure', 'toughtables_dbp', results_toughtables_dbp, candidates_toughtables_dbp, toughtables_dbp)
 
 results_wikitables_2013_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2013_dbp,
     'LexMa': lexma_wikitables_2013_dbp,
     'MAGIC': magic_wikitables_2013_dbp
 }
-evaluate_quality('/measure', 'wikitables_2013_dbp', results_wikitables_2013_dbp, wikitables_2013_dbp)
+evaluate_quality('/measure', 'wikitables_2013_dbp', results_wikitables_2013_dbp, None, wikitables_2013_dbp)
 
 results_wikitables_2013_wd = {
     'bbw': bbw_wikitables_2013,
@@ -97,14 +110,20 @@ results_wikitables_2013_wd = {
     'LexMa': lexma_wikitables_2013_wd,
     'MAGIC': magic_wikitables_2013_wd
 }
-evaluate_quality('/measure', 'wikitables_2013_wd', results_wikitables_2013_wd, wikitables_2013_wd)
+candidates_wikitables_2013_wd = {
+     #'bbw':
+    #'EMBLOOKUP'
+    #'LexMa'
+    'MAGIC': magic_wikitables_2013_wd_candidates
+}
+evaluate_quality('/measure', 'wikitables_2013_wd', results_wikitables_2013_wd, candidates_wikitables_2013_wd, wikitables_2013_wd)
 
 results_wikitables_2019_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2019_dbp,
     'LexMa': lexma_wikitables_2019_dbp,
     'MAGIC': magic_wikitables_2019_dbp
 }
-evaluate_quality('/measure', 'wikitables_2019_dbp', results_wikitables_2019_dbp, wikitables_2019_dbp)
+evaluate_quality('/measure', 'wikitables_2019_dbp', results_wikitables_2019_dbp, None, wikitables_2019_dbp)
 
 results_wikitables_2019_wd = {
     'bbw': bbw_wikitables_2019,
@@ -112,6 +131,6 @@ results_wikitables_2019_wd = {
     'LexMa': lexma_wikitables_2019_wd,
     'MAGIC': magic_wikitables_2019_wd
 }
-evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, wikitables_2019_wd)
+evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, None, wikitables_2019_wd)
 
 print('Done')

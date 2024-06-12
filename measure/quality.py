@@ -1,19 +1,7 @@
 import csv
+import filter_ground_truth as fgt
 import target_cell_identifiability as tci
-
-# Only consider ground truth for tables that have been processed by the entity linker
-def _filter_gt(gt, predictions):
-    filtered_gt = dict()
-    processed_tables = set()
-
-    for result in predictions:
-        processed_tables.add(result[0])
-
-    for table_id in gt.keys():
-        if table_id in processed_tables:
-            filtered_gt[table_id] = gt[table_id]
-
-    return filtered_gt
+import candidate_generation as cg
 
 # Measures all metrics as a single value across all tables
 def _measure_quality(predictions, gt):
@@ -21,7 +9,7 @@ def _measure_quality(predictions, gt):
     method_gt_cell_ent = dict()
 
     for method in predictions.keys():
-        gt_per_method[method] = _filter_gt(gt, predictions[method])
+        gt_per_method[method] = fgt.filter_gt(gt, predictions[method])
         method_gt_cell_ent[method] = dict()
 
         for table_id in gt_per_method[method].keys():
@@ -66,9 +54,10 @@ def _measure_quality(predictions, gt):
 
     return scores
 
-def evaluate_quality(base_dir, result_name, predictions, gt):
+def evaluate_quality(base_dir, result_name, predictions, candidates, gt):
     scores = _measure_quality(predictions, gt)
     target_identifiability = tci.identifiability(predictions, gt)
+    candidate_quality = cg.evaluate_candidate_generation(candidates, gt) if not candidates is None else None
     print(result_name)
     print('Entity linking quality')
 
@@ -76,7 +65,7 @@ def evaluate_quality(base_dir, result_name, predictions, gt):
         print(method)
         print('Precision:', scores[method]['precision'])
         print('Recall:', scores[method]['recall'])
-        print('F1-score:', scores[method]['f1'], '\n')
+        print('F1-score:', scores[method]['f1'])
 
     print('\nTarget cell identifiability')
 
@@ -85,3 +74,12 @@ def evaluate_quality(base_dir, result_name, predictions, gt):
         print('Precision:', target_identifiability[method]['precision'])
         print('Recall:', target_identifiability[method]['recall'])
         print('F1-score:', target_identifiability[method]['f1'])
+
+    if not candidates is None:
+        print('\nCandidate generation hit rate')
+
+        for method in candidate_quality.keys():
+            print(method)
+            print('Hit rate:', candidate_quality[method])
+
+    print()

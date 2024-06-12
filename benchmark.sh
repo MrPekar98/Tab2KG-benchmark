@@ -122,3 +122,51 @@ ROOT=${PWD}
 cd ${KEYWORD_KG_LINKER}
 ./evaluate.sh
 cd ${ROOT}
+
+# EmbLookup - candidates
+
+# bbw - candidates
+
+# Magic - candidates
+docker run -it --rm -d --network kg-lookup-network \
+           -v ${PWD}/baselines/magic/lucene_dbp_2016/:/lucene \
+           -p 7000:7000 \
+           -e MEM=200g \
+           -e GRAPH=dbp_2016 \
+           -e VIRTUOSO=$(docker exec vos bash -c "hostname -I") \
+           --name kg-lookup-service kg-lookup
+sleep 2m
+
+ENDPOINT_IP=$(docker exec kg-lookup-service hostname -I)
+docker run --rm --network kg-lookup-network -e ENDPOINT=${ENDPOINT_IP} -e KG="dbp-10-2016" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/baselines/magic/:/hdt -v ${PWD}/results:/results magic_candidates
+docker stop kg-lookup-service
+
+docker run -it --rm -d --network kg-lookup-network \
+           -v ${PWD}/baselines/magic/lucene_dbp_2022/:/lucene \
+           -p 7000:7000 \
+           -e MEM=200g \
+           -e GRAPH=dbp_2022 \
+           -e VIRTUOSO=$(docker exec vos bash -c "hostname -I") \
+           --name kg-lookup-service kg-lookup
+sleep 2m
+
+ENDPOINT_IP=$(docker exec kg-lookup-service hostname -I)
+docker run --rm --network kg-lookup-network -e ENDPOINT=${ENDPOINT_IP} -e KG="dbp-12-2022" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/baselines/magic/:/hdt -v ${PWD}/results:/results magic_candidates
+docker stop kg-lookup-service
+
+docker run -it --rm -d --network kg-lookup-network \
+           -v ${PWD}/baselines/lexma/lucene_wd/:/lucene \
+           -p 7000:7000 \
+           -e MEM=200g \
+           -e GRAPH=wd \
+           -e VIRTUOSO=$(docker exec vos bash -c "hostname -I") \
+           --name kg-lookup-service kg-lookup
+sleep 2m
+
+ENDPOINT_IP=$(docker exec kg-lookup-service hostname -I)
+docker run --rm --network kg-lookup-network -e ENDPOINT=${ENDPOINT_IP} -e KG="wd" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/baselines/magic/:/hdt -v ${PWD}/results:/results magic_candidates
+docker stop kg-lookup-service
+
+# LexMa - candidates
+
+# keyword-kg-linker - candidates
