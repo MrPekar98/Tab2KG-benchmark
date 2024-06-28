@@ -1,18 +1,23 @@
+import filter_ground_truth as fgt
+
 def identifiability(predictions, gt):
-    results = dict()
-    cells = dict()
-    target_cell_count = 0
-
-    for table in gt.keys():
-        cells[table] = set()
-
-        for cell in gt[table]:
-            row = cell[0]
-            column = cell[1]
-            cells[table].add((row, column))
-            target_cell_count += 1
+    method_gt_cells = dict()
 
     for method in predictions.keys():
+        method_gt = fgt.filter_gt(gt, predictions[method])
+        method_gt_cells[method] = 0
+        results = dict()
+        cells = dict()
+
+        for table_id in method_gt.keys():
+            cells[table_id] = set()
+
+            for cell in method_gt[table_id]:
+                method_gt_cells[method] += 1
+                row = cell[0]
+                column = cell[1]
+                cells[table_id].add((row, column))
+
         total = 0
         correct = 0
 
@@ -26,7 +31,7 @@ def identifiability(predictions, gt):
                 correct += 1
 
         precision = correct / total if total > 0 else 0.0
-        recall = correct / target_cell_count
+        recall = correct / method_gt_cells[method]
         f1 = (2 * precision * recall) / (precision + recall) if (precision + recall) > 0 else 0.0
         results[method] = {'precision': precision, 'recall': recall, 'f1': f1}
 
