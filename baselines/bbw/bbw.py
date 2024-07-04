@@ -55,7 +55,7 @@ def get_SPARQL_dataframe(name, language,
         Possible mention in wikidata.
     url : str, optional
         SPARQL-endpoint. The default is "http://" + virtuoso + ":8890/sparql".
-    extra : str
+    extra : strdef get_SPARQL_dataframe(name, language
         An extra parameter that will be also SELECTed in the SPARQL query.
     Returns
     -------
@@ -73,15 +73,12 @@ def get_SPARQL_dataframe(name, language,
         FILTER (lang(?itemLabel) = """ + '"' + lang + '").'
     else:
         subquery = ""
-    query = "SELECT DISTINCT ?item " + extra + """?itemType ?p1 ?p2 ?value ?valueType ?valueLabel ?psvalueLabel WHERE {
-                ?item ?p1 """ + '"' + name + '"' + "@" + lang + """;
-                ?p2 ?value.""" + subquery + """
-                OPTIONAL { ?item <http://www.wikidata.org/prop/direct/P31> ?itemType. }
-                OPTIONAL { ?value <http://www.wikidata.org/prop/direct/P31> ?valueType. }
-                OPTIONAL {
-                    ?wdproperty <http://wikiba.se/ontology#claim> ?p2 ;
-                        <http://wikiba.se/ontology#statementProperty> ?psproperty .
-                    ?value ?psproperty ?psvalue .
+    query = "SELECT DISTINCT ?item " + extra + """?itemType ?p1 ?p2 ?value ?valueType WHERE {
+                GRAPH <http://localhost:8890/wd> {
+                    ?item ?p1 """ + '"' + name + '"' + "@" + lang + """;
+                    ?p2 ?value.""" + subquery + """
+                    OPTIONAL { ?item <http://www.wikidata.org/prop/direct/P31> ?itemType. }
+                    OPTIONAL { ?value <http://www.wikidata.org/prop/direct/P31> ?valueType. }
                 }
             }
             LIMIT 100000
@@ -106,11 +103,10 @@ def get_SPARQL_dataframe(name, language,
             output = pd.DataFrame(results, dtype=str)
         else:
             output = None
-    except Exception:
+    except Exception as e:
         output = None
 
     return output
-
 
 def get_SPARQL_dataframe_item(name, language, 
                               url="http://" + virtuoso + ":8890/sparql"):
@@ -132,12 +128,14 @@ def get_SPARQL_dataframe_item(name, language,
     else:
         lang = get_language(name)
     query = """SELECT REDUCED ?value ?valueType ?p2 ?item ?itemType ?itemLabel WHERE {
-                ?value <http://www.w3.org/2000/01/rdf-schema#label> """ + '"' + name + '"@' + lang + """;
-                <http://www.wikidata.org/prop/direct/P31> ?valueType.
-                ?item ?p2 [ ?x """ + '"' + name + '"@' + lang + """].
-                ?item <http://www.wikidata.org/prop/direct/P31> ?itemType.
-                ?item <http://www.w3.org/2000/01/rdf-schema#label> ?itemLabel.
-                FILTER((LANG(?itemLabel)) = "en").
+                GRAPH <http://localhost:8890/wd> {
+                    ?value <http://www.w3.org/2000/01/rdf-schema#label> """ + '"' + name + '"@' + lang + """;
+                    <http://www.wikidata.org/prop/direct/P31> ?valueType.
+                    ?item ?p2 [ ?x """ + '"' + name + '"@' + lang + """].
+                    ?item <http://www.wikidata.org/prop/direct/P31> ?itemType.
+                    ?item <http://www.w3.org/2000/01/rdf-schema#label> ?itemLabel.
+                    FILTER((LANG(?itemLabel)) = "en").
+                }
             }
             LIMIT 10000
             """
@@ -174,18 +172,17 @@ def get_SPARQL_dataframe_prop(prop, value, url="http://" + virtuoso + ":8890/spa
     # wdt:"""+ str(prop) + """ [ ?p """ + '"' + str(value) + '"' + """@en ] ;
     #    <http://www.wikidata.org/prop/direct/"""+ str(prop) + """> ?value0;
     query = """
-    SELECT REDUCED ?item ?itemType ?itemLabel ?p2 ?value ?valueType ?valueLabel ?psvalueLabel WHERE {
-  ?item """ + subquery + """
-        ?p2 ?value.
-  ?item <http://www.wikidata.org/prop/direct/P31> ?itemType;
-        <http://www.w3.org/2000/01/rdf-schema#label> ?itemLabel.
-  FILTER (lang(?itemLabel) = "en").
-  OPTIONAL {
-  ?value <http://www.wikidata.org/prop/direct/P31> ?valueType .}
-  OPTIONAL {?wdproperty <http://wikiba.se/ontology#claim> ?p2 ;
-                        <http://wikiba.se/ontology#statementProperty> ?psproperty .
-            ?value ?psproperty ?psvalue .}
-   }
+    SELECT REDUCED ?item ?itemType ?itemLabel ?p2 ?value ?valueType WHERE {
+        GRAPH <http://localhost:8890/wd> {
+            ?item """ + subquery + """
+            ?p2 ?value.
+            ?item <http://www.wikidata.org/prop/direct/P31> ?itemType;
+            <http://www.w3.org/2000/01/rdf-schema#label> ?itemLabel.
+            FILTER (lang(?itemLabel) = "en").
+            OPTIONAL {
+                ?value <http://www.wikidata.org/prop/direct/P31> ?valueType .}
+        }
+    }
     LIMIT 50000
     """
     try:
@@ -221,8 +218,10 @@ def get_SPARQL_dataframe_type(name, datatype, language, url="http://" + virtuoso
     else:
         lang = get_language(name)
     query = """SELECT DISTINCT ?item ?itemLabel WHERE {
-        {?item  (<http://www.w3.org/2000/01/rdf-schema#label>|<http://www.w3.org/2004/02/skos/core#altLabel>) """ + '"' + name + '"@' + lang + """.}
-        ?item <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/prop/direct/""" + datatype + """> .
+        GRAPH <http://localhost:8890/wd> {
+            {?item  (<http://www.w3.org/2000/01/rdf-schema#label>|<http://www.w3.org/2004/02/skos/core#altLabel>) """ + '"' + name + '"@' + lang + """.}
+            ?item <http://www.wikidata.org/prop/direct/P31> <http://www.wikidata.org/prop/direct/""" + datatype + """> .
+            }
         }
         LIMIT 10000"""
     try:
@@ -259,9 +258,11 @@ def get_SPARQL_dataframe_type2(datatype, language, url="http://" + virtuoso + ":
     else:
         lang = "en"
     query = """SELECT REDUCED ?itemLabel WHERE {
-        []  <http://www.wikidata.org/prop/direct/P31> wd:""" + datatype + """;
-              (<http://www.w3.org/2000/01/rdf-schema#label>|<http://www.w3.org/2004/02/skos/core#altLabel>) ?itemLabel.
-        FILTER (lang(?itemLabel) = """ + '"' + lang + '"' + """).
+        GRAPH <http://localhost:8890/wd> {
+            []  <http://www.wikidata.org/prop/direct/P31> wd:""" + datatype + """;
+                  (<http://www.w3.org/2000/01/rdf-schema#label>|<http://www.w3.org/2004/02/skos/core#altLabel>) ?itemLabel.
+            FILTER (lang(?itemLabel) = """ + '"' + lang + '"' + """).
+            }
         }
         """+limit
     try:
@@ -531,7 +532,6 @@ def get_searx_bestname(name):
         bestname = None
     return bestname
 
-
 def isfloat(value):
     try:
         float(value.replace(',', ''))
@@ -645,7 +645,6 @@ def lookup(name_in_data, language, metalookup=True, openrefine=False):
                 how_matched = 'OpenRefine'  # proper_name is found in Wikidata
     return [WDdf, how_matched, proper_name]
 
-
 def detect_name(value):
     """
     This is an extended function from https://github.com/IBCNServices/CSV2KG/blob/master/csv2kg/util.py
@@ -672,40 +671,40 @@ def match(WDdf, target_value):
         isdate = True
         target_value = match_date[1] + "-" + match_date[2] + "-" + match_date[3]
     # 1. exact matching of valueLabels
-    df = WDdf[WDdf.valueLabel == target_value]
+    df = WDdf[WDdf.value == target_value]
     # 2a. case-insensitive exact matching of valueLabels
     if df.empty and not isfloat(target_value):
-        df = WDdf[WDdf.valueLabel.str.lower() == str.lower(target_value)]
+        df = WDdf[WDdf.value.str.lower() == str.lower(target_value)]
         # 2b. inexact matching of valueLabels with high cuttoff=0.95
         if df.empty:
-            approx_matches = difflib.get_close_matches(target_value, WDdf.valueLabel.to_list(), n=3, cutoff=0.95)
+            approx_matches = difflib.get_close_matches(target_value, WDdf.value.to_list(), n=3, cutoff=0.95)
             if len(approx_matches) == 0:
-                approx_matches = difflib.get_close_matches(target_value, WDdf.valueLabel.to_list(), n=3, cutoff=0.5)
+                approx_matches = difflib.get_close_matches(target_value, WDdf.value.to_list(), n=3, cutoff=0.5)
             if len(approx_matches) > 0:
-                df = WDdf[WDdf.valueLabel.isin(approx_matches)]
+                df = WDdf[WDdf.value.isin(approx_matches)]
             else:
                 if detect_name(target_value):
-                    df = WDdf[WDdf.valueLabel.apply(
+                    df = WDdf[WDdf.value.apply(
                         lambda x: all(word in x.lower() for word in detect_name(target_value).lower()))]
     # 3. approximate date matching
     if df.empty and isdate:
-        wd_dates = [x for x in WDdf.valueLabel.to_list() if re.match(r"^\d{4}-\d{2}-\d{2}", x)]
+        wd_dates = [x for x in WDdf.value.to_list() if re.match(r"^\d{4}-\d{2}-\d{2}", x)]
         target_datetime = date.fromisoformat(target_value)
         approximate_match = min(wd_dates, key=lambda x: abs(date.fromisoformat(x[:10]) - target_datetime))
         # check that approximate date is within 6 months
         delta = date.fromisoformat(approximate_match[:10]) - target_datetime
         if abs(delta.days) < 183:
-            df = WDdf[WDdf.valueLabel == approximate_match]
+            df = WDdf[WDdf.value == approximate_match]
     # 4. approximate floating numbers matching
     if df.empty and isfloat(target_value):
-        wd_floats = [x for x in WDdf.valueLabel.to_list() if isfloat(x)]
+        wd_floats = [x for x in WDdf.value.to_list() if isfloat(x)]
         # get only one approximate match
         # approximate_match = min(wd_floats, key=lambda x: abs(float(x) - float(target_value)))
         # get all approximate matches within a 2% range
         all_approximate_matches = [x for x in wd_floats if
                                    (abs(float(x) - float(target_value)) <= 0.02 * abs(float(x)))]
         if len(all_approximate_matches) > 0:
-            df = WDdf[WDdf.valueLabel.isin(all_approximate_matches)]
+            df = WDdf[WDdf.value.isin(all_approximate_matches)]
 
     return df
 
@@ -792,7 +791,9 @@ def contextual_matching(filecsv, filename='', language='', semtab = False,
                             if value:
                                 cea_list.append(
                                     [filename, row, col, value, valueType, 'Step 2: ' + how_matched, proper_name])
-                        except Exception:
+                        except Exception as e:
+                            handle = open('/results/exception-' + str(e) + '.txt', 'w')
+                            handle.close()
                             pass
             else:
                 nomatch.append([filename, row, name_in_data, proper_name])

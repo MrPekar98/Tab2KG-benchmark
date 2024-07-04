@@ -10,7 +10,7 @@ SLEEP=8h
 # Tough Tables - Wikidata
 if [[ -d ${TOUGH_TABLES_WD} ]]
 then
-    python bbwWrapper.py ${TOUGH_TABLES_WD} toughtables_wd_scalability &
+    python main.py ${TOUGH_TABLES_WD} /results/bbw/toughtables_wd_scalability/ ${ENDPOINT} ${VIRTUOSO} &
     PID=$1
     sleep ${SLEEP}
     kill -9 ${PID}
@@ -19,7 +19,7 @@ fi
 # Wikitables
 if [[ -d ${WIKITABLES} ]]
 then
-    python bbwWrapper.py ${WIKITABLES} wikitables_scalability &
+    python main.py ${WIKITABLES} /results/bbw/wikitables_scalability/ ${ENDPOINT} ${VIRTUOSO} &
     PID=$1
     sleep ${SLEEP}
     kill -9 ${PID}
