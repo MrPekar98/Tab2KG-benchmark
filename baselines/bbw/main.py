@@ -23,7 +23,7 @@ for table_file in os.listdir(tables_dir):
     runtimes.append([file.replace('.csv', ''), end])
     cea.to_csv(output_dir + table_file)
 
-with open(output_dir + 'runtimes.csv') as handle:
+with open(output_dir + 'runtimes.csv', 'w') as handle:
     writer = csv.writer(handle)
     writer.writerow(['table', 'miliseconds'])
 
