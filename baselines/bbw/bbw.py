@@ -792,8 +792,6 @@ def contextual_matching(filecsv, filename='', language='', semtab = False,
                                 cea_list.append(
                                     [filename, row, col, value, valueType, 'Step 2: ' + how_matched, proper_name])
                         except Exception as e:
-                            handle = open('/results/exception-' + str(e) + '.txt', 'w')
-                            handle.close()
                             pass
             else:
                 nomatch.append([filename, row, name_in_data, proper_name])
