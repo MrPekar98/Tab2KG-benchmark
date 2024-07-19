@@ -17,7 +17,7 @@ then
     fi
 
     # tFood
-    mkdir -p {RESULT_DIR}lexma/tfood/
+    mkdir -p ${RESULT_DIR}lexma/tfood/
     CORPUS="${BENCHMARK_DIR}semtab/tfood/horizontal/tables_subset/"
 
     if [[ -d ${CORPUS} ]]
