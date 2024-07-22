@@ -21,7 +21,7 @@ emblookup_wikitables_2019_dbp = rr.read_emblookup(EMBLOOKUP + 'wikitables_2019_d
 emblookup_wikitables_2019_wd = rr.read_emblookup(EMBLOOKUP + 'wikitables_2019_wd/results.csv', 'wikidata')
 
 lexma_hardtables = rr.read_lexma(LEXMA + 'hardtables/')
-lexma_tfood = rr.read_lexma(LEXMA + 'tfood/output.csv')
+lexma_tfood = rr.read_lexma(LEXMA + 'tfood/')
 lexma_toughtables_dbp = rr.read_lexma(LEXMA + 'toughtables_dbp/')
 lexma_toughtables_wd = rr.read_lexma(LEXMA + 'toughtables_wd/')
 lexma_wikitables_2013_dbp = rr.read_lexma(LEXMA + 'wikitables_2013_dbp/')
@@ -39,7 +39,7 @@ magic_wikitables_2013_dbp = rr.read_magic(MAGIC + 'wikitables-2013_dbp/')
 magic_wikitables_2013_wd = rr.read_magic(MAGIC + 'wikitables-2013_wd/')
 magic_wikitables_2013_wd_candidates = rr.read_magic(MAGIC + 'wikitables-2013_wd_candidates')
 magic_wikitables_2019_dbp = rr.read_magic(MAGIC + 'wikitables-2019_dbp/')
-magic_wikitables_2019_wd = rr.read_magic(MAGIC + 'wikitables-2019_wd')
+magic_wikitables_2019_wd = rr.read_magic(MAGIC + 'wikitables-2019_wd/')
 
 print('Reading ground truth...')
 
@@ -69,9 +69,9 @@ results_tfood = {
     'MAGIC': magic_tfood
 }
 candidates_tfood = {
-    #'bbw':
-    #'EMBLOOKUP'
-    #'LexMa'
+    'bbw':
+    'EMBLOOKUP'
+    'LexMa'
     'MAGIC': magic_tfood_candidates
 }
 evaluate_quality('/measure', 'tfood', results_tfood, candidates_tfood, tfood_gt)
@@ -90,9 +90,9 @@ results_toughtables_dbp = {
     'MAGIC': magic_toughtables_dbp
 }
 candidates_toughtables_dbp = {
-    #'bbw':
-    #'EMBLOOKUP'
-    #'LexMa'
+    'bbw':
+    'EMBLOOKUP'
+    'LexMa'
     'MAGIC': magic_toughtables_dbp_candidates
 }
 evaluate_quality('/measure', 'toughtables_dbp', results_toughtables_dbp, candidates_toughtables_dbp, toughtables_dbp)
@@ -111,9 +111,9 @@ results_wikitables_2013_wd = {
     'MAGIC': magic_wikitables_2013_wd
 }
 candidates_wikitables_2013_wd = {
-     #'bbw':
-    #'EMBLOOKUP'
-    #'LexMa'
+    'bbw':
+    'EMBLOOKUP'
+    'LexMa'
     'MAGIC': magic_wikitables_2013_wd_candidates
 }
 evaluate_quality('/measure', 'wikitables_2013_wd', results_wikitables_2013_wd, candidates_wikitables_2013_wd, wikitables_2013_wd)
