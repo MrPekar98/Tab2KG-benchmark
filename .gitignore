@@ -48,6 +48,10 @@ baselines/keyword-kg-linker/README.md
 baselines/keyword-kg-linker/linker.sh
 baselines/keyword-kg-linker/load.sh
 baselines/keyword-kg-linker/pom.xml
+baselines/keyword-kg-linker/dbp_16/
+baselines/keyword-kg-linker/dbp_22/
+baselines/keyword-kg-linker/wd/
+baselines/keyword-kg-linker/Dockerfile
 results/
 measure/__pycache__/
 measure/*.csv
