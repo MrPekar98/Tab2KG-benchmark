@@ -8,6 +8,7 @@ ADD download_nltk.py .
 RUN python download_nltk.py
 
 ADD lexma.py .
+ADD lexma_candidates.py .
 ADD evaluate.sh .
 ADD experiments/ .
 

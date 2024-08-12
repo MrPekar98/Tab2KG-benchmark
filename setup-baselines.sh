@@ -23,7 +23,6 @@ docker network inspect ${NETWORK} >/dev/null 2>&1 || docker network create ${NET
 
 docker build -t bbw -f ${BBW}bbw.dockerfile ${BBW}
 docker build -t magic -f ${MAGIC}magic.dockerfile ${MAGIC}
-docker build -t magic_candidates -f ${MAGIC}magic_candidates.dockerfile ${MAGIC}
 docker build -t lexma -f ${LEXMA}lexma.dockerfile ${LEXMA}
 docker build -t emblookup -f ${EMBLOOKUP}emblookup.dockerfile ${EMBLOOKUP}
 

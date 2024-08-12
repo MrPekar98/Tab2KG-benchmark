@@ -14,6 +14,7 @@ RUN git clone https://github.com/IBCNServices/INK.git
 RUN pip install -e INK/
 
 ADD main.py .
+ADD main_candidates.py .
 ADD evaluate.sh .
 ADD experiments/ .
 
