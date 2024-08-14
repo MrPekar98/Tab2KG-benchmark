@@ -11,27 +11,6 @@ SLEEP=8h
 
 cd ..
 
-# ToughTables - DBpedia
-if [[ -d ${TOUGH_TABLES_DBP} ]]
-then
-    RESULTS=${RESULT_DIR}/toughtables_dbp_scalability/
-    mkdir -p ${RESULTS}/keyword/ ${RESULTS}/embedding/
-
-    docker start neo4j_dbp16
-    sleep 10m
-
-    ./linker.sh -tables ${TOUGH_TABLES_DBP} -output ${RESULTS}/keyword/ -dir dbp_16/ -config config.json -type keyword &
-    sleep ${SLEEP}
-    docker stop keyword-kg-linker-container
-
-    ./linker.sh -tables ${TOUGH_TABLES_DBP} -output ${RESULTS}/embedding/ -dir dbp_16/ -config config.json -type embedding
-    sleep ${SLEEP}
-    docker stop keyword-kg-linker-container
-
-    docker stop neo4j_dbp16
-    sleep 1m
-fi
-
 # ToughTables - Wikidata
 if [[ -d ${TOUGH_TABLES_WD} ]]
 then

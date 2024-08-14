@@ -8,18 +8,6 @@ TOUGH_TABLES_WD=${BENCHMARK_DIR}toughtables/wikidata/tables/
 WIKITABLES=${BENCHMARK_DIR}wikitables_2013/tables/
 SLEEP=8h
 
-# ToughTables - DBpedia
-if [[ "${KG}" = "dbp_16" && -d ${TOUGH_TABLES_DBP} ]]
-then
-    RESULTS="/results/lexma/toughtables_dbp_scalability"
-    mkdir -p ${RESULTS}
-
-    python lexma.py dbpedia "${TOUGH_TABLES_DBP}" ${RESULTS} 10 "http://${ENDPOINT}:7000/" &
-    PID=$1
-    sleep ${SLEEP}
-    kill -9 ${PID}
-fi
-
 # ToughTables - Wikidata
 if [[ "${KG}" = "wd" && -d ${TOUGH_TABLES_WD} ]]
 then

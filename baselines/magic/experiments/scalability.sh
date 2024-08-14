@@ -8,18 +8,6 @@ TOUGH_TABLES_WD=${BENCHMARK_DIR}toughtables/wikidata/tables/
 WIKITABLES=${BENCHMARK_DIR}wikitables_2013/tables/
 SLEEP=8h
 
-# ToughTables - DBpedia
-if [[ "${KG}" = "dbp-10-2016" && -d ${TOUGH_TABLES_DBP} ]]
-then
-    RESULTS="/results/magic/toughtables_dbp_scalability"
-    mkdir -p ${RESULTS}
-
-    python3 main.py dbpedia "/hdt/${KG}.hdt" "${TOUGH_TABLES_DBP}" "${RESULTS}" ${ENDPOINT} &
-    PID=$1
-    sleep ${SLEEP}
-    kill -9 ${PID}
-fi
-
 # ToughTables - Wikidata
 if [[ "${KG}" = "wd" && -d ${TOUGH_TABLES_WD} ]]
 then
