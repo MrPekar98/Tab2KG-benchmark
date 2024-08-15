@@ -2,6 +2,7 @@ import csv
 from data import *
 import read_results as rr
 from quality import evaluate_quality
+from runtime import linked_tables
 
 print('Reading experiment results...')
 
@@ -132,5 +133,10 @@ results_wikitables_2019_wd = {
     'MAGIC': magic_wikitables_2019_wd
 }
 evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, None, wikitables_2019_wd)
+
+print('\nEvaluating scalability')
+
+linked_tables(BBW + 'toughtables_wd_scalability/', 'BBW', 'Tough Tables - Wikidata')
+linked_tables(BBW + 'wikitables_scalability', 'BBW', 'Wikitables 2013')
 
 print('Done')

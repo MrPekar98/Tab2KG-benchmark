@@ -1,3 +1,6 @@
-import csv
-from data import *
-import read_results as rr
+import os
+
+def linked_tables(dir, method, name):
+    print(method)
+    print(name)
+    print(len(os.listdir(dir)))
