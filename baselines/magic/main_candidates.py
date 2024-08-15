@@ -80,10 +80,6 @@ if __name__ == '__main__':
     if not output.endswith('/'):
         output += '/'
 
-    store = HDTStore(hdt)
-    g = Graph(store)
-    connector = HDTConnector()
-    runtimes = dict()
     api = None
 
     if kg == 'dbpedia':
@@ -93,23 +89,28 @@ if __name__ == '__main__':
         api = WikiMagic(endpoint_ip)
 
     for file in tqdm(glob.glob(corpus + '*.csv')):
-        with open(output + file, 'w') as handle:
-            writer = csv.writer(handle)
-            column_count = file_columns(file)
-            name = file.split('/')[-1].split('.')[0]
-            annotator = None
-            print('Linking ' + name)
+        with open(file, 'r') as input_handle:
+            with open(output + file.split('/')[-1], 'w') as out_handle:
+                writer = csv.writer(out_handle)
+                column_count = file_columns(file)
+                name = file.split('/')[-1].split('.')[0]
+                annotator = None
+                print('Linking ' + name)
 
-            for i in range(column_count):
-                df = pd.read_csv(file, index_col = i)
+                for i in range(column_count):
+                    df = pd.read_csv(file, index_col = i)
+                    j = 0
 
-                for k, row in df.iterrows():
-                    candidates = api.search_entity_api(re.sub("[\(\[].*?[\)\]]", "", row[i]))
-                    cand_str = ""
+                    for k, row in df.iterrows():
+                        if i < len(row) and isinstance(row[i], (str)):
+                            candidates = api.search_entity_api(re.sub("[\(\[].*?[\)\]]", "", row[i]))
+                            cand_str = ""
 
-                    for candidate in candidates:
-                        cand_str += candidate + ' '
+                            for candidate in candidates:
+                                cand_str += candidate + ' '
 
-                    cand_str = cand_str[:-1]
-                    tuple = [name.replace('.csv', ''), k, i, cand_str]
-                    writer.writerow(tuple)
+                            cand_str = cand_str[:-1]
+                            tuple = [name.replace('.csv', ''), j, i, cand_str]
+                            writer.writerow(tuple)
+
+                        j += 1
