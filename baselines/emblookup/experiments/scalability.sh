@@ -9,17 +9,6 @@ WIKITABLES=${BENCHMARK_DIR}wikitables_2013/tables/
 DATA_DIR="data/"
 SLEEP=8h
 
-# ToughTables - DBpedia
-if [[ -d ${TOUGH_TABLES_DBP} ]]
-then
-    mkdir -p /results/emblookup/toughtables_dbp_scalability
-
-    python3 main.py "${TOUGH_TABLES_DBP}" "${DATA_DIR}aliases/alias_dbp10-2016.ttl" "${DATA_DIR}index_mappings/kg_index_name_mapping_dbp10-2016.csv" "${DATA_DIR}aliases_processed/aliases_processed_dbp10-2016.csv" -h &
-    PID=$1
-    sleep ${SLEEP}
-    kill -9 ${PID}
-fi
-
 # ToughTables - Wikidata
 if [[ -d ${TOUGH_TABLES_WD} ]]
 then

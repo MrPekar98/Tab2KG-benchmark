@@ -4,3 +4,4 @@
 !/experiments/*
 !lexma.dockerfile
 !lexma.py
+!lexma_candidates.py
