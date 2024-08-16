@@ -367,7 +367,8 @@ if __name__ == '__main__':
                 candidates = ''
 
                 for entity in entities:
-                    candidates += entity + ' '
+                    if 'uri' in entity.keys():
+                        candidates += entity['uri'] + ' '
 
                 linked_rows.append([row_index, column_index, candidates])
                 column_index += 1
