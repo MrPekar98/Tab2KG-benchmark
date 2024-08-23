@@ -137,8 +137,10 @@ evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, N
 print('\nEvaluating scalability')
 
 linked_tables(BBW + 'toughtables_wd_scalability/', 'BBW', 'Tough Tables - Wikidata')
-linked_tables(BBW + 'wikitables_scalability', 'BBW', 'Wikitables 2013')
-linked_tables(LEXMA + 'toughtables_wd_scalability', 'LexMa', 'Tough Tables - Wikidata')
-linked_tables(LEXMA + 'wikitables_dbp_2013_scalability', 'LexMa', 'Wikitables 2013')
+linked_tables(BBW + 'wikitables_scalability/', 'BBW', 'Wikitables 2013')
+linked_tables(LEXMA + 'toughtables_wd_scalability/', 'LexMa', 'Tough Tables - Wikidata')
+linked_tables(LEXMA + 'wikitables_dbp_2013_scalability/', 'LexMa', 'Wikitables 2013')
+linked_tables(MAGIC + 'toughtables_wd_scalability/', 'MAGIC', 'Tough Tables - Wikidata')
+linked_tables(MAGIC + 'wikitables_dbp_2013_scalability/', 'MAGIC', 'Wikitables 2013')
 
 print('Done')
