@@ -184,7 +184,7 @@ def read_magic_candidates(result_file_dir):
     files = os.listdir(result_file_dir)
 
     for result_file in files:
-        with open(result_files_dir + result_file, 'r') as input:
+        with open(result_file_dir + result_file, 'r') as input:
             reader = csv.reader(input)
 
             for row in reader:
