@@ -2,7 +2,7 @@ import csv
 from data import *
 import read_results as rr
 from quality import evaluate_quality
-from runtime import linked_tables
+from runtime import linked_tables, linked_tables_emblookup
 
 print('Reading experiment results...')
 
@@ -135,5 +135,7 @@ linked_tables(LEXMA + 'toughtables_wd_scalability/', 'LexMa', 'Tough Tables - Wi
 linked_tables(LEXMA + 'wikitables_dbp_2013_scalability/', 'LexMa', 'Wikitables 2013')
 linked_tables(MAGIC + 'toughtables_wd_scalability/', 'MAGIC', 'Tough Tables - Wikidata')
 linked_tables(MAGIC + 'wikitables_dbp_2013_scalability/', 'MAGIC', 'Wikitables 2013')
+linked_tables_emblookup(EMBLOOKUP + 'toughtables_wd_scalability/results.csv', 'EMBLOOKUP', 'Tough Tables - Wikidata')
+linked_tables_emblookup(EMBLOOKUP + 'wikitables_dbp_2013_scalability/results.csv', 'EMBLOOKUP', 'Wikitables 2013')
 
 print('Done')
