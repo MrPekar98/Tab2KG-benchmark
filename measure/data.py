@@ -1,4 +1,6 @@
 import pandas as pd
+import os
+import csv
 
 BASE = '/results/'
 BBW = BASE + 'bbw/'
@@ -8,6 +10,12 @@ LEXMA = BASE + 'lexma/'
 MAGIC = BASE + 'magic/'
 
 BENCHMARKS_BASE = '/benchmarks/'
+SEMTAB_HARDTABLES = BENCHMARKS_BASE + 'semtab/HardTables/tables/'
+SEMTAB_TFOOD = BENCHMARKS_BASE + 'semtab/tfood/horizontal/tables/'
+TOUGH_TABLES_DBPEDIA = BENCHMARKS_BASE + 'toughtables/dbpedia/tables/'
+TOUGH_TABLES_WIKIDATA = BENCHMARKS_BASE + 'toughtables/wikidata/tables/'
+WIKITABLES_2013 = BENCHMARKS_BASE + 'wikitables_2013/tables/'
+WIKITABLES_2019 = BENCHMARKS_BASE + 'wikitabes_2019/tables/'
 SEMTAB_HARDTABLES_GT = BENCHMARKS_BASE + 'semtab/HardTables/gt/cea_gt.csv'
 SEMTAB_TFOOD_GT = BENCHMARKS_BASE + 'semtab/tfood/horizontal/gt/cea_gt.csv'
 TOUGH_TABLES_DBPEDIA_GT = BENCHMARKS_BASE + 'toughtables/dbpedia/gt/cea_gt.csv'
@@ -42,3 +50,16 @@ def ground_truth(gt_path):
         gt[table_id].append(tuple)
 
     return gt
+
+def avg_rows(dir):
+    files = os.listdir(dir)
+    count = 0
+
+    for file in files:
+        with open(dir + '/' + file) as handle:
+            reader = csv.reader(handle)
+
+            for row in reader:
+                count += 1
+
+    return count / len(files)

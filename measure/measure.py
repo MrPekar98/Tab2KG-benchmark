@@ -129,13 +129,15 @@ evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, N
 
 print('\nEvaluating scalability')
 
-linked_tables(BBW + 'toughtables_wd_scalability/', 'BBW', 'Tough Tables - Wikidata')
-linked_tables(BBW + 'wikitables_scalability/', 'BBW', 'Wikitables 2013')
-linked_tables(LEXMA + 'toughtables_wd_scalability/', 'LexMa', 'Tough Tables - Wikidata')
-linked_tables(LEXMA + 'wikitables_dbp_2013_scalability/', 'LexMa', 'Wikitables 2013')
-linked_tables(MAGIC + 'toughtables_wd_scalability/', 'MAGIC', 'Tough Tables - Wikidata')
-linked_tables(MAGIC + 'wikitables_dbp_2013_scalability/', 'MAGIC', 'Wikitables 2013')
-linked_tables_emblookup(EMBLOOKUP + 'toughtables_wd_scalability/results.csv', 'EMBLOOKUP', 'Tough Tables - Wikidata')
-linked_tables_emblookup(EMBLOOKUP + 'wikitables_dbp_2013_scalability/results.csv', 'EMBLOOKUP', 'Wikitables 2013')
+toughtables_wd_avg_rows = avg_rows(TOUGH_TABLES_WIKIDATA)
+wikitables_2013_avg_rows = avg_rows(WIKITABLES_2013)
+linked_tables(BBW + 'toughtables_wd_scalability/', 'BBW', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
+linked_tables(BBW + 'wikitables_scalability/', 'BBW', 'Wikitables 2013', wikitables_2013_avg_rows)
+linked_tables(LEXMA + 'toughtables_wd_scalability/', 'LexMa', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
+linked_tables(LEXMA + 'wikitables_dbp_2013_scalability/', 'LexMa', 'Wikitables 2013', wikitables_2013_avg_rows)
+linked_tables(MAGIC + 'toughtables_wd_scalability/', 'MAGIC', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
+linked_tables(MAGIC + 'wikitables_dbp_2013_scalability/', 'MAGIC', 'Wikitables 2013', wikitables_2013_avg_rows)
+linked_tables_emblookup(EMBLOOKUP + 'toughtables_wd_scalability/results.csv', 'EMBLOOKUP', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
+linked_tables_emblookup(EMBLOOKUP + 'wikitables_dbp_2013_scalability/results.csv', 'EMBLOOKUP', 'Wikitables 2013', wikitables_2013_avg_rows)
 
 print('Done')
