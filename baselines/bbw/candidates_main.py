@@ -40,7 +40,7 @@ for table_file in os.listdir(tables_dir):
     with open(output_dir + '/' + table_file, 'w') as handle:
         writer = csv.writer(handle)
 
-        for line in cea:
+        for line in table_candidates:
             candidates_str = ''
 
             for entity in lin[2]:
