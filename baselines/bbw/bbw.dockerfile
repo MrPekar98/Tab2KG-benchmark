@@ -5,6 +5,7 @@ WORKDIR /bbw
 
 ADD bbw.py .
 ADD main.py .
+ADD candidates_main.py .
 ADD evaluate.sh .
 ADD experiments/ .
 

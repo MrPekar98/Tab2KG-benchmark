@@ -1100,7 +1100,7 @@ def annotate(filecsv, filename='', language=''):
         cpa_sub - dataframe with annotations for CPA task,
         cea_sub - dataframe with annotations for CEA task,
         cta_sub - dataframe with annotations for CTA task
-        ].
+       ].
 
     """
     filename = filename.replace('.csv', '')
