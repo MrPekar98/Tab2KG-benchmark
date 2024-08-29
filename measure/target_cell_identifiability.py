@@ -2,11 +2,11 @@ import filter_ground_truth as fgt
 
 def identifiability(predictions, gt):
     method_gt_cells = dict()
+    results = dict()
 
     for method in predictions.keys():
         method_gt = fgt.filter_gt(gt, predictions[method])
         method_gt_cells[method] = 0
-        results = dict()
         cells = dict()
 
         for table_id in method_gt.keys():
