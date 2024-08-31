@@ -5,10 +5,14 @@ set -e
 echo
 echo "Evaluating EmbLookup"
 
-echo
-echo "Linking quality experiment"
-./quality.sh
+#echo
+#echo "Linking quality experiment"
+#./quality.sh
+
+#echo
+#echo "Linking scalability experiment"
+#./scalability.sh
 
 echo
-echo "Linking scalability experiment"
-./scalability.sh
+echo "Candidate generation experiment"
+./candidates.sh
