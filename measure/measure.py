@@ -15,19 +15,23 @@ bbw_wikitables_2019 = rr.read_bbw(BBW + 'wikitables_2019')
 emblookup_hardtables = rr.read_emblookup(EMBLOOKUP + 'semtab_hardtables/results.csv', 'wikidata')
 emblookup_tfood = rr.read_read_emblookup(EMBLOOKUP + 'tfood/results.csv', 'wikidata')
 emblookup_toughtables_dbp = rr.read_emblookup(EMBLOOKUP + 'toughtables_dbp/results.csv', 'dbpedia')
+emblookup_toughtables_dbp_candidates = rr.read_emblookup_candidates(EMBLOOKUP + 'toughtables_dbp_candidates/results.csv', 'dbpedia')
 emblookup_toughtables_wd = rr.read_emblookup(EMBLOOKUP + 'toughtables_wd/results.csv', 'wikidata')
 emblookup_wikitables_2013_dbp = rr.read_emblookup(EMBLOOKUP + 'wikitables_2013_dbp/results.csv', 'dbpedia')
 emblookup_wikitables_2013_wd = rr.read_emblookup(EMBLOOKUP + 'wikitables_2013_wd/results.csv', 'wikidata')
 emblookup_wikitables_2019_dbp = rr.read_emblookup(EMBLOOKUP + 'wikitables_2019_dbp/results.csv', 'dbpedia')
+emblookup_wikitables_2019_dbp_candidates = rr.read_emblookup_candidates(EMBLOOKUP + 'wikitables_2019_dbp_candidates/results.csv', 'dbpedia')
 emblookup_wikitables_2019_wd = rr.read_emblookup(EMBLOOKUP + 'wikitables_2019_wd/results.csv', 'wikidata')
 
 lexma_hardtables = rr.read_lexma(LEXMA + 'hardtables/')
 lexma_tfood = rr.read_lexma(LEXMA + 'tfood/')
 lexma_toughtables_dbp = rr.read_lexma(LEXMA + 'toughtables_dbp/')
+lexma_toughtables_dbp_candidates = rr.read_lexma_candidates(LEXMA + 'toughtables_dbp_candidates/')
 lexma_toughtables_wd = rr.read_lexma(LEXMA + 'toughtables_wd/')
 lexma_wikitables_2013_dbp = rr.read_lexma(LEXMA + 'wikitables_2013_dbp/')
 lexma_wikitables_2013_wd = rr.read_lexma(LEXMA + 'wikitables_2013_wd/')
 lexma_wikitables_2019_dbp = rr.read_lexma(LEXMA + 'wikitables_2019_dbp/')
+lexma_wikitables_2019_dbp_candidates = rr.read_lexma_candidates(LEXMA + 'wikitables_2019_dbp_candidates/')
 lexma_wikitables_2019_wd = rr.read_lexma(LEXMA + 'wikitables_2019_wd/')
 
 magic_hardtables = rr.read_magic(MAGIC + 'HardTables/')
@@ -85,8 +89,8 @@ results_toughtables_dbp = {
 }
 candidates_toughtables_dbp = {
     'bbw':
-    'EMBLOOKUP':
-    'LexMa':
+    'EMBLOOKUP': emblookup_toughtables_dbp_candidates,
+    'LexMa': lexma_toughtables_dbp_candidates,
     'MAGIC': magic_toughtables_dbp_candidates
 }
 evaluate_quality('/measure', 'toughtables_dbp', results_toughtables_dbp, candidates_toughtables_dbp, toughtables_dbp)
@@ -112,9 +116,8 @@ results_wikitables_2019_dbp = {
     'MAGIC': magic_wikitables_2019_dbp
 }
 candidates_wikitables_2019_dbp = {
-    'bbw':
-    'EMBLOOKUP':
-    'LexMa':
+    'EMBLOOKUP': emblookup_wikitables_2019_dbp_candidates,
+    'LexMa': lexma_wikitables_2019_dbp_candidates,
     'MAGIC': magic_wikitables_2019_dbp_candidates
 }
 evaluate_quality('/measure', 'wikitables_2019_dbp', results_wikitables_2019_dbp, candidates_wikitables_2019_dbp, wikitables_2019_dbp)
