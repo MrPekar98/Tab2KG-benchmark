@@ -40,6 +40,7 @@ magic_toughtables_dbp = rr.read_magic(MAGIC + 'tough_tables_dbp/')
 magic_toughtables_dbp_candidates = rr.read_magic_candidates(MAGIC + 'tough_tables_dbp_candidates/')
 magic_toughtables_wd = rr.read_magic(MAGIC + 'tough_tables_wd/')
 magic_wikitables_2013_dbp = rr.read_magic(MAGIC + 'wikitables-2013_dbp/')
+magic_wikitables_2013_dbp_candidates = rr.read_magic_candidates(MAGIC + 'wikitables-2013_dbp_candidates/')
 magic_wikitables_2013_wd = rr.read_magic(MAGIC + 'wikitables-2013_wd/')
 magic_wikitables_2019_dbp = rr.read_magic(MAGIC + 'wikitables-2019_dbp/')
 magic_wikitables_2019_dbp_candidates = rr.read_magic_candidates(MAGIC + 'wikitables-2019_dbp_candidates/')
@@ -88,7 +89,6 @@ results_toughtables_dbp = {
     'MAGIC': magic_toughtables_dbp
 }
 candidates_toughtables_dbp = {
-    'bbw':
     'EMBLOOKUP': emblookup_toughtables_dbp_candidates,
     'LexMa': lexma_toughtables_dbp_candidates,
     'MAGIC': magic_toughtables_dbp_candidates
@@ -100,7 +100,12 @@ results_wikitables_2013_dbp = {
     'LexMa': lexma_wikitables_2013_dbp,
     'MAGIC': magic_wikitables_2013_dbp
 }
-evaluate_quality('/measure', 'wikitables_2013_dbp', results_wikitables_2013_dbp, None, wikitables_2013_dbp)
+candidates_wikitables_2013_dbp = {
+    #'EMBLOOKUP':
+    #'LexMa':
+    'MAGIC': magic_wikitables_2013_dbp_candidates
+}
+evaluate_quality('/measure', 'wikitables_2013_dbp', results_wikitables_2013_dbp, candidates_wikitables_2013_dbp, wikitables_2013_dbp)
 
 results_wikitables_2013_wd = {
     'bbw': bbw_wikitables_2013,
