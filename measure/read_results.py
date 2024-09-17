@@ -1,5 +1,6 @@
 import csv
 import os
+import sys
 
 # Following functions return a list of tuples with results
 # Each tuple is organized as follows:
@@ -106,6 +107,7 @@ def read_bbw_candidates(files_dir):
 
     for file in files:
         with open(files_dir + '/' + file, 'r') as input:
+            csv.field_size_limit(sys.maxsize)
             reader = csv.reader(input)
             header_skipped = False
 
@@ -114,7 +116,7 @@ def read_bbw_candidates(files_dir):
                     header_skipped = True
                     continue
 
-                tuple = [file.replace('.csv', ''), int(row[1]), int(row[2]), [entity.lower() for entity in row[3].split(' ')]]
+                tuple = [file.replace('.csv', ''), int(row[0]), int(row[1]), [entity.lower() for entity in row[2].split(' ')]]
                 results.append(tuple)
 
     return results

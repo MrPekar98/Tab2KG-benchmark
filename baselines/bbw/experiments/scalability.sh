@@ -13,7 +13,7 @@ then
     python main.py ${TOUGH_TABLES_WD} /results/bbw/toughtables_wd_scalability/ ${ENDPOINT} ${VIRTUOSO} &
     PID=$1
     sleep ${SLEEP}
-    kill -9 ${PID}
+    kill ${PID}
 fi
 
 # Wikitables
@@ -22,5 +22,5 @@ then
     python main.py ${WIKITABLES} /results/bbw/wikitables_scalability/ ${ENDPOINT} ${VIRTUOSO} &
     PID=$1
     sleep ${SLEEP}
-    kill -9 ${PID}
+    kill ${PID}
 fi

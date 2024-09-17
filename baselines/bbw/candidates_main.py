@@ -27,23 +27,28 @@ for table_file in os.listdir(tables_dir):
 
          for column in list(df.columns.values):
              cell = row[column]
-             candidates = bbw.lookup(cell, '')
 
-             if not candidates[0] is None:
-                 row_candidates.append([i, j, set(candidates[0]['item'])])
+             if isinstance(cell, str):
+                 candidates = bbw.lookup(cell, '')
+
+                 if not candidates[0] is None:
+                     row_candidates.append([i, j, set(candidates[0]['item'])])
 
              j += 1
 
          i += 1
-         table_candidates.append(row_candidates)
+
+         if len(row_candidates) > 0:
+             table_candidates.append(row_candidates)
 
     with open(output_dir + '/' + table_file, 'w') as handle:
         writer = csv.writer(handle)
 
-        for line in table_candidates:
-            candidates_str = ''
+        for row in table_candidates:
+            for column in row:
+                candidates_str = ''
 
-            for entity in lin[2]:
-                candidates_str += entity + ' '
+                for entity in column[2]:
+                    candidates_str += entity + ' '
 
-            write.writerow([line[0], line[1], candidates_str])
+                writer.writerow([column[0], column[1], candidates_str])

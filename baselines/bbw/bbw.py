@@ -62,7 +62,7 @@ def get_SPARQL_dataframe(name, language,
     output : pd.DataFrame
         Dataframe created from the json-file returned by SPARQL-endpoint.
     """
-    name = name.replace('"', '\\\"')
+    name = str(name).replace('"', '\\\"')
     if language:
         lang = language
     else:

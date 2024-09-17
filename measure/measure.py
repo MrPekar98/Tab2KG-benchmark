@@ -9,7 +9,9 @@ print('Reading experiment results...')
 bbw_hardtables = rr.read_bbw(BBW + 'semtab_hardtables')
 bbw_tfood = rr.read_bbw(BBW + 'tfood')
 bbw_toughtables = rr.read_bbw(BBW + 'toughtables_wd')
+bbw_toughtables_candidates = rr.read_bbw_candidates(BBW + 'toughtables_candidates/')
 bbw_wikitables_2013 = rr.read_bbw(BBW + 'wikitables_2013')
+bbw_wikitables_2013_candidates = rr.read_bbw_candidates(BBW + 'wikitables_2013_candidates/')
 bbw_wikitables_2019 = rr.read_bbw(BBW + 'wikitables_2019')
 
 emblookup_hardtables = rr.read_emblookup(EMBLOOKUP + 'semtab_hardtables/results.csv', 'wikidata')
@@ -81,7 +83,10 @@ results_toughtables_wd = {
     'LexMa': lexma_toughtables_wd,
     'MAGIC': magic_toughtables_wd
 }
-evaluate_quality('/measure', 'toughtables_wd', results_toughtables_wd, None, toughtables_wd)
+candidates_toughtables_wd = {
+    'bbw': bbw_toughtables_candidates
+}
+evaluate_quality('/measure', 'toughtables_wd', results_toughtables_wd, candidates_toughtables_wd, toughtables_wd)
 
 results_toughtables_dbp = {
     'EMBLOOKUP': emblookup_toughtables_dbp,
@@ -113,7 +118,10 @@ results_wikitables_2013_wd = {
     'LexMa': lexma_wikitables_2013_wd,
     'MAGIC': magic_wikitables_2013_wd
 }
-evaluate_quality('/measure', 'wikitables_2013_wd', results_wikitables_2013_wd, None, wikitables_2013_wd)
+candidates_wikitables_2013_wd = {
+    'bbw': bbw_wikitables_2013_candidates
+}
+evaluate_quality('/measure', 'wikitables_2013_wd', results_wikitables_2013_wd, candidates_wikitables_2013_wd, wikitables_2013_wd)
 
 results_wikitables_2019_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2019_dbp,
