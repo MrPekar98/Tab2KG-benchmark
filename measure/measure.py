@@ -152,9 +152,10 @@ linked_tables(BBW + 'toughtables_wd_scalability/', 'BBW', 'Tough Tables - Wikida
 linked_tables(BBW + 'wikitables_scalability/', 'BBW', 'Wikitables 2013', wikitables_2013_avg_rows)
 linked_tables(LEXMA + 'toughtables_wd_scalability/', 'LexMa', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
 linked_tables(LEXMA + 'wikitables_dbp_2013_scalability/', 'LexMa', 'Wikitables 2013', wikitables_2013_avg_rows)
+linked_tables(LEXMA + 'wikitables_wd_2019_scalability/', 'LexMA', 'Wikitables 2019', wikitables_2019_avg_rows)
 linked_tables(MAGIC + 'toughtables_wd_scalability/', 'MAGIC', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
 linked_tables(MAGIC + 'wikitables_dbp_2013_scalability/', 'MAGIC', 'Wikitables 2013', wikitables_2013_avg_rows)
-linked_tables(MAGIC + 'wikitables_wd_2019_scalability/', 'MAGIC', 'Wikitables 2019', wikitables_2019_avg_rows)
+linked_tables(MAGIC + 'wikitables_dbp_2019_scalability/', 'MAGIC', 'Wikitables 2019', wikitables_2019_avg_rows)
 linked_tables_emblookup(EMBLOOKUP + 'toughtables_wd_scalability/results.csv', 'EMBLOOKUP', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
 linked_tables_emblookup(EMBLOOKUP + 'wikitables_dbp_2013_scalability/results.csv', 'EMBLOOKUP', 'Wikitables 2013', wikitables_2013_avg_rows)
 
