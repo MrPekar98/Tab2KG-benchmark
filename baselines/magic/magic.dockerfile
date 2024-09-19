@@ -10,6 +10,7 @@ ADD requirements.txt .
 RUN pip install -r requirements.txt
 
 WORKDIR Magic/
+RUN git config --global http.version HTTP/1.1
 RUN git clone https://github.com/IBCNServices/INK.git
 RUN pip install -e INK/
 

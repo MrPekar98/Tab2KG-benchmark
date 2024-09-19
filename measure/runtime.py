@@ -4,7 +4,12 @@ import csv
 def linked_tables(dir, method, name, avg_table_size):
     print(method)
     print(name)
-    print(len(os.listdir(dir)) / avg_table_size)
+
+    if method == 'MAGIC':
+        print((len(os.listdir(dir)) / 3) / avg_table_size)
+
+    else:
+        print(len(os.listdir(dir)) / avg_table_size)
 
 def linked_tables_emblookup(file, method, name, avg_table_size):
     tables = set()
