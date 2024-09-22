@@ -4,7 +4,8 @@ set -e
 
 BENCHMARK_DIR="/benchmarks/"
 TOUGH_TABLES_WD=${BENCHMARK_DIR}toughtables/wikidata/tables/
-WIKITABLES=${BENCHMARK_DIR}wikitables_2013/tables/
+WIKITABLES_2013=${BENCHMARK_DIR}wikitables_2013/tables/
+WIKITABLES_2019=${BENCHMARK_DIR}wikitables_2019/tables/
 SLEEP=8h
 
 # Tough Tables - Wikidata
@@ -16,10 +17,19 @@ then
     kill ${PID}
 fi
 
-# Wikitables
-if [[ -d ${WIKITABLES} ]]
+# Wikitables 2013
+if [[ -d ${WIKITABLES_2013} ]]
 then
-    python main.py ${WIKITABLES} /results/bbw/wikitables_scalability/ ${ENDPOINT} ${VIRTUOSO} &
+    python main.py ${WIKITABLES_2013} /results/bbw/wikitables_2013_scalability/ ${ENDPOINT} ${VIRTUOSO} &
+    PID=$1
+    sleep ${SLEEP}
+    kill ${PID}
+fi
+
+# Wikitables 2019
+if [[ -d ${WIKITABLES_2019} ]]
+then
+    python main.py ${WIKITABLES_2019} /results/bbw/wikitables_2019_scalability/ ${ENDPOINT} ${VIRTUOSO} &
     PID=$1
     sleep ${SLEEP}
     kill ${PID}

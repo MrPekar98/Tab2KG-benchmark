@@ -12,3 +12,7 @@ python candidates_main.py ${CORPUS} ${RESULT_DIR}bbw/toughtables_candidates/ ${E
 mkdir -p ${RESULT_DIR}bbw/wikitables_2013_candidates/
 CORPUS="${BENCHMARK_DIR}wikitables_2013/tables_subset/"
 python candidates_main.py ${CORPUS} ${RESULT_DIR}bbw/wikitables_2013_candidates/ ${ENDPOINT} ${VIRTUOSO}
+
+mkdir -p ${RESULT_DIR}bbw/wikitables_2019_candidates/
+CORPUS="${BENCHMARK_DIR}wikitables_2019/tables_subset/"
+python candidates_main.py ${CORPUS} ${RESULT_DIR}bbw/wikitables_2019_candidates/ ${ENDPOINT} ${VIRTUOSO}
