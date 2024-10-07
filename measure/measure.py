@@ -13,6 +13,7 @@ bbw_toughtables_candidates = rr.read_bbw_candidates(BBW + 'toughtables_candidate
 bbw_wikitables_2013 = rr.read_bbw(BBW + 'wikitables_2013')
 bbw_wikitables_2013_candidates = rr.read_bbw_candidates(BBW + 'wikitables_2013_candidates/')
 bbw_wikitables_2019 = rr.read_bbw(BBW + 'wikitables_2019')
+bbw_wikitables_2019_candidates = rr.read_bbw_candidates(BBW + 'wikitables_2019_candidates/')
 
 emblookup_hardtables = rr.read_emblookup(EMBLOOKUP + 'semtab_hardtables/results.csv', 'wikidata')
 emblookup_tfood = rr.read_read_emblookup(EMBLOOKUP + 'tfood/results.csv', 'wikidata')
@@ -141,7 +142,10 @@ results_wikitables_2019_wd = {
     'LexMa': lexma_wikitables_2019_wd,
     'MAGIC': magic_wikitables_2019_wd
 }
-evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, None, wikitables_2019_wd)
+candidates_wikitables_2019_wd = {
+    'bbw': bbw_wikitables_2019_candidates
+}
+evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, candidates_wikitables_2019_wd, wikitables_2019_wd)
 
 print('\nEvaluating scalability')
 
