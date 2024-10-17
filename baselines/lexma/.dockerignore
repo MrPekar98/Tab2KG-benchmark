@@ -5,3 +5,4 @@
 !lexma.dockerfile
 !lexma.py
 !lexma_candidates.py
+!lexma_non_rec.py

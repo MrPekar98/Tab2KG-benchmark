@@ -31,7 +31,7 @@ def identifiability(predictions, gt):
                 correct += 1
 
         precision = correct / total if total > 0 else 0.0
-        recall = correct / method_gt_cells[method]
+        recall = correct / method_gt_cells[method] if method_gt_cells[method] > 0 else 0.0
         f1 = (2 * precision * recall) / (precision + recall) if (precision + recall) > 0 else 0.0
         results[method] = {'precision': precision, 'recall': recall, 'f1': f1}
 

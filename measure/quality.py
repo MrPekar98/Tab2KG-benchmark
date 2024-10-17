@@ -1,7 +1,7 @@
 import csv
-import filter_ground_truth as fgt
 import target_cell_identifiability as tci
 import candidate_generation as cg
+import filter_ground_truth as fgt
 
 # Measures all metrics as a single value across all tables
 def _measure_quality(predictions, gt):
@@ -48,14 +48,16 @@ def _measure_quality(predictions, gt):
                         correct_cells.add(result_cell)
 
         precision = len(correct_cells) / len(annotated_cells) if len(annotated_cells) > 0 else 0.0
-        recall = len(correct_cells) / len(method_gt_cell_ent[method].keys())
+        recall = len(correct_cells) / len(method_gt_cell_ent[method].keys()) if len(method_gt_cell_ent[method].keys()) > 0 else 0.0
         f1 = (2 * precision * recall) / (precision + recall) if (precision + recall) > 0 else 0.0
         scores[method] = {'precision': precision, 'recall': recall, 'f1': f1}
 
     return scores
 
-def evaluate_quality(base_dir, result_name, predictions, candidates, gt):
+def evaluate_quality(base_dir, result_name, predictions, candidates, non_rec, gt, entity_cells):
+    non_rec_gt = fgt.filter_cells(gt, entity_cells)
     scores = _measure_quality(predictions, gt)
+    non_rec_scores = _measure_quality(non_rec, non_rec_gt)
     target_identifiability = tci.identifiability(predictions, gt)
     candidate_quality = cg.evaluate_candidate_generation(candidates, gt) if not candidates is None else None
     print(result_name)
@@ -81,5 +83,14 @@ def evaluate_quality(base_dir, result_name, predictions, candidates, gt):
         for method in candidate_quality.keys():
             print(method)
             print('Hit rate:', candidate_quality[method])
+
+    if not non_rec is None:
+        print('\nNo entity recognition')
+
+        for method in non_rec.keys():
+            print(method)
+            print('Precision:', non_rec_scores[method]['precision'])
+            print('Recall:', non_rec_scores[method]['recall'])
+            print('F1-score:', non_rec_scores[method]['f1'])
 
     print()

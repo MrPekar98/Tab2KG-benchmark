@@ -303,9 +303,26 @@ def cosine(cell, entity):
         except ZeroDivisionError:
             return 0
 
+def read_entity_cells(file):
+    cells = dict()
+
+    with open(file, 'r') as handle:
+        for line in handle:
+            split = line.strip().split(',')
+            id = split[0]
+
+            if id not in cells.keys():
+                cells[id] = list()
+
+            row = int(split[1])
+            column = int(split[2])
+            cells[id].append((row, column))
+
+    return cells
+
 if __name__ == '__main__':
-    if len(sys.argv) < 6:
-        print('Specify KG, table directory, output directory, number of candidates to generate, and endpoint hostname')
+    if len(sys.argv) < 7:
+        print('Specify KG, table directory, output directory, number of candidates to generate, endpoint hostname, and entity cells file')
         exit(1)
 
     kg = sys.argv[1]
@@ -313,6 +330,7 @@ if __name__ == '__main__':
     output_dir = sys.argv[3]
     candidates = int(sys.argv[4])
     endpoint = sys.argv[5]
+    entity_cells_file = sys.argv[6]
 
     if kg == 'wikidata':
         print(URI_KG.uris[KG.Wikidata.value])
@@ -347,6 +365,7 @@ if __name__ == '__main__':
     table_list = os.listdir(table_dir)
     table_counter = 1
     linked_tables = os.listdir(output_dir)
+    entity_cells = read_entity_cells(entity_cells_file)
 
     if kg_type == KG.Wikidata.value:
         api = WikidataAPI(endpoint)
@@ -366,7 +385,7 @@ if __name__ == '__main__':
             column_index = 0
 
             for column in row:
-                if isinstance(column, (float, int)):
+                if isinstance(column, (float, int)) or not table.replace('.csv', '') in entity_cells.keys() or not (row_index, column_index) not in entity_cells[table.replace('.csv', '')]:
                     continue
 
                 entities = api.getKGEntities(column, limit, type)

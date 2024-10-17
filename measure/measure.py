@@ -2,7 +2,7 @@ import csv
 from data import *
 import read_results as rr
 from quality import evaluate_quality
-from runtime import linked_tables, linked_tables_emblookup
+from runtime import *
 
 print('Reading experiment results...')
 
@@ -31,23 +31,27 @@ lexma_tfood = rr.read_lexma(LEXMA + 'tfood/')
 lexma_toughtables_dbp = rr.read_lexma(LEXMA + 'toughtables_dbp/')
 lexma_toughtables_dbp_candidates = rr.read_lexma_candidates(LEXMA + 'toughtables_dbp_candidates/')
 lexma_toughtables_wd = rr.read_lexma(LEXMA + 'toughtables_wd/')
+lexma_toughtables_wd_non_rec = rr.read_lexma_non_rec(LEXMA + 'toughtables_wd_non_rec/')
 lexma_wikitables_2013_dbp = rr.read_lexma(LEXMA + 'wikitables_2013_dbp/')
 lexma_wikitables_2013_wd = rr.read_lexma(LEXMA + 'wikitables_2013_wd/')
 lexma_wikitables_2019_dbp = rr.read_lexma(LEXMA + 'wikitables_2019_dbp/')
 lexma_wikitables_2019_dbp_candidates = rr.read_lexma_candidates(LEXMA + 'wikitables_2019_dbp_candidates/')
 lexma_wikitables_2019_wd = rr.read_lexma(LEXMA + 'wikitables_2019_wd/')
+lexma_wikitables_2019_wd_non_rec = rr.read_lexma_non_rec(LEXMA + 'wikitables_2019_wd_non_rec/')
 
 magic_hardtables = rr.read_magic(MAGIC + 'HardTables/')
 magic_tfood = rr.read_magic(MAGIC + 'tfood/')
 magic_toughtables_dbp = rr.read_magic(MAGIC + 'tough_tables_dbp/')
 magic_toughtables_dbp_candidates = rr.read_magic_candidates(MAGIC + 'tough_tables_dbp_candidates/')
 magic_toughtables_wd = rr.read_magic(MAGIC + 'tough_tables_wd/')
+magic_toughtables_wd_non_rec = rr.read_magic_non_rec(MAGIC + 'tough_tables_wd_non_rec/')
 magic_wikitables_2013_dbp = rr.read_magic(MAGIC + 'wikitables-2013_dbp/')
 magic_wikitables_2013_dbp_candidates = rr.read_magic_candidates(MAGIC + 'wikitables-2013_dbp_candidates/')
 magic_wikitables_2013_wd = rr.read_magic(MAGIC + 'wikitables-2013_wd/')
 magic_wikitables_2019_dbp = rr.read_magic(MAGIC + 'wikitables-2019_dbp/')
 magic_wikitables_2019_dbp_candidates = rr.read_magic_candidates(MAGIC + 'wikitables-2019_dbp_candidates/')
 magic_wikitables_2019_wd = rr.read_magic(MAGIC + 'wikitables-2019_wd/')
+magic_wikitables_2019_wd_non_rec = rr.read_magic_non_rec(MAGIC + 'wikitables-2019_wd_non_rec/')
 
 print('Reading ground truth...')
 
@@ -55,10 +59,12 @@ hardtables_gt = ground_truth(SEMTAB_HARDTABLES_GT)
 tfood_gt = ground_truth(SEMTAB_TFOOD_GT)
 toughtables_dbp = ground_truth(TOUGH_TABLES_DBPEDIA_GT)
 toughtables_wd = ground_truth(TOUGH_TABLES_WIKIDATA_GT)
+toughtables_wd_entity_cells = entity_cells(TOUGH_TABLES_WIKIDATA_ENTITY_CELLS)
 wikitables_2013_dbp = ground_truth(WIKITABLES_2013_DBPEDIA_GT)
 wikitables_2013_wd = ground_truth(WIKITABLES_2013_WIKIDATA_GT)
 wikitables_2019_dbp = ground_truth(WIKITABLES_2019_DBPEDIA_GT)
 wikitables_2019_wd = ground_truth(WIKITABLES_2019_WIKIDATA_GT)
+wikitables_2019_wd_entity_cells = entity_cells(WIKITABLES_2019_WIKIDATA_ENTITY_CELLS)
 
 print('Evaluating results...')
 
@@ -68,7 +74,7 @@ results_hardtables = {
     'LexMa': lexma_hardtables,
     'MAGIC': magic_hardtables
 }
-evaluate_quality('/measure', 'hardtables', results_hardtables, None, hardtables_gt)
+evaluate_quality('/measure', 'hardtables', results_hardtables, None, hardtables_gt, None)
 
 results_tfood = {
     'bbw': bbw_tfood,
@@ -76,7 +82,7 @@ results_tfood = {
     'LexMa': lexma_tfood,
     'MAGIC': magic_tfood
 }
-evaluate_quality('/measure', 'tfood', results_tfood, None, tfood_gt)
+evaluate_quality('/measure', 'tfood', results_tfood, None, tfood_gt, None)
 
 results_toughtables_wd = {
     'bbw': bbw_toughtables,
@@ -87,7 +93,11 @@ results_toughtables_wd = {
 candidates_toughtables_wd = {
     'bbw': bbw_toughtables_candidates
 }
-evaluate_quality('/measure', 'toughtables_wd', results_toughtables_wd, candidates_toughtables_wd, toughtables_wd)
+non_rec_toughtables_wd = {
+    'LexMa': lexma_toughtables_wd_non_rec,
+    'MAGIC': magic_toughtables_wd_non_rec
+}
+evaluate_quality('/measure', 'toughtables_wd', results_toughtables_wd, candidates_toughtables_wd, non_rec_toughtables_wd, toughtables_wd, wikitables_2019_wd_entity_cells)
 
 results_toughtables_dbp = {
     'EMBLOOKUP': emblookup_toughtables_dbp,
@@ -99,7 +109,7 @@ candidates_toughtables_dbp = {
     'LexMa': lexma_toughtables_dbp_candidates,
     'MAGIC': magic_toughtables_dbp_candidates
 }
-evaluate_quality('/measure', 'toughtables_dbp', results_toughtables_dbp, candidates_toughtables_dbp, toughtables_dbp)
+evaluate_quality('/measure', 'toughtables_dbp', results_toughtables_dbp, candidates_toughtables_dbp, toughtables_dbp, None)
 
 results_wikitables_2013_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2013_dbp,
@@ -111,7 +121,7 @@ candidates_wikitables_2013_dbp = {
     #'LexMa':
     'MAGIC': magic_wikitables_2013_dbp_candidates
 }
-evaluate_quality('/measure', 'wikitables_2013_dbp', results_wikitables_2013_dbp, candidates_wikitables_2013_dbp, wikitables_2013_dbp)
+evaluate_quality('/measure', 'wikitables_2013_dbp', results_wikitables_2013_dbp, candidates_wikitables_2013_dbp, wikitables_2013_dbp, None)
 
 results_wikitables_2013_wd = {
     'bbw': bbw_wikitables_2013,
@@ -122,7 +132,7 @@ results_wikitables_2013_wd = {
 candidates_wikitables_2013_wd = {
     'bbw': bbw_wikitables_2013_candidates
 }
-evaluate_quality('/measure', 'wikitables_2013_wd', results_wikitables_2013_wd, candidates_wikitables_2013_wd, wikitables_2013_wd)
+evaluate_quality('/measure', 'wikitables_2013_wd', results_wikitables_2013_wd, candidates_wikitables_2013_wd, wikitables_2013_wd, None)
 
 results_wikitables_2019_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2019_dbp,
@@ -134,7 +144,7 @@ candidates_wikitables_2019_dbp = {
     'LexMa': lexma_wikitables_2019_dbp_candidates,
     'MAGIC': magic_wikitables_2019_dbp_candidates
 }
-evaluate_quality('/measure', 'wikitables_2019_dbp', results_wikitables_2019_dbp, candidates_wikitables_2019_dbp, wikitables_2019_dbp)
+evaluate_quality('/measure', 'wikitables_2019_dbp', results_wikitables_2019_dbp, candidates_wikitables_2019_dbp, wikitables_2019_dbp, None)
 
 results_wikitables_2019_wd = {
     'bbw': bbw_wikitables_2019,
@@ -145,24 +155,31 @@ results_wikitables_2019_wd = {
 candidates_wikitables_2019_wd = {
     'bbw': bbw_wikitables_2019_candidates
 }
-evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, candidates_wikitables_2019_wd, wikitables_2019_wd)
+non_rec_wikitables_2019_wd = {
+    'LexMa': lexma_wikitables_2019_wd_non_rec,
+    'MAGIC': magic_wikitables_2019_wd_non_rec
+}
+evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, candidates_wikitables_2019_wd, non_rec_wikitables_2019_wd, wikitables_2019_wd, wikitables_2019_wd_entity_cells)
 
 print('\nEvaluating scalability')
 
-toughtables_wd_avg_rows = avg_rows(TOUGH_TABLES_WIKIDATA)
-wikitables_2013_avg_rows = avg_rows(WIKITABLES_2013)
-wikitables_2019_avg_rows = avg_rows(WIKITABLES_2019)
-linked_tables(BBW + 'toughtables_wd_scalability/', 'BBW', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
-linked_tables(BBW + 'wikitables_2013_scalability/', 'BBW', 'Wikitables 2013', wikitables_2013_avg_rows)
-linked_tables(BBW + 'wikitables_2019_scalability', 'BBW', 'Wikitables 2019', wikitables_2019_avg_rows)
-linked_tables(LEXMA + 'toughtables_wd_scalability/', 'LexMa', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
-linked_tables(LEXMA + 'wikitables_dbp_2013_scalability/', 'LexMa', 'Wikitables 2013', wikitables_2013_avg_rows)
-linked_tables(LEXMA + 'wikitables_dbp_2019_scalability/', 'LexMA', 'Wikitables 2019', wikitables_2019_avg_rows)
-linked_tables(MAGIC + 'toughtables_wd_scalability/', 'MAGIC', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
-linked_tables(MAGIC + 'wikitables_dbp_2013_scalability/', 'MAGIC', 'Wikitables 2013', wikitables_2013_avg_rows)
-linked_tables(MAGIC + 'wikitables_dbp_2019_scalability/', 'MAGIC', 'Wikitables 2019', wikitables_2019_avg_rows)
-linked_tables_emblookup(EMBLOOKUP + 'toughtables_wd_scalability/results.csv', 'EMBLOOKUP', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
-linked_tables_emblookup(EMBLOOKUP + 'wikitables_dbp_2013_scalability/results.csv', 'EMBLOOKUP', 'Wikitables 2013', wikitables_2013_avg_rows)
-linked_tables_emblookup(EMBLOOKUP + 'wikitables_dbp_2019_scalability/results.csv', 'EMBLOOKUP', 'Wikitables 2019', wikitables_2019_avg_rows)
+magic_tough_tables_wd_linked_cells = magic_linked_cells(MAGIC + 'toughtables_wd_scalability/')
+magic_wikitables_2019_dbp_linked_cells = magic_linked_cells(MAGIC + 'wikitables_wd_2019_scalability/')
+lexma_tough_tables_wd_linked_cells = lexma_linked_cells(LEXMA + 'toughtables_wd_scalability/')
+lexma_wikitables_2019_dbp_linked_cells = lexma_linked_cells(LEXMA + 'wikitables_dbp_2019_scalability/')
+bbw_tough_tables_wd_linked_cells = bbw_linked_cells(BBW + 'toughtables_wd_scalability/')
+bbw_wikitables_2019_linked_cells = bbw_linked_cells(BBW + 'wikitables_2019_scalability/')
+emblookup_tough_tables_wd_linked_cells = emblookup_linked_cells(EMBLOOKUP + 'toughtables_wd_scalability/results.csv')
+emblookup_wikitables_2019_linked_cells = emblookup_linked_cells(EMBLOOKUP + 'wikitables_dbp_2019_scalability/results.csv')
 
-print('Done')
+print('Linked cells')
+print('MAGIC - Tough Tables (Wikidata):', magic_tough_tables_wd_linked_cells)
+print('MAGIC - Wikitables 2019 (DBpedia):', magic_wikitables_2019_dbp_linked_cells)
+print('\nLexMa - Tough Tables (Wikidata):', lexma_tough_tables_wd_linked_cells)
+print('LexMa - Wikitables 2019 (DBpedia):', lexma_wikitables_2019_dbp_linked_cells)
+print('\nbbw - Tough Tables (Wikidata):', bbw_tough_tables_wd_linked_cells)
+print('bbw - Wikitables 2019 (Wikidata):', bbw_wikitables_2019_linked_cells)
+print('\nEMBLOOKUP - Tough Tables (Wikidata):', emblookup_tough_tables_wd_linked_cells)
+print('EMBLOOKUP - Wikitabkes 2019 (DBpedia):', emblookup_wikitables_2019_linked_cells)
+
+print('\nDone')

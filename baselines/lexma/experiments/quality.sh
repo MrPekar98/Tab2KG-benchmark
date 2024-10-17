@@ -45,7 +45,7 @@ then
 
     # Wikitables 2019 - Wikidata
     mkdir -p ${RESULT_DIR}lexma/wikitables_2019_wd/
-    CORPUS="${BENCHMARK_DIR}wikitables_2013/tables_subset/"
+    CORPUS="${BENCHMARK_DIR}wikitables_2019/tables_subset/"
 
     if [[ -d ${CORPUS} ]]
     then

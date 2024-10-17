@@ -24,6 +24,8 @@ WIKITABLES_2013_DBPEDIA_GT = BENCHMARKS_BASE + 'wikitables_2013/gt/dbpedia/gt.cs
 WIKITABLES_2013_WIKIDATA_GT = BENCHMARKS_BASE + 'wikitables_2013/gt/wikidata/gt.csv'
 WIKITABLES_2019_DBPEDIA_GT = BENCHMARKS_BASE + 'wikitables_2019/gt/dbpedia/gt.csv'
 WIKITABLES_2019_WIKIDATA_GT = BENCHMARKS_BASE + 'wikitables_2019/gt/wikidata/gt.csv'
+TOUGH_TABLES_WIKIDATA_ENTITY_CELLS = BENCHMARKS_BASE + 'toughtables/wikidata/gt/entity_cells.txt'
+WIKITABLES_2019_WIKIDATA_ENTITY_CELLS = BENCHMARKS_BASE + 'wikitables_2019/gt/wikidata/entity_cells.txt'
 
 # Ground truth output is given in a similar format as the results of each approach
 # It's a map from table ID to tuples on the following format:
@@ -63,3 +65,20 @@ def avg_rows(dir):
                 count += 1
 
     return count / len(files)
+
+def entity_cells(file):
+    cells = dict()
+
+    with open(file, 'r') as handle:
+        for line in handle:
+            split = line.strip().split(',')
+            id = split[0]
+
+            if not id in cells.keys():
+                cells[id] = list()
+
+            row = int(split[1])
+            column = int(split[2])
+            cells[id].append((row, column))
+
+    return cells

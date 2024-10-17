@@ -2,6 +2,7 @@
 !magic.dockerfile
 !main.py
 !main_candidates.py
+!main_non_rec.py
 !requirements.txt
 !evaluate.sh
 !/experiments/*

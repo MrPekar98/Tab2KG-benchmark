@@ -16,3 +16,7 @@ echo "Linking scalability experiment"
 echo
 echo "Candidate generation experiment"
 ./candidates.sh
+
+echo
+echo "No entity recognition experiment"
+./non_rec_quality.sh

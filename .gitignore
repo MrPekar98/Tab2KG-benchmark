@@ -56,3 +56,4 @@ results/
 measure/__pycache__/
 measure/*.csv
 kg-lookup/
+entity_cells_wt_wd.txt

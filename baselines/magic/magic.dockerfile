@@ -16,6 +16,7 @@ RUN pip install -e INK/
 
 ADD main.py .
 ADD main_candidates.py .
+ADD main_non_rec.py .
 ADD evaluate.sh .
 ADD experiments/ .
 

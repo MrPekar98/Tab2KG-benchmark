@@ -162,6 +162,11 @@ def read_lexma_candidates(result_files_dir):
 
     return results
 
+# Results of LexMa entity linking with given entity cells
+def read_lexma_non_rec(result_files_dir):
+    results = read_lexma(result_files_dir)
+    return results
+
 # Results of MAGIC
 def read_magic(result_files_dir):
     results = list()
@@ -190,7 +195,12 @@ def read_magic_candidates(result_file_dir):
             reader = csv.reader(input)
 
             for row in reader:
-                tuple = [row[0], int(row[1]) + 1, int(row[2]), [entity.lower() for entity in row[3].split(' ')]]
+                tuple = [row[0], int(row[1]) + 1, int(row[2]) + 1, [entity.lower() for entity in row[3].split(' ')]]
                 results.append(tuple)
 
+    return results
+
+# Results of LexMa entity linking with given entity cells
+def read_magic_non_rec(result_files_dir):
+    results = read_magic(result_files_dir)
     return results
