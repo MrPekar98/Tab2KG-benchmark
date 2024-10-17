@@ -2,7 +2,7 @@ import csv
 from data import *
 import read_results as rr
 from quality import evaluate_quality
-from runtime import linked_tables, linked_tables_emblookup
+from runtime import *
 
 print('Reading experiment results...')
 
@@ -149,20 +149,23 @@ evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, c
 
 print('\nEvaluating scalability')
 
-toughtables_wd_avg_rows = avg_rows(TOUGH_TABLES_WIKIDATA)
-wikitables_2013_avg_rows = avg_rows(WIKITABLES_2013)
-wikitables_2019_avg_rows = avg_rows(WIKITABLES_2019)
-linked_tables(BBW + 'toughtables_wd_scalability/', 'BBW', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
-linked_tables(BBW + 'wikitables_2013_scalability/', 'BBW', 'Wikitables 2013', wikitables_2013_avg_rows)
-linked_tables(BBW + 'wikitables_2019_scalability', 'BBW', 'Wikitables 2019', wikitables_2019_avg_rows)
-linked_tables(LEXMA + 'toughtables_wd_scalability/', 'LexMa', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
-linked_tables(LEXMA + 'wikitables_dbp_2013_scalability/', 'LexMa', 'Wikitables 2013', wikitables_2013_avg_rows)
-linked_tables(LEXMA + 'wikitables_dbp_2019_scalability/', 'LexMA', 'Wikitables 2019', wikitables_2019_avg_rows)
-linked_tables(MAGIC + 'toughtables_wd_scalability/', 'MAGIC', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
-linked_tables(MAGIC + 'wikitables_dbp_2013_scalability/', 'MAGIC', 'Wikitables 2013', wikitables_2013_avg_rows)
-linked_tables(MAGIC + 'wikitables_dbp_2019_scalability/', 'MAGIC', 'Wikitables 2019', wikitables_2019_avg_rows)
-linked_tables_emblookup(EMBLOOKUP + 'toughtables_wd_scalability/results.csv', 'EMBLOOKUP', 'Tough Tables - Wikidata', toughtables_wd_avg_rows)
-linked_tables_emblookup(EMBLOOKUP + 'wikitables_dbp_2013_scalability/results.csv', 'EMBLOOKUP', 'Wikitables 2013', wikitables_2013_avg_rows)
-linked_tables_emblookup(EMBLOOKUP + 'wikitables_dbp_2019_scalability/results.csv', 'EMBLOOKUP', 'Wikitables 2019', wikitables_2019_avg_rows)
+magic_tough_tables_wd_linked_cells = magic_linked_cells(MAGIC + 'toughtables_wd_scalability/')
+magic_wikitables_2019_dbp_linked_cells = magic_linked_cells(MAGIC + 'wikitables_wd_2019_scalability/')
+lexma_tough_tables_wd_linked_cells = lexma_linked_cells(LEXMA + 'toughtables_wd_scalability/')
+lexma_wikitables_2019_dbp_linked_cells = lexma_linked_cells(LEXMA + 'wikitables_dbp_2019_scalability/')
+bbw_tough_tables_wd_linked_cells = bbw_linked_cells(BBW + 'toughtables_wd_scalability/')
+bbw_wikitables_2019_linked_cells = bbw_linked_cells(BBW + 'wikitables_2019_scalability/')
+emblookup_tough_tables_wd_linked_cells = emblookup_linked_cells(EMBLOOKUP + 'toughtables_wd_scalability/results.csv')
+emblookup_wikitables_2019_linked_cells = emblookup_linked_cells(EMBLOOKUP + 'wikitables_dbp_2019_scalability/results.csv')
 
-print('Done')
+print('Linked cells')
+print('MAGIC - Tough Tables (Wikidata):', magic_tough_tables_wd_linked_cells)
+print('MAGIC - Wikitables 2019 (DBpedia):', magic_wikitables_2019_dbp_linked_cells)
+print('\nLexMa - Tough Tables (Wikidata):', lexma_tough_tables_wd_linked_cells)
+print('LexMa - Wikitables 2019 (DBpedia):', lexma_wikitables_2019_dbp_linked_cells)
+print('\nbbw - Tough Tables (Wikidata):', bbw_tough_tables_wd_linked_cells)
+print('bbw - Wikitables 2019 (Wikidata):', bbw_wikitables_2019_linked_cells)
+print('\nEMBLOOKUP - Tough Tables (Wikidata):', emblookup_tough_tables_wd_linked_cells)
+print('EMBLOOKUP - Wikitabkes 2019 (DBpedia):', emblookup_wikitables_2019_linked_cells)
+
+print('\nDone')
