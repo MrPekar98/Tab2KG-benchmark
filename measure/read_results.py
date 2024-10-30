@@ -190,7 +190,7 @@ def read_magic_candidates(result_file_dir):
             reader = csv.reader(input)
 
             for row in reader:
-                tuple = [row[0], int(row[1]) + 1, int(row[2]), [entity.lower() for entity in row[3].split(' ')]]
+                tuple = [row[0], int(row[1]) + 1, int(row[2]) + 1, [entity.lower() for entity in row[3].split(' ')]]
                 results.append(tuple)
 
     return results
