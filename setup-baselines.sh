@@ -6,7 +6,6 @@ HOME=${PWD}
 NETWORK="evaluation"
 
 BBW="baselines/bbw/"
-KEYWORD_KG_LINKER="baselines/keyword-kg-linker/"
 LEXMA="baselines/lexma/"
 EMBLOOKUP="baselines/emblookup/"
 MAGIC="baselines/magic/"
@@ -14,7 +13,6 @@ MAGIC="baselines/magic/"
 mkdir -p results/
 mkdir -p results/bbw/
 mkdir -p results/emblookup/
-mkdir -p results/keyword-kg-linker/
 mkdir -p results/lexma/
 mkdir -p results/magic/
 
@@ -99,19 +97,3 @@ sleep 2m
 curl http://localhost:7000/index?domain=wikidata
 docker stop kg-lookup-service
 docker stop vos
-
-# Setup of our own naive keyword-based entity linker
-IDX_DIR_DBP_16="dbp_16/"
-IDX_DIR_DBP_22="dbp_22/"
-IDX_DIR_WD="wd/"
-git clone https://github.com/MrPekar98/keyword-kg-linker.git
-rm keyword-kg-linker/config.json
-mv keyword-kg-linker/* ${KEYWORD_KG_LINKER}
-rm -rf keyword-kg-linker/
-ROOT=${PWD}
-cd ${KEYWORD_KG_LINKER}
-mkdir -p ${IDX_DIR_DBP_16} ${IDX_DIR_DBP_22} ${IDX_DIR_WD}
-./linker.sh -dir ${IDX_DIR_DBP_16} -kg ${ROOT}/${DBP_16_DIR} -config config.json
-./linker.sh -dir ${IDX_DIR_DBP_22} -kg ${ROOT}/${DBP_22_DIR} -config config.json
-./linker.sh -dir ${IDX_DIR_WD} -kg ${ROOT}/${WD_DIR} -config config.json
-cd ${ROOT}

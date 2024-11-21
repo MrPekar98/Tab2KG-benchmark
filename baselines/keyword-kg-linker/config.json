@@ -1,9 +1,0 @@
-{
-    "candidates": 50,
-    "domain": "",
-    "logging": true,
-    "weights": {
-        "LABEL": 0.7,
-        "DESCRIPTION": 0.3
-    }
-}
