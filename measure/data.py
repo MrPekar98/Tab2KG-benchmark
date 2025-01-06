@@ -8,6 +8,7 @@ EMBLOOKUP = BASE + 'emblookup/'
 KEYWORD_KG_LINKER = BASE + 'keyword-kg-linker/'
 LEXMA = BASE + 'lexma/'
 MAGIC = BASE + 'magic/'
+NAIVE = BASE + 'keyword-kg-linker/'
 
 BENCHMARKS_BASE = '/benchmarks/'
 SEMTAB_HARDTABLES = BENCHMARKS_BASE + 'semtab/HardTables/tables/'

@@ -122,8 +122,32 @@ def read_bbw_candidates(files_dir):
     return results
 
 # Results of keyword-kg-linker
-def read_keyword_kg_linker():
-    pass
+def read_keyword_kg_linker(files_dir):
+    results = list()
+    files = os.listdir(files_dir)
+
+    for file in files:
+        with open(files_dir + file, 'r') as input:
+            reader = csv.reader(input)
+            header_skipped = False
+            row_count = 1
+            file_id = file.replace('.csv', '')
+
+            for row in reader:
+                if not header_skipped:
+                    header_skipped = True
+                    continue
+
+                column_count = 0
+
+                for column in row:
+                    tuple = [file_id, row_count, column_count, column]
+                    results.append(tuple)
+                    column_count += 1
+
+                row_count += 1
+
+    return results
 
 # Results key-kg-linker candidate generation
 def read_keyword_kg_linker_candidates():
