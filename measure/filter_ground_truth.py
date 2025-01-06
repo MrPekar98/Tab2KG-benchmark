@@ -12,7 +12,7 @@ def filter_gt(gt, predictions):
 
     return filtered_gt
 
-def filter_cells(gt, entity_cells):
+def filter_gt_cells(gt, entity_cells):
     filtered_gt = dict()
 
     for table_id in entity_cells.keys():
@@ -24,3 +24,20 @@ def filter_cells(gt, entity_cells):
                 filtered_gt[table_id].append(annotation)
 
     return filtered_gt
+
+def filter_prediction_cells(predictions, entity_cells):
+    filtered = dict()
+
+    for method in predictions.keys():
+        method_filtered = list()
+
+        for prediction in predictions[method]:
+            cell = (prediction[1], prediction[2])
+            table_id = prediction[0]
+
+            if cell in entity_cells[table_id]:
+                method_filtered.append(prediction)
+
+        filtered[method] = method_filtered
+
+    return filtered

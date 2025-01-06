@@ -26,7 +26,7 @@ docker build -t emblookup -f ${EMBLOOKUP}emblookup.dockerfile ${EMBLOOKUP}
 
 tar -xf entity_cells_tt_wd.txt.tar.gz
 gzip -d entity_cells_wt_wd.txt.gz
-mv entity_cells_tt_wd.txt benchmarks/toughtables/wikidata/gt/entity_cells.txt
+mv entity_cells.txt benchmarks/toughtables/wikidata/gt/entity_cells.txt
 mv entity_cells_wt_wd.txt benchmarks/wikitables_2019/gt/wikidata/entity_cells.txt
 
 DBP_16_DIR="setup/tough_tables/dbpedia/"

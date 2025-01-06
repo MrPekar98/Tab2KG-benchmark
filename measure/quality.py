@@ -55,9 +55,7 @@ def _measure_quality(predictions, gt):
     return scores
 
 def evaluate_quality(base_dir, result_name, predictions, candidates, non_rec, gt, entity_cells):
-    non_rec_gt = fgt.filter_cells(gt, entity_cells)
     scores = _measure_quality(predictions, gt)
-    non_rec_scores = _measure_quality(non_rec, non_rec_gt)
     target_identifiability = tci.identifiability(predictions, gt)
     candidate_quality = cg.evaluate_candidate_generation(candidates, gt) if not candidates is None else None
     print(result_name)
@@ -85,6 +83,10 @@ def evaluate_quality(base_dir, result_name, predictions, candidates, non_rec, gt
             print('Hit rate:', candidate_quality[method])
 
     if not non_rec is None:
+        non_rec_gt = fgt.filter_gt_cells(gt, entity_cells)
+        filtered_predictions = fgt.filter_prediction_cells(non_rec, entity_cells)
+        non_rec_scores = _measure_quality(filtered_predictions, non_rec_gt)
+
         print('\nNo entity recognition')
 
         for method in non_rec.keys():
