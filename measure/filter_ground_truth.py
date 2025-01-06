@@ -22,7 +22,7 @@ def filter_prediction_cells(predictions, entity_cells):
             cell = (prediction[1], prediction[2])
             table_id = prediction[0]
 
-            if cell in entity_cells[table_id]:
+            if table_id in entity_cells.keys() and cell in entity_cells[table_id]:
                 method_filtered.append(prediction)
 
         filtered[method] = method_filtered

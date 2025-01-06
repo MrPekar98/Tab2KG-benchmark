@@ -31,27 +31,23 @@ lexma_tfood = rr.read_lexma(LEXMA + 'tfood/')
 lexma_toughtables_dbp = rr.read_lexma(LEXMA + 'toughtables_dbp/')
 lexma_toughtables_dbp_candidates = rr.read_lexma_candidates(LEXMA + 'toughtables_dbp_candidates/')
 lexma_toughtables_wd = rr.read_lexma(LEXMA + 'toughtables_wd/')
-lexma_toughtables_wd_non_rec = rr.read_lexma_non_rec(LEXMA + 'toughtables_wd_non_rec/')
 lexma_wikitables_2013_dbp = rr.read_lexma(LEXMA + 'wikitables_2013_dbp/')
 lexma_wikitables_2013_wd = rr.read_lexma(LEXMA + 'wikitables_2013_wd/')
 lexma_wikitables_2019_dbp = rr.read_lexma(LEXMA + 'wikitables_2019_dbp/')
 lexma_wikitables_2019_dbp_candidates = rr.read_lexma_candidates(LEXMA + 'wikitables_2019_dbp_candidates/')
 lexma_wikitables_2019_wd = rr.read_lexma(LEXMA + 'wikitables_2019_wd/')
-lexma_wikitables_2019_wd_non_rec = rr.read_lexma_non_rec(LEXMA + 'wikitables_2019_wd_non_rec/')
 
 magic_hardtables = rr.read_magic(MAGIC + 'HardTables/')
 magic_tfood = rr.read_magic(MAGIC + 'tfood/')
 magic_toughtables_dbp = rr.read_magic(MAGIC + 'tough_tables_dbp/')
 magic_toughtables_dbp_candidates = rr.read_magic_candidates(MAGIC + 'tough_tables_dbp_candidates/')
 magic_toughtables_wd = rr.read_magic(MAGIC + 'tough_tables_wd/')
-magic_toughtables_wd_non_rec = rr.read_magic_non_rec(MAGIC + 'tough_tables_wd_non_rec/')
 magic_wikitables_2013_dbp = rr.read_magic(MAGIC + 'wikitables-2013_dbp/')
 magic_wikitables_2013_dbp_candidates = rr.read_magic_candidates(MAGIC + 'wikitables-2013_dbp_candidates/')
 magic_wikitables_2013_wd = rr.read_magic(MAGIC + 'wikitables-2013_wd/')
 magic_wikitables_2019_dbp = rr.read_magic(MAGIC + 'wikitables-2019_dbp/')
 magic_wikitables_2019_dbp_candidates = rr.read_magic_candidates(MAGIC + 'wikitables-2019_dbp_candidates/')
 magic_wikitables_2019_wd = rr.read_magic(MAGIC + 'wikitables-2019_wd/')
-magic_wikitables_2019_wd_non_rec = rr.read_magic_non_rec(MAGIC + 'wikitables-2019_wd_non_rec/')
 
 naive_keyword_hardtables = rr.read_keyword_kg_linker(NAIVE + 'hardtables/keyword/')
 naive_embeddings_hardtables = rr.read_keyword_kg_linker(NAIVE + 'hardtables/embeddings/')
@@ -117,8 +113,8 @@ candidates_toughtables_wd = {
     'bbw': bbw_toughtables_candidates
 }
 non_rec_toughtables_wd = {
-    'LexMa': lexma_toughtables_wd_non_rec,
-    'MAGIC': magic_toughtables_wd_non_rec
+    'LexMa': lexma_toughtables_wd,
+    'MAGIC': magic_toughtables_wd
 }
 evaluate_quality('/measure', 'toughtables_wd', results_toughtables_wd, candidates_toughtables_wd, non_rec_toughtables_wd, toughtables_wd, wikitables_2019_wd_entity_cells)
 
@@ -189,8 +185,8 @@ candidates_wikitables_2019_wd = {
     'bbw': bbw_wikitables_2019_candidates
 }
 non_rec_wikitables_2019_wd = {
-    'LexMa': lexma_wikitables_2019_wd_non_rec,
-    'MAGIC': magic_wikitables_2019_wd_non_rec
+    'LexMa': lexma_wikitables_2019_wd,
+    'MAGIC': magic_wikitables_2019_wd
 }
 evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, candidates_wikitables_2019_wd, non_rec_wikitables_2019_wd, wikitables_2019_wd, wikitables_2019_wd_entity_cells)
 
