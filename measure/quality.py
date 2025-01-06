@@ -83,9 +83,8 @@ def evaluate_quality(base_dir, result_name, predictions, candidates, non_rec, gt
             print('Hit rate:', candidate_quality[method])
 
     if not non_rec is None:
-        non_rec_gt = fgt.filter_gt_cells(gt, entity_cells)
         filtered_predictions = fgt.filter_prediction_cells(non_rec, entity_cells)
-        non_rec_scores = _measure_quality(filtered_predictions, non_rec_gt)
+        non_rec_scores = _measure_quality(filtered_predictions, gt)
 
         print('\nNo entity recognition')
 

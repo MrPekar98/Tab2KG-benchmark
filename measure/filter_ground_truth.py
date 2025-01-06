@@ -12,19 +12,6 @@ def filter_gt(gt, predictions):
 
     return filtered_gt
 
-def filter_gt_cells(gt, entity_cells):
-    filtered_gt = dict()
-
-    for table_id in entity_cells.keys():
-        for annotation in gt[table_id]:
-            if (annotation[0], annotation[1]) in entity_cells[table_id]:
-                if not table_id in filtered_gt:
-                    filtered_gt[table_id] = list()
-
-                filtered_gt[table_id].append(annotation)
-
-    return filtered_gt
-
 def filter_prediction_cells(predictions, entity_cells):
     filtered = dict()
 
