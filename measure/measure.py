@@ -16,7 +16,7 @@ bbw_wikitables_2019 = rr.read_bbw(BBW + 'wikitables_2019')
 bbw_wikitables_2019_candidates = rr.read_bbw_candidates(BBW + 'wikitables_2019_candidates/')
 
 emblookup_hardtables = rr.read_emblookup(EMBLOOKUP + 'semtab_hardtables/results.csv', 'wikidata')
-emblookup_tfood = rr.read_read_emblookup(EMBLOOKUP + 'tfood/results.csv', 'wikidata')
+emblookup_tfood = rr.read_emblookup(EMBLOOKUP + 'tfood/results.csv', 'wikidata')
 emblookup_toughtables_dbp = rr.read_emblookup(EMBLOOKUP + 'toughtables_dbp/results.csv', 'dbpedia')
 emblookup_toughtables_dbp_candidates = rr.read_emblookup_candidates(EMBLOOKUP + 'toughtables_dbp_candidates/results.csv', 'dbpedia')
 emblookup_toughtables_wd = rr.read_emblookup(EMBLOOKUP + 'toughtables_wd/results.csv', 'wikidata')
@@ -114,9 +114,10 @@ candidates_toughtables_wd = {
 }
 non_rec_toughtables_wd = {
     'LexMa': lexma_toughtables_wd,
-    'MAGIC': magic_toughtables_wd
+    'MAGIC': magic_toughtables_wd,
+    'EMBLOOKUP': emblookup_toughtables_wd
 }
-evaluate_quality('/measure', 'toughtables_wd', results_toughtables_wd, candidates_toughtables_wd, non_rec_toughtables_wd, toughtables_wd, wikitables_2019_wd_entity_cells)
+evaluate_quality('/measure', 'toughtables_wd', results_toughtables_wd, candidates_toughtables_wd, non_rec_toughtables_wd, toughtables_wd, toughtables_2019_wd_entity_cells)
 
 results_toughtables_dbp = {
     'EMBLOOKUP': emblookup_toughtables_dbp,
@@ -186,7 +187,8 @@ candidates_wikitables_2019_wd = {
 }
 non_rec_wikitables_2019_wd = {
     'LexMa': lexma_wikitables_2019_wd,
-    'MAGIC': magic_wikitables_2019_wd
+    'MAGIC': magic_wikitables_2019_wd,
+    'EMBLOOKUP': emblookup_wikitables_2019_wd
 }
 evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, candidates_wikitables_2019_wd, non_rec_wikitables_2019_wd, wikitables_2019_wd, wikitables_2019_wd_entity_cells)
 
