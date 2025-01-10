@@ -113,9 +113,10 @@ candidates_toughtables_wd = {
     'bbw': bbw_toughtables_candidates
 }
 non_rec_toughtables_wd = {
+    'bbw': bbw_toughtables,
+    'EMBLOOKUP': emblookup_toughtables_wd,
     'LexMa': lexma_toughtables_wd,
     'MAGIC': magic_toughtables_wd,
-    'EMBLOOKUP': emblookup_toughtables_wd
 }
 evaluate_quality('/measure', 'toughtables_wd', results_toughtables_wd, candidates_toughtables_wd, non_rec_toughtables_wd, toughtables_wd, toughtables_2019_wd_entity_cells)
 
@@ -186,9 +187,10 @@ candidates_wikitables_2019_wd = {
     'bbw': bbw_wikitables_2019_candidates
 }
 non_rec_wikitables_2019_wd = {
+    'bbw': bbw_wikitables_2019,
+    'EMBLOOKUP': emblookup_wikitables_2019_wd,
     'LexMa': lexma_wikitables_2019_wd,
     'MAGIC': magic_wikitables_2019_wd,
-    'EMBLOOKUP': emblookup_wikitables_2019_wd
 }
 evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, candidates_wikitables_2019_wd, non_rec_wikitables_2019_wd, wikitables_2019_wd, wikitables_2019_wd_entity_cells)
 
