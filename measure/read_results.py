@@ -127,7 +127,7 @@ def read_keyword_kg_linker(files_dir):
     files = os.listdir(files_dir)
 
     for file in files:
-        with open(files_dir + file, 'r') as input:
+        with open(files_dir + file, 'r', encoding = 'ISO-8859-1') as input:
             reader = csv.reader(input)
             header_skipped = False
             row_count = 1
@@ -150,8 +150,15 @@ def read_keyword_kg_linker(files_dir):
     return results
 
 # Results key-kg-linker candidate generation
-def read_keyword_kg_linker_candidates():
-    pass
+def read_keyword_kg_linker_candidates(files_dir):
+    results = read_keyword_kg_linker(files_dir)
+    copy = list()
+
+    for result in results:
+        tuple = [result[0], result[1], result[2], [entity for entity in result[3].split('#')]]
+        copy.append(tuple)
+
+    return copy
 
 # Results of LexMa
 def read_lexma(result_files_dir):

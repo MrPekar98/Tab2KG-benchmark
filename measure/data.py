@@ -50,6 +50,12 @@ def ground_truth(gt_path):
         if gt_path in (WIKITABLES_2013_DBPEDIA_GT, WIKITABLES_2013_WIKIDATA_GT, WIKITABLES_2019_DBPEDIA_GT, WIKITABLES_2019_WIKIDATA_GT):
             tuple[0] += 1
 
+        elif gt_path in SEMTAB_TFOOD:
+            gt_row = int(row[2])
+            gt_column = int(row[1])
+            tuple[0] = gt_row
+            tuple[1] = gt_column
+
         gt[table_id].append(tuple)
 
     return gt

@@ -52,6 +52,7 @@ magic_wikitables_2019_wd = rr.read_magic(MAGIC + 'wikitables-2019_wd/')
 naive_keyword_hardtables = rr.read_keyword_kg_linker(NAIVE + 'hardtables/keyword/')
 naive_embeddings_hardtables = rr.read_keyword_kg_linker(NAIVE + 'hardtables/embeddings/')
 naive_keyword_toughtables_dbp = rr.read_keyword_kg_linker(NAIVE + 'toughtables_dbp/keyword/')
+naive_keyword_toughtables_dbp_candidates = rr.read_keyword_kg_linker_candidates(NAIVE + 'toughtables_dbp_candidates/keyword/')
 naive_embeddings_toughtables_dbp = rr.read_keyword_kg_linker(NAIVE + 'toughtables_dbp/embeddings/')
 naive_keyword_toughtables_wd = rr.read_keyword_kg_linker(NAIVE + 'toughtables_wd/keyword/')
 naive_embeddings_toughtables_wd = rr.read_keyword_kg_linker(NAIVE + 'toughtables_wd/embeddings/')
@@ -62,6 +63,7 @@ naive_embeddings_wikitables_2013_dbp = rr.read_keyword_kg_linker(NAIVE + 'wikita
 naive_keyword_wikitables_2013_wd = rr.read_keyword_kg_linker(NAIVE + 'wikitables_2013_wd/keyword/')
 naive_embeddings_wikitables_2013_wd = rr.read_keyword_kg_linker(NAIVE + 'wikitables_2013_wd/embeddings/')
 naive_keyword_wikitables_2019_dbp = rr.read_keyword_kg_linker(NAIVE + 'wikitables_2019_dbp/keyword/')
+naive_keyword_wikitables_2019_dbp_candidates = rr.read_keyword_kg_linker_candidates(NAIVE + 'wikitables_2019_dbp_candidates/keyword/')
 naive_embeddings_wikitables_2019_dbp = rr.read_keyword_kg_linker(NAIVE + 'wikitables_2019_dbp/embeddings/')
 naive_keyword_wikitables_2019_wd = rr.read_keyword_kg_linker(NAIVE + 'wikitables_2019_wd/keyword/')
 naive_embeddings_wikitables_2019_wd = rr.read_keyword_kg_linker(NAIVE + 'wikitables_2019_wd/embeddings/')
@@ -89,7 +91,7 @@ results_hardtables = {
     'Naive_k': naive_keyword_hardtables,
     'Naive_e': naive_embeddings_hardtables
 }
-evaluate_quality('/measure', 'hardtables', results_hardtables, None, hardtables_gt, None)
+evaluate_quality('/measure', 'hardtables', results_hardtables, None, None, hardtables_gt, None)
 
 results_tfood = {
     'bbw': bbw_tfood,
@@ -99,7 +101,7 @@ results_tfood = {
     'Naive_k': naive_keyword_tfood,
     'Naive_e': naive_embeddings_tfood
 }
-evaluate_quality('/measure', 'tfood', results_tfood, None, tfood_gt, None)
+evaluate_quality('/measure', 'tfood', results_tfood, None, None, tfood_gt, None)
 
 results_toughtables_wd = {
     'bbw': bbw_toughtables,
@@ -118,21 +120,21 @@ non_rec_toughtables_wd = {
     'LexMa': lexma_toughtables_wd,
     'MAGIC': magic_toughtables_wd,
 }
-evaluate_quality('/measure', 'toughtables_wd', results_toughtables_wd, candidates_toughtables_wd, non_rec_toughtables_wd, toughtables_wd, toughtables_2019_wd_entity_cells)
+evaluate_quality('/measure', 'toughtables_wd', results_toughtables_wd, candidates_toughtables_wd, non_rec_toughtables_wd, toughtables_wd, toughtables_wd_entity_cells)
 
 results_toughtables_dbp = {
     'EMBLOOKUP': emblookup_toughtables_dbp,
     'LexMa': lexma_toughtables_dbp,
     'MAGIC': magic_toughtables_dbp,
     'Naive_k': naive_keyword_toughtables_dbp,
-    'Naive_e': naive_embeddings_toughtables_dbp
 }
 candidates_toughtables_dbp = {
     'EMBLOOKUP': emblookup_toughtables_dbp_candidates,
     'LexMa': lexma_toughtables_dbp_candidates,
-    'MAGIC': magic_toughtables_dbp_candidates
+    'MAGIC': magic_toughtables_dbp_candidates,
+    'Naive_k': naive_keyword_toughtables_dbp_candidates
 }
-evaluate_quality('/measure', 'toughtables_dbp', results_toughtables_dbp, candidates_toughtables_dbp, toughtables_dbp, None)
+evaluate_quality('/measure', 'toughtables_dbp', results_toughtables_dbp, candidates_toughtables_dbp, None, toughtables_dbp, None)
 
 results_wikitables_2013_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2013_dbp,
@@ -146,7 +148,7 @@ candidates_wikitables_2013_dbp = {
     #'LexMa':
     'MAGIC': magic_wikitables_2013_dbp_candidates
 }
-evaluate_quality('/measure', 'wikitables_2013_dbp', results_wikitables_2013_dbp, candidates_wikitables_2013_dbp, wikitables_2013_dbp, None)
+evaluate_quality('/measure', 'wikitables_2013_dbp', results_wikitables_2013_dbp, candidates_wikitables_2013_dbp, None, wikitables_2013_dbp, None)
 
 results_wikitables_2013_wd = {
     'bbw': bbw_wikitables_2013,
@@ -159,7 +161,7 @@ results_wikitables_2013_wd = {
 candidates_wikitables_2013_wd = {
     'bbw': bbw_wikitables_2013_candidates
 }
-evaluate_quality('/measure', 'wikitables_2013_wd', results_wikitables_2013_wd, candidates_wikitables_2013_wd, wikitables_2013_wd, None)
+evaluate_quality('/measure', 'wikitables_2013_wd', results_wikitables_2013_wd, candidates_wikitables_2013_wd, None, wikitables_2013_wd, None)
 
 results_wikitables_2019_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2019_dbp,
@@ -171,9 +173,10 @@ results_wikitables_2019_dbp = {
 candidates_wikitables_2019_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2019_dbp_candidates,
     'LexMa': lexma_wikitables_2019_dbp_candidates,
-    'MAGIC': magic_wikitables_2019_dbp_candidates
+    'MAGIC': magic_wikitables_2019_dbp_candidates,
+    'Naive_k': naive_keyword_wikitables_2019_dbp_candidates
 }
-evaluate_quality('/measure', 'wikitables_2019_dbp', results_wikitables_2019_dbp, candidates_wikitables_2019_dbp, wikitables_2019_dbp, None)
+evaluate_quality('/measure', 'wikitables_2019_dbp', results_wikitables_2019_dbp, candidates_wikitables_2019_dbp, None, wikitables_2019_dbp, None)
 
 results_wikitables_2019_wd = {
     'bbw': bbw_wikitables_2019,
@@ -192,7 +195,7 @@ non_rec_wikitables_2019_wd = {
     'LexMa': lexma_wikitables_2019_wd,
     'MAGIC': magic_wikitables_2019_wd,
 }
-evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, candidates_wikitables_2019_wd, non_rec_wikitables_2019_wd, wikitables_2019_wd, wikitables_2019_wd_entity_cells)
+evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, candidates_wikitables_2019_wd, non_rec_wikitables_2019_wd, wikitables_2019_wd, wikitables_2019_wd_entity_cells)"""
 
 print('\nEvaluating scalability')
 
