@@ -27,7 +27,7 @@ def evaluate_candidate_generation(candidates, gt):
                 found_hit = False
 
                 for candidate in candidate_set:
-                    if candidate in gt_cells[result_cell]:
+                    if candidate.lower() in gt_cells[result_cell]:
                         hits += 1
                         found_hit = True
                         break
