@@ -188,7 +188,7 @@ non_rec_wikitables_2019_wd = {
     'LexMa': lexma_wikitables_2019_wd,
     'MAGIC': magic_wikitables_2019_wd,
 }
-evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, candidates_wikitables_2019_wd, non_rec_wikitables_2019_wd, wikitables_2019_wd, wikitables_2019_wd_entity_cells)"""
+evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, candidates_wikitables_2019_wd, non_rec_wikitables_2019_wd, wikitables_2019_wd, wikitables_2019_wd_entity_cells)
 
 print('\nEvaluating scalability')
 
