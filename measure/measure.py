@@ -11,7 +11,6 @@ bbw_tfood = rr.read_bbw(BBW + 'tfood')
 bbw_toughtables = rr.read_bbw(BBW + 'toughtables_wd')
 bbw_toughtables_candidates = rr.read_bbw_candidates(BBW + 'toughtables_candidates/')
 bbw_wikitables_2013 = rr.read_bbw(BBW + 'wikitables_2013')
-bbw_wikitables_2013_candidates = rr.read_bbw_candidates(BBW + 'wikitables_2013_candidates/')
 bbw_wikitables_2019 = rr.read_bbw(BBW + 'wikitables_2019')
 bbw_wikitables_2019_candidates = rr.read_bbw_candidates(BBW + 'wikitables_2019_candidates/')
 
@@ -20,11 +19,15 @@ emblookup_tfood = rr.read_emblookup(EMBLOOKUP + 'tfood/results.csv', 'wikidata')
 emblookup_toughtables_dbp = rr.read_emblookup(EMBLOOKUP + 'toughtables_dbp/results.csv', 'dbpedia')
 emblookup_toughtables_dbp_candidates = rr.read_emblookup_candidates(EMBLOOKUP + 'toughtables_dbp_candidates/results.csv', 'dbpedia')
 emblookup_toughtables_wd = rr.read_emblookup(EMBLOOKUP + 'toughtables_wd/results.csv', 'wikidata')
+emblookup_toughtables_wd_more = rr.read_emblookup(EMBLOOKUP + 'toughtables_wd_more_training/results.csv', 'wikidata')
+emblookup_toughtables_wd_less = rr.read_emblookup(EMBLOOKUP + 'toughtables_wd_less_training/results.csv', 'wikidata')
 emblookup_wikitables_2013_dbp = rr.read_emblookup(EMBLOOKUP + 'wikitables_2013_dbp/results.csv', 'dbpedia')
 emblookup_wikitables_2013_wd = rr.read_emblookup(EMBLOOKUP + 'wikitables_2013_wd/results.csv', 'wikidata')
 emblookup_wikitables_2019_dbp = rr.read_emblookup(EMBLOOKUP + 'wikitables_2019_dbp/results.csv', 'dbpedia')
 emblookup_wikitables_2019_dbp_candidates = rr.read_emblookup_candidates(EMBLOOKUP + 'wikitables_2019_dbp_candidates/results.csv', 'dbpedia')
 emblookup_wikitables_2019_wd = rr.read_emblookup(EMBLOOKUP + 'wikitables_2019_wd/results.csv', 'wikidata')
+emblookup_wikitables_2019_wd_mroe = rr.read_emblookup(EMBLOOKUP + 'wikitables_2019_wd_more_training/results.csv', 'wikidata')
+emblookup_wikitables_2019_wd_less = rr.read_emblookup(EMBLOOKUP + 'wikitables_2019_wd_less_training/results.csv', 'wikidata')
 
 lexma_hardtables = rr.read_lexma(LEXMA + 'hardtables/')
 lexma_tfood = rr.read_lexma(LEXMA + 'tfood/')
@@ -43,7 +46,6 @@ magic_toughtables_dbp = rr.read_magic(MAGIC + 'tough_tables_dbp/')
 magic_toughtables_dbp_candidates = rr.read_magic_candidates(MAGIC + 'tough_tables_dbp_candidates/')
 magic_toughtables_wd = rr.read_magic(MAGIC + 'tough_tables_wd/')
 magic_wikitables_2013_dbp = rr.read_magic(MAGIC + 'wikitables-2013_dbp/')
-magic_wikitables_2013_dbp_candidates = rr.read_magic_candidates(MAGIC + 'wikitables-2013_dbp_candidates/')
 magic_wikitables_2013_wd = rr.read_magic(MAGIC + 'wikitables-2013_wd/')
 magic_wikitables_2019_dbp = rr.read_magic(MAGIC + 'wikitables-2019_dbp/')
 magic_wikitables_2019_dbp_candidates = rr.read_magic_candidates(MAGIC + 'wikitables-2019_dbp_candidates/')
@@ -88,8 +90,7 @@ results_hardtables = {
     'EMBLOOKUP': emblookup_hardtables,
     'LexMa': lexma_hardtables,
     'MAGIC': magic_hardtables,
-    'Naive_k': naive_keyword_hardtables,
-    'Naive_e': naive_embeddings_hardtables
+    'Naive_k': naive_keyword_hardtables
 }
 evaluate_quality('/measure', 'hardtables', results_hardtables, None, None, hardtables_gt, None)
 
@@ -98,18 +99,18 @@ results_tfood = {
     'EMBLOOKUP': emblookup_tfood,
     'LexMa': lexma_tfood,
     'MAGIC': magic_tfood,
-    'Naive_k': naive_keyword_tfood,
-    'Naive_e': naive_embeddings_tfood
+    'Naive_k': naive_keyword_tfood
 }
 evaluate_quality('/measure', 'tfood', results_tfood, None, None, tfood_gt, None)
 
 results_toughtables_wd = {
     'bbw': bbw_toughtables,
     'EMBLOOKUP': emblookup_toughtables_wd,
+    'EMBLOOKUP - more training': emblookup_toughtables_wd_more,
+    'EMBLOOKUP - less training': emblookup_toughtables_wd_less,
     'LexMa': lexma_toughtables_wd,
     'MAGIC': magic_toughtables_wd,
-    'Naive_k': naive_keyword_toughtables_wd,
-    'Naive_e': naive_embeddings_toughtables_wd
+    'Naive_k': naive_keyword_toughtables_wd
 }
 candidates_toughtables_wd = {
     'bbw': bbw_toughtables_candidates
@@ -126,7 +127,7 @@ results_toughtables_dbp = {
     'EMBLOOKUP': emblookup_toughtables_dbp,
     'LexMa': lexma_toughtables_dbp,
     'MAGIC': magic_toughtables_dbp,
-    'Naive_k': naive_keyword_toughtables_dbp,
+    'Naive_k': naive_keyword_toughtables_dbp
 }
 candidates_toughtables_dbp = {
     'EMBLOOKUP': emblookup_toughtables_dbp_candidates,
@@ -140,23 +141,16 @@ results_wikitables_2013_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2013_dbp,
     'LexMa': lexma_wikitables_2013_dbp,
     'MAGIC': magic_wikitables_2013_dbp,
-    'Naive_k': naive_keyword_wikitables_2013_dbp,
-    'Naive_e': naive_embeddings_wikitables_2013_dbp
+    'Naive_k': naive_keyword_wikitables_2013_dbp
 }
-candidates_wikitables_2013_dbp = {
-    #'EMBLOOKUP':
-    #'LexMa':
-    'MAGIC': magic_wikitables_2013_dbp_candidates
-}
-evaluate_quality('/measure', 'wikitables_2013_dbp', results_wikitables_2013_dbp, candidates_wikitables_2013_dbp, None, wikitables_2013_dbp, None)
+evaluate_quality('/measure', 'wikitables_2013_dbp', results_wikitables_2013_dbp, None, None, wikitables_2013_dbp, None)
 
 results_wikitables_2013_wd = {
     'bbw': bbw_wikitables_2013,
     'EMBLOOKUP': emblookup_wikitables_2013_wd,
     'LexMa': lexma_wikitables_2013_wd,
     'MAGIC': magic_wikitables_2013_wd,
-    'Naive_k': naive_keyword_wikitables_2013_wd,
-    'Naive_e': naive_embeddings_wikitables_2013_wd
+    'Naive_k': naive_keyword_wikitables_2013_wd
 }
 candidates_wikitables_2013_wd = {
     'bbw': bbw_wikitables_2013_candidates
@@ -167,8 +161,7 @@ results_wikitables_2019_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2019_dbp,
     'LexMa': lexma_wikitables_2019_dbp,
     'MAGIC': magic_wikitables_2019_dbp,
-    'Naive_k': naive_keyword_wikitables_2019_dbp,
-    'Naive_e': naive_embeddings_wikitables_2019_dbp
+    'Naive_k': naive_keyword_wikitables_2019_dbp
 }
 candidates_wikitables_2019_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2019_dbp_candidates,
@@ -184,7 +177,7 @@ results_wikitables_2019_wd = {
     'LexMa': lexma_wikitables_2019_wd,
     'MAGIC': magic_wikitables_2019_wd,
     'Naive_k': naive_keyword_wikitables_2019_wd,
-    'Naive_e': naive_embeddings_wikitables_2019_wd
+    'EMBLOOKUP - less training': emblookup_wikitables_2019_wd_less
 }
 candidates_wikitables_2019_wd = {
     'bbw': bbw_wikitables_2019_candidates
