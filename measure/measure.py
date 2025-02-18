@@ -26,7 +26,7 @@ emblookup_wikitables_2013_wd = rr.read_emblookup(EMBLOOKUP + 'wikitables_2013_wd
 emblookup_wikitables_2019_dbp = rr.read_emblookup(EMBLOOKUP + 'wikitables_2019_dbp/results.csv', 'dbpedia')
 emblookup_wikitables_2019_dbp_candidates = rr.read_emblookup_candidates(EMBLOOKUP + 'wikitables_2019_dbp_candidates/results.csv', 'dbpedia')
 emblookup_wikitables_2019_wd = rr.read_emblookup(EMBLOOKUP + 'wikitables_2019_wd/results.csv', 'wikidata')
-emblookup_wikitables_2019_wd_mroe = rr.read_emblookup(EMBLOOKUP + 'wikitables_2019_wd_more_training/results.csv', 'wikidata')
+emblookup_wikitables_2019_wd_more = rr.read_emblookup(EMBLOOKUP + 'wikitables_2019_wd_more_training/results.csv', 'wikidata')
 emblookup_wikitables_2019_wd_less = rr.read_emblookup(EMBLOOKUP + 'wikitables_2019_wd_less_training/results.csv', 'wikidata')
 
 lexma_hardtables = rr.read_lexma(LEXMA + 'hardtables/')
@@ -52,23 +52,15 @@ magic_wikitables_2019_dbp_candidates = rr.read_magic_candidates(MAGIC + 'wikitab
 magic_wikitables_2019_wd = rr.read_magic(MAGIC + 'wikitables-2019_wd/')
 
 naive_keyword_hardtables = rr.read_keyword_kg_linker(NAIVE + 'hardtables/keyword/')
-naive_embeddings_hardtables = rr.read_keyword_kg_linker(NAIVE + 'hardtables/embeddings/')
 naive_keyword_toughtables_dbp = rr.read_keyword_kg_linker(NAIVE + 'toughtables_dbp/keyword/')
 naive_keyword_toughtables_dbp_candidates = rr.read_keyword_kg_linker_candidates(NAIVE + 'toughtables_dbp_candidates/keyword/')
-naive_embeddings_toughtables_dbp = rr.read_keyword_kg_linker(NAIVE + 'toughtables_dbp/embeddings/')
 naive_keyword_toughtables_wd = rr.read_keyword_kg_linker(NAIVE + 'toughtables_wd/keyword/')
-naive_embeddings_toughtables_wd = rr.read_keyword_kg_linker(NAIVE + 'toughtables_wd/embeddings/')
 naive_keyword_tfood = rr.read_keyword_kg_linker(NAIVE + 'tfood/keyword/')
-naive_embeddings_tfood = rr.read_keyword_kg_linker(NAIVE + 'tfood/embeddings/')
 naive_keyword_wikitables_2013_dbp = rr.read_keyword_kg_linker(NAIVE + 'wikitables_2013_dbp/keyword/')
-naive_embeddings_wikitables_2013_dbp = rr.read_keyword_kg_linker(NAIVE + 'wikitables_2013_dbp/embeddings/')
 naive_keyword_wikitables_2013_wd = rr.read_keyword_kg_linker(NAIVE + 'wikitables_2013_wd/keyword/')
-naive_embeddings_wikitables_2013_wd = rr.read_keyword_kg_linker(NAIVE + 'wikitables_2013_wd/embeddings/')
 naive_keyword_wikitables_2019_dbp = rr.read_keyword_kg_linker(NAIVE + 'wikitables_2019_dbp/keyword/')
 naive_keyword_wikitables_2019_dbp_candidates = rr.read_keyword_kg_linker_candidates(NAIVE + 'wikitables_2019_dbp_candidates/keyword/')
-naive_embeddings_wikitables_2019_dbp = rr.read_keyword_kg_linker(NAIVE + 'wikitables_2019_dbp/embeddings/')
 naive_keyword_wikitables_2019_wd = rr.read_keyword_kg_linker(NAIVE + 'wikitables_2019_wd/keyword/')
-naive_embeddings_wikitables_2019_wd = rr.read_keyword_kg_linker(NAIVE + 'wikitables_2019_wd/embeddings/')
 
 print('Reading ground truth...')
 
@@ -177,7 +169,8 @@ results_wikitables_2019_wd = {
     'LexMa': lexma_wikitables_2019_wd,
     'MAGIC': magic_wikitables_2019_wd,
     'Naive_k': naive_keyword_wikitables_2019_wd,
-    'EMBLOOKUP - less training': emblookup_wikitables_2019_wd_less
+    'EMBLOOKUP - less training': emblookup_wikitables_2019_wd_less,
+    'EMBLOOKUP - more training': emblookup_wikitables_2019_wd_more
 }
 candidates_wikitables_2019_wd = {
     'bbw': bbw_wikitables_2019_candidates
@@ -209,6 +202,6 @@ print('LexMa - Wikitables 2019 (DBpedia):', lexma_wikitables_2019_dbp_linked_cel
 print('\nbbw - Tough Tables (Wikidata):', bbw_tough_tables_wd_linked_cells)
 print('bbw - Wikitables 2019 (Wikidata):', bbw_wikitables_2019_linked_cells)
 print('\nEMBLOOKUP - Tough Tables (Wikidata):', emblookup_tough_tables_wd_linked_cells)
-print('EMBLOOKUP - Wikitabkes 2019 (DBpedia):', emblookup_wikitables_2019_linked_cells)"""
+print('EMBLOOKUP - Wikitabkes 2019 (DBpedia):', emblookup_wikitables_2019_linked_cells)
 
 print('\nDone')

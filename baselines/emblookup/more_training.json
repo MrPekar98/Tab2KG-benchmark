@@ -1,0 +1,13 @@
+{
+  "dataset_alphabet_stats": {
+    "alphabets": " 0123456789abcdefghijklmnopqrstuvwxyz,./:;_-*",
+    "max_string_length": 64,
+    "alphabet_size": 45
+  },
+  "embedding_model_configs": {
+    "embedding_dimension": 64,
+    "batch_size": 128,
+    "channel_size": 8,
+    "num_epochs": 64
+  }
+}
