@@ -9,7 +9,7 @@ runtimes = list()
 tables_dir = sys.argv[1]
 output_dir = sys.argv[2]
 bbw.endpoint = sys.argv[3]
-bbw.virtusos = sys.argv[4]
+bbw.virtuoso = sys.argv[4]
 
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
