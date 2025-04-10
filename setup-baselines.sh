@@ -33,8 +33,11 @@ DBP_16_DIR="setup/tough_tables/dbpedia/"
 DBP_22_DIR="setup/kg/dbpedia/"
 WD_DIR="setup/tough_tables/wikidata/"
 
-git clone https://github.com/MrPekar98/kg-lookup.git
-cd kg-lookup/
+mkdir kg-lookup/
+wget https://anonymous.4open.science/api/repo/kg-lookup-0B54/zip
+mv zip kg-lookup.zip
+unzip kg-lookup.zip
+rm kg-lookup.zip
 
 echo "Loading DBpedia 2016..."
 ./load.sh ../${DBP_16_DIR} dbp_2016
