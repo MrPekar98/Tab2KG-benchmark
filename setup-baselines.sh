@@ -9,12 +9,15 @@ BBW="baselines/bbw/"
 LEXMA="baselines/lexma/"
 EMBLOOKUP="baselines/emblookup/"
 MAGIC="baselines/magic/"
+CITYSTI="baselines/citysti/"
 
 mkdir -p results/
 mkdir -p results/bbw/
 mkdir -p results/emblookup/
 mkdir -p results/lexma/
 mkdir -p results/magic/
+mkdir -p results/musted/
+mkdir -p results/citysti/
 
 docker pull searx/searx
 docker network inspect ${NETWORK} >/dev/null 2>&1 || docker network create ${NETWORK}
@@ -23,6 +26,7 @@ docker build -t bbw -f ${BBW}bbw.dockerfile ${BBW}
 docker build -t magic -f ${MAGIC}magic.dockerfile ${MAGIC}
 docker build -t lexma -f ${LEXMA}lexma.dockerfile ${LEXMA}
 docker build -t emblookup -f ${EMBLOOKUP}emblookup.dockerfile ${EMBLOOKUP}
+docker build -t citysti -f ${CITYSTI}citysti.dockerfile ${CITYSTI}
 
 tar -xf entity_cells_tt_wd.txt.tar.gz
 gzip -d entity_cells_wt_wd.txt.gz

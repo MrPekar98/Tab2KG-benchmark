@@ -6,6 +6,8 @@ IPS="$(hostname -I)"
 IP_ARRAY=(${IPS})
 IP=${ARRAY[0]}
 
+API_KEY=""
+
 # EmbLookup
 docker run --rm -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results emblookup
 
@@ -116,10 +118,6 @@ docker stop kg-lookup-service
 
 docker stop vos
 
-# EmbLookup - candidates
-
-# bbw - candidates
-
 # Magic - candidates
 docker run -it --rm -d --network kg-lookup-network \
            -v ${PWD}/baselines/magic/lucene_dbp_2016/:/lucene \
@@ -160,6 +158,7 @@ ENDPOINT_IP=$(docker exec kg-lookup-service hostname -I)
 docker run --rm --network kg-lookup-network -e ENDPOINT=${ENDPOINT_IP} -e KG="wd" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/baselines/magic/:/hdt -v ${PWD}/results:/results magic_candidates
 docker stop kg-lookup-service
 
-# LexMa - candidates
-
-# keyword-kg-linker - candidates
+# CitySTI
+docker run --rm --network kg-lookup-network -e API_KEY=${API_KEY} -e KG="dbp16" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results citysti
+docker run --rm --network kg-lookup-network -e API_KEY=${API_KEY} -e KG="dbp22" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results citysti
+docker run --rm --network kg-lookup-network -e API_KEY=${API_KEY} -e KG="wd" -v ${PWD}/benchmarks:/benchmarks -v ${PWD}/results:/results citysti

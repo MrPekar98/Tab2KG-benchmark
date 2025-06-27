@@ -43,6 +43,7 @@ First, open `settings.sh` to select which datasets to use in the experiments.
 Make sure to not include a dataset that wasn't included when setting up the setup.
 
 Executing the benchmark is simple.
+First, open `benchmark.sh` and insert a Gemini API key in the string for the variable `API_KEY`.
 Similar to setting up the benchmark, run the following commands to start the entire benchmark pipeline.
 
 ```bash
