@@ -8,6 +8,7 @@ EMBLOOKUP = BASE + 'emblookup/'
 KEYWORD_KG_LINKER = BASE + 'keyword-kg-linker/'
 LEXMA = BASE + 'lexma/'
 MAGIC = BASE + 'magic/'
+CITYSTI = BASE + 'citysti/'
 NAIVE = BASE + 'keyword-kg-linker/'
 
 BENCHMARKS_BASE = '/benchmarks/'

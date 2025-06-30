@@ -225,3 +225,16 @@ def read_magic_candidates(result_file_dir):
                 results.append(tuple)
 
     return results
+
+# Results of CitySTI
+def read_citysti(result_file):
+    results = list()
+
+    with open(result_file, 'r') as handle:
+        reader = csv.reader(handle)
+
+        for row in reader:
+            tuple = [row[0], int(row[1]), int(row[2]), row[3].lower()]
+            results.append(tuple)
+
+    return results
