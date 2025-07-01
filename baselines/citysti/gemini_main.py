@@ -20,6 +20,7 @@ KG = sys.argv[2]
 INPUT = sys.argv[3]
 OUTPUT = sys.argv[4]
 MODEL_NAME = "gemini-2.5-pro"
+LOOKUP_URL = sys.argv[5]
 
 if KG != 'wikidata' and KG != 'dbpedia':
     print('KG \'' + KG + '\' not recognized')
@@ -211,4 +212,4 @@ if __name__ == '__main__':
     task_queue.join()
     event.set()     # stop threading timer
 
-    print('\n\nTime taken:', time.time() - start_time, '\n\n')
+    print('\n\nTime taken:', time.time() - start_time, 's\n\n')

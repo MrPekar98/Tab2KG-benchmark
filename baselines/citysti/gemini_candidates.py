@@ -94,10 +94,10 @@ def clean_data(raw_csv_data):
         print(e)
 
 '''
-Up to 5 entities are retrieved from the Lookup API
+Up to 10 entities are retrieved from the Lookup API
 '''
 def get_entities(cell_data):
-    limit = 5
+    limit = 10
     KG_api = config["KG_api"]
 
     KG_results = []
@@ -124,7 +124,8 @@ def process_cell(filename, row_index, col_index, cell_data, csv_data, entity_dic
             entity_dict[cell_data] = KG_results
 
     with task_lock:
-        write_csv(filename, row_index, col_index, entity + "#" for entity in kg_results)
+        print('DEBUG:', kg_results)
+        write_csv(filename, row_index, col_index, [entity + "#" for entity in kg_results])
 
 def is_numeric(value):
 
@@ -156,7 +157,8 @@ def annotate_csv_cell(filepath):
 
     clear_entity_cache(entity_dict)
     raw_csv_data = extract_csv(filepath)
-    csv_data = clean_data(raw_csv_data)
+    csv_data = raw_csv_data
+    #csv_data = clean_data(raw_csv_data)
 
     for row_index, row in enumerate(csv_data[1:], start=1):
         for col_index, cell_data in enumerate(row):
