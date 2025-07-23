@@ -238,3 +238,15 @@ def read_citysti(result_file):
             results.append(tuple)
 
     return results
+
+def read_citysti_candidates(result_file):
+    results = list()
+
+    with open(result_file, 'r') as handle:
+        reader = csv.reader(handle)
+
+        for row in reader:
+            tuple = [row[0], int(row[1]), int(row[2]), [entity.lower() for entity in row[3].split('#')]]
+            results.append(tuple)
+
+    return results

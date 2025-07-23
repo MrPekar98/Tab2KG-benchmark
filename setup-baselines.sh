@@ -30,8 +30,10 @@ docker build -t citysti -f ${CITYSTI}citysti.dockerfile ${CITYSTI}
 
 tar -xf entity_cells_tt_wd.txt.tar.gz
 gzip -d entity_cells_wt_wd.txt.gz
+tar -xf entity_cells_ht.txt.tar.gz
 mv entity_cells.txt benchmarks/toughtables/wikidata/gt/entity_cells.txt
 mv entity_cells_wt_wd.txt benchmarks/wikitables_2019/gt/wikidata/entity_cells.txt
+mv entity_cells_ht.txt.tar.gz benchmarks/semtab/HardTables/gt/entity_cells.txt
 
 DBP_16_DIR="setup/tough_tables/dbpedia/"
 DBP_22_DIR="setup/kg/dbpedia/"

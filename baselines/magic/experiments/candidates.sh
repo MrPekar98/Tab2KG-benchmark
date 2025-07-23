@@ -31,3 +31,12 @@ then
     mkdir -p ${RESULT_DIR}magic/wikitables-2019_dbp_candidates/
     python3 main_candidates.py dbpedia ${CORPUS} ${RESULT_DIR}magic/wikitables-2019_dbp_candidates/ ${ENDPOINT}
 fi
+
+# HardTables - Wikidata
+CORPUS="${BENCHMARK_DIR}semtab/HardTables/tables_subset/"
+
+if [[ "${KG}" = "wd" && -d ${CORPUS} ]]
+then
+    mkdir -p ${RESULT_DIR}magic/hardtables_candidates/
+    python3 main_candidates.py wikidata ${CPRPUS} ${RESULT_DIR}magic/hardtables_candidates/ ${ENDPOINT}
+fi

@@ -7,6 +7,7 @@ from runtime import *
 print('Reading experiment results...')
 
 bbw_hardtables = rr.read_bbw(BBW + 'semtab_hardtables')
+bbw_hardtables_candidates = rr.read_bbw_candidates(BBW + 'hardtables_candidates/')
 bbw_tfood = rr.read_bbw(BBW + 'tfood')
 bbw_toughtables = rr.read_bbw(BBW + 'toughtables_wd')
 bbw_toughtables_candidates = rr.read_bbw_candidates(BBW + 'toughtables_candidates/')
@@ -15,6 +16,7 @@ bbw_wikitables_2019 = rr.read_bbw(BBW + 'wikitables_2019')
 bbw_wikitables_2019_candidates = rr.read_bbw_candidates(BBW + 'wikitables_2019_candidates/')
 
 emblookup_hardtables = rr.read_emblookup(EMBLOOKUP + 'semtab_hardtables/results.csv', 'wikidata')
+emblookup_hardtables_candidates = rr.read_emblookup_candidates(EMBLOOKUP + 'hardtables_candidates/results.csv', 'wikidata')
 emblookup_tfood = rr.read_emblookup(EMBLOOKUP + 'tfood/results.csv', 'wikidata')
 emblookup_toughtables_dbp = rr.read_emblookup(EMBLOOKUP + 'toughtables_dbp/results.csv', 'dbpedia')
 emblookup_toughtables_dbp_candidates = rr.read_emblookup_candidates(EMBLOOKUP + 'toughtables_dbp_candidates/results.csv', 'dbpedia')
@@ -30,6 +32,7 @@ emblookup_wikitables_2019_wd_more = rr.read_emblookup(EMBLOOKUP + 'wikitables_20
 emblookup_wikitables_2019_wd_less = rr.read_emblookup(EMBLOOKUP + 'wikitables_2019_wd_less_training/results.csv', 'wikidata')
 
 lexma_hardtables = rr.read_lexma(LEXMA + 'hardtables/')
+lexma_hardtables_candidates = rr.read_lexma_candidates(LEXMA + 'hardtables_candidates/')
 lexma_tfood = rr.read_lexma(LEXMA + 'tfood/')
 lexma_toughtables_dbp = rr.read_lexma(LEXMA + 'toughtables_dbp/')
 lexma_toughtables_dbp_candidates = rr.read_lexma_candidates(LEXMA + 'toughtables_dbp_candidates/')
@@ -41,6 +44,7 @@ lexma_wikitables_2019_dbp_candidates = rr.read_lexma_candidates(LEXMA + 'wikitab
 lexma_wikitables_2019_wd = rr.read_lexma(LEXMA + 'wikitables_2019_wd/')
 
 magic_hardtables = rr.read_magic(MAGIC + 'HardTables/')
+magic_hardtables_candidates = rr.read_magic_candidates(MAGIC + 'hardtables_candidates/')
 magic_tfood = rr.read_magic(MAGIC + 'tfood/')
 magic_toughtables_dbp = rr.read_magic(MAGIC + 'tough_tables_dbp/')
 magic_toughtables_dbp_candidates = rr.read_magic_candidates(MAGIC + 'tough_tables_dbp_candidates/')
@@ -51,7 +55,19 @@ magic_wikitables_2019_dbp = rr.read_magic(MAGIC + 'wikitables-2019_dbp/')
 magic_wikitables_2019_dbp_candidates = rr.read_magic_candidates(MAGIC + 'wikitables-2019_dbp_candidates/')
 magic_wikitables_2019_wd = rr.read_magic(MAGIC + 'wikitables-2019_wd/')
 
+citysti_hardtables = rr.read_citysti(CITYSTI + 'hardtables/cea-gemini-2.5-pro.csv')
+citysti_hardtables_candidates = rr.read_citysti_candidates(CITYSTI + 'hardtables_candidates/cea-gemini-2.5-pro.csv')
+citysti_toughtables_dbp = rr.read_citysti(CITYSTI + 'toughtables_dbp/cea-gemini-2.5-pro.csv')
+citysti_toughtables_wd = rr.read_citysti(CITYSTI + 'toughtables_wd/cea-gemini-2.5-pro.csv')
+citysti_toughtables_wd_candidates = rr.read_citysti_candidates(CITYSTI + 'toughtables_wd_candidates/cea-gemini-2.5-pro.csv')
+citysti_wikitables_2013_dbp = rr.read_citysti(CITYSTI + 'wikitables_2013_dbp/cea-gemini-2.5-pro.csv')
+citysti_wikitables_2013_wd = rr.read_citysti(CITYSTI + 'wikitables_2013_wd/cea-gemini-2.5-pro.csv')
+citysti_wikitables_2019_dbp = rr.read_citysti(CITYSTI + 'wikitables_2019_dbp/cea-gemini-2.5-pro.csv')
+citysti_wikitables_2019_wd = rr.read_citysti(CITYSTI + 'wikitables_2019_wd/cea-gemini-2.5-pro.csv')
+citysti_wikitables_2019_wd_candidates = rr.read_citysti(CITYSTI + 'wikitables_2019_wd_candidates/cea-gemini-2.5-pro.csv')
+
 naive_keyword_hardtables = rr.read_keyword_kg_linker(NAIVE + 'hardtables/keyword/')
+naive_keyword_hardtables_candidates = rr.read_keyword_kg_linker_candidates(NAIVE + 'hardtables_candidates/keyword/')
 naive_keyword_toughtables_dbp = rr.read_keyword_kg_linker(NAIVE + 'toughtables_dbp/keyword/')
 naive_keyword_toughtables_dbp_candidates = rr.read_keyword_kg_linker_candidates(NAIVE + 'toughtables_dbp_candidates/keyword/')
 naive_keyword_toughtables_wd = rr.read_keyword_kg_linker(NAIVE + 'toughtables_wd/keyword/')
@@ -65,6 +81,7 @@ naive_keyword_wikitables_2019_wd = rr.read_keyword_kg_linker(NAIVE + 'wikitables
 print('Reading ground truth...')
 
 hardtables_gt = ground_truth(SEMTAB_HARDTABLES_GT)
+hardtables_entity_cells = entity_cells(HARDTABLES_ENTITY_CELLS)
 tfood_gt = ground_truth(SEMTAB_TFOOD_GT)
 toughtables_dbp = ground_truth(TOUGH_TABLES_DBPEDIA_GT)
 toughtables_wd = ground_truth(TOUGH_TABLES_WIKIDATA_GT)
@@ -82,9 +99,26 @@ results_hardtables = {
     'EMBLOOKUP': emblookup_hardtables,
     'LexMa': lexma_hardtables,
     'MAGIC': magic_hardtables,
+    'CitySTI': citysti_hardtables,
     'Naive_k': naive_keyword_hardtables
 }
-evaluate_quality('/measure', 'hardtables', results_hardtables, None, None, hardtables_gt, None)
+candidates_hardtables = {
+    'bbw': bbw_hardtables_candidates,
+    'EMBLOOKUP': emblookup_hardtables_candidates,
+    'LexMa': lexma_hardtables_candidates,
+    'MAGIC': magic_hardtables_candidates,
+    'CitySTI': citysti_hardtables_candidates,
+    'Naive_k': naive_keyword_hardtables_candidates
+}
+non_rec_hardtables = {
+    'bbw': bbw_hardtables,
+    'EMBLOOKUP': emblookup_hardtables,
+    'LexMa': lexma_hardtables,
+    'MAGIC': magic_hardtables,
+    'CitySTI': citysti_hardtables,
+    'Naive_k': naive_keyword_hardtables
+}
+evaluate_quality('/measure', 'hardtables', results_hardtables, candidates_hardtables, non_rec_hardtables, hardtables_gt, hardtables_entity_cells)
 
 results_tfood = {
     'bbw': bbw_tfood,
@@ -102,16 +136,19 @@ results_toughtables_wd = {
     'EMBLOOKUP - less training': emblookup_toughtables_wd_less,
     'LexMa': lexma_toughtables_wd,
     'MAGIC': magic_toughtables_wd,
+    'CitySTI': citysti_toughtables_wd,
     'Naive_k': naive_keyword_toughtables_wd
 }
 candidates_toughtables_wd = {
-    'bbw': bbw_toughtables_candidates
+    'bbw': bbw_toughtables_candidates,
+    'CitySTI': citysti_toughtables_wd_candidates
 }
 non_rec_toughtables_wd = {
     'bbw': bbw_toughtables,
     'EMBLOOKUP': emblookup_toughtables_wd,
     'LexMa': lexma_toughtables_wd,
     'MAGIC': magic_toughtables_wd,
+    'CitySTI': citysti_toughtables_wd
 }
 evaluate_quality('/measure', 'toughtables_wd', results_toughtables_wd, candidates_toughtables_wd, non_rec_toughtables_wd, toughtables_wd, toughtables_wd_entity_cells)
 
@@ -119,6 +156,7 @@ results_toughtables_dbp = {
     'EMBLOOKUP': emblookup_toughtables_dbp,
     'LexMa': lexma_toughtables_dbp,
     'MAGIC': magic_toughtables_dbp,
+    'CitySTI': citysti_toughtables_dbp,
     'Naive_k': naive_keyword_toughtables_dbp
 }
 candidates_toughtables_dbp = {
@@ -133,6 +171,7 @@ results_wikitables_2013_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2013_dbp,
     'LexMa': lexma_wikitables_2013_dbp,
     'MAGIC': magic_wikitables_2013_dbp,
+    'CitySTI': citysti_wikitables_2013_dbp,
     'Naive_k': naive_keyword_wikitables_2013_dbp
 }
 evaluate_quality('/measure', 'wikitables_2013_dbp', results_wikitables_2013_dbp, None, None, wikitables_2013_dbp, None)
@@ -142,6 +181,7 @@ results_wikitables_2013_wd = {
     'EMBLOOKUP': emblookup_wikitables_2013_wd,
     'LexMa': lexma_wikitables_2013_wd,
     'MAGIC': magic_wikitables_2013_wd,
+    'CitySTI': citysti_wikitables_2013_wd,
     'Naive_k': naive_keyword_wikitables_2013_wd
 }
 candidates_wikitables_2013_wd = {
@@ -153,6 +193,7 @@ results_wikitables_2019_dbp = {
     'EMBLOOKUP': emblookup_wikitables_2019_dbp,
     'LexMa': lexma_wikitables_2019_dbp,
     'MAGIC': magic_wikitables_2019_dbp,
+    'CitySTI': citysti_wikitables_2019_dbp,
     'Naive_k': naive_keyword_wikitables_2019_dbp
 }
 candidates_wikitables_2019_dbp = {
@@ -170,16 +211,19 @@ results_wikitables_2019_wd = {
     'MAGIC': magic_wikitables_2019_wd,
     'Naive_k': naive_keyword_wikitables_2019_wd,
     'EMBLOOKUP - less training': emblookup_wikitables_2019_wd_less,
-    'EMBLOOKUP - more training': emblookup_wikitables_2019_wd_more
+    'EMBLOOKUP - more training': emblookup_wikitables_2019_wd_more,
+    'CitySTI': citysti_wikitables_2019_wd
 }
 candidates_wikitables_2019_wd = {
-    'bbw': bbw_wikitables_2019_candidates
+    'bbw': bbw_wikitables_2019_candidates,
+    'CitySTI': citysti_wikitables_2019_wd_candidates
 }
 non_rec_wikitables_2019_wd = {
     'bbw': bbw_wikitables_2019,
     'EMBLOOKUP': emblookup_wikitables_2019_wd,
     'LexMa': lexma_wikitables_2019_wd,
     'MAGIC': magic_wikitables_2019_wd,
+    'CitySTI': citysti_wikitables_2019_wd
 }
 evaluate_quality('/measure', 'wikitables_2019_wd', results_wikitables_2019_wd, candidates_wikitables_2019_wd, non_rec_wikitables_2019_wd, wikitables_2019_wd, wikitables_2019_wd_entity_cells)
 

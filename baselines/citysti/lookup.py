@@ -18,7 +18,8 @@ class Lookup(object):
             #The urllib.urlencode() function is now urllib.parse.urlencode(),
             #and the urllib.urlopen() function is now urllib.request.urlopen().
             #url = service_url + '?' + urllib.urlencode(params)
-            url = self.service_url + '?' + parse.urlencode(params)
+            #url = self.service_url + '?' + parse.urlencode(params)
+            url = self.service_url + '?query=' + params['query'] + '&k=' + str(params['k']) + '&format=' + params['format'] + '&fuzzy=' + params['fuzzy']
             #print(url)
             #response = json.loads(urllib.urlopen(url).read())
 
@@ -53,7 +54,7 @@ class DBpediaLookup(Lookup):
 
         #NEW lookup: https://github.com/dbpedia/lookup-application
         #return "http://akswnc7.informatik.uni-leipzig.de/lookup/api/search"
-        return "https://" + os.getenv("ENDPOINT") + ":7000/search"
+        return "http://" + os.getenv("ENDPOINT") + ":7000/search"
 
         #TODO: prefix search allows for partial searches
         #return "http://lookup.dbpedia.org/api/search/PrefixSearch"
@@ -140,7 +141,7 @@ class WikidataAPI(Lookup):
         super().__init__(self.getURL())
 
     def getURL(self):
-        return "https://" + os.getenv("ENDPOINT") + ":7000/search"
+        return "http://" + os.getenv("ENDPOINT") + ":7000/search"
 
     def __createParams(self, query, limit, type='item'):
         params = {

@@ -26,7 +26,7 @@ if KG != 'wikidata' and KG != 'dbpedia':
     print('KG \'' + KG + '\' not recognized')
     exit(1)
 
-genai.configure(api_key=GEMINI_API_KEY)
+genai.configure(api_key = GEMINI_API_KEY)
 
 generation_config = {
   "temperature": 0.25,
@@ -59,7 +59,7 @@ def write_csv(wfilename, wrow, wcol, wurl):
 
 def extract_csv(filename: str) -> list:
     with open(filename, 'r', newline='', encoding='utf-8') as csvfile:
-        csv_reader = csv.reader(csvfile) 
+        csv_reader = csv.reader(csvfile)
         return list(csv_reader)
 
 url_pattern = re.compile(r'http[s]?://[^\s",]+')
@@ -94,10 +94,10 @@ def clean_data(raw_csv_data):
         print(e)
 
 '''
-Up to 10 entities are retrieved from the Lookup API
+Up to 5 entities are retrieved from the Lookup API
 '''
 def get_entities(cell_data):
-    limit = 10
+    limit = 5
     KG_api = config["KG_api"]
 
     KG_results = []
@@ -123,18 +123,20 @@ def process_cell(filename, row_index, col_index, cell_data, csv_data, entity_dic
             KG_results = get_entities(cell_data)
             entity_dict[cell_data] = KG_results
 
+    candidates = ''
+
+    for entity in KG_results:
+        candidates += entity + '#'
+
     with task_lock:
-        print('DEBUG:', kg_results)
-        write_csv(filename, row_index, col_index, [entity + "#" for entity in kg_results])
+        write_csv(filename, row_index, col_index, candidates)
 
 def is_numeric(value):
-
-    numeric_pattern = re.compile(r'^-?\d+(\.\d+)?$')   
-    numeric_thousands_pattern = re.compile(r'^-?\d{1,3}(,\d{3})*(\.\d+)?$')   
+    numeric_pattern = re.compile(r'^-?\d+(\.\d+)?$')
+    numeric_thousands_pattern = re.compile(r'^-?\d{1,3}(,\d{3})*(\.\d+)?$')
     return bool(numeric_pattern.match(value)) or bool(numeric_thousands_pattern.match(value))
 
 def is_date(value):
-
     date_pattern = re.compile(r'^(?:\d{4}[-/]\d{2}[-/]\d{2}|\d{2}[-/]\d{2}[-/]\d{4}|\d{2}/\d{2}/\d{2})$')       
     return bool(date_pattern.match(value))
 
@@ -157,10 +159,9 @@ def annotate_csv_cell(filepath):
 
     clear_entity_cache(entity_dict)
     raw_csv_data = extract_csv(filepath)
-    csv_data = raw_csv_data
-    #csv_data = clean_data(raw_csv_data)
+    csv_data = clean_data(raw_csv_data)
 
-    for row_index, row in enumerate(csv_data[1:], start=1):
+    for row_index, row in enumerate(csv_data[1:], start = 1):
         for col_index, cell_data in enumerate(row):
             if not (is_numeric(cell_data) or is_date(cell_data) or cell_data.strip() == '' or cell_data is None):
                 process_cell(filename, row_index, col_index, cell_data, csv_data, entity_dict)

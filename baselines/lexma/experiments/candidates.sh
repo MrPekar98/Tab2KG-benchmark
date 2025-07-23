@@ -28,3 +28,15 @@ then
         python lexma_candidates.py dbpedia ${CORPUS} ${RESULT_DIR}lexma/wikitables_2019_dbp_candidates/ 10 "http://${ENDPOINT}:7000/"
     fi
 fi
+
+if [[ "${KS}" = "wd" ]]
+then
+    # HardTables - Wikidata
+    mkdir -p ${RESULT_DIR}lexma/hardtables_candidates/
+    CORPUS="${BENCHMARK_DIR}semtab/HardTables/tables_subset/"
+
+    if [[ -d ${CORPUS} ]]
+    then
+        python lexma_candidates.py wikidata ${CORPUS} ${RESULT_DIR}lexma/hardtables_candidates/ 10 "http://${ENDPOINT}:7000/"
+    fi
+fi

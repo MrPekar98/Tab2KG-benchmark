@@ -10,7 +10,7 @@ then
     # Tough Tables - DBpedia
     mkdir -p ${RESULT_DIR}citysti/toughtables_dbp/
     CORPUS="${BENCHMARK_DIR}toughtables/dbpedia/tables_subset/"
-    python gemini_main.py ${API_KEY} dbpedia ${CORPUS} ${RESULT_DIR}citysti/toughtables_dbp/
+    python gemini_main.py ${API_KEY} dbpedia ${CORPUS} ${RESULT_DIR}citysti/toughtables_dbp/ ${ENDPOINT}
 fi
 
 if [[ "${KG}" = "dbp22" ]]
@@ -18,12 +18,12 @@ then
     # Wikitables 2013 - DBpedia
     mkdir -p ${RESULT_DIR}citysti/wikitables_2013_dbp/
     CORPUS="${BENCHMARK_DIR}wikitables_2013/tables_subset/"
-    python gemini_main.py ${API_KEY} dbpedia ${CORPUS} ${RESULT_DIR}citysti/wikitables_2013_dbp/
+    python gemini_main.py ${API_KEY} dbpedia ${CORPUS} ${RESULT_DIR}citysti/wikitables_2013_dbp/ ${ENDPOINT}
 
     # Wikitables 2019 - DBpedia
     mkdir -p ${RESULT_DIR}citysti/wikitables_2019_dbp/
     CORPUS="${BENCHMARK_DIR}wikitables_2019/tables_subset/"
-    python gemini_main.py ${API_KEY} dbpedia ${CORPUS} ${RESULT_DIR}citysti/wikitables_2019_dbp/
+    python gemini_main.py ${API_KEY} dbpedia ${CORPUS} ${RESULT_DIR}citysti/wikitables_2019_dbp/ ${ENDPOINT}
 fi
 
 if [[ "${KG}" = "wd" ]]
@@ -31,25 +31,25 @@ then
     # HardTables
     mkdir -p ${RESULT_DIR}citysti/hardtables/
     CORPUS="${BENCHMARK_DIR}semtab/HardTables/tables_subset/"
-    python gemini_main.py ${API_KEY} wikidata ${CORPUS} ${RESULT_DIR}citysti/hardtables/
+    python gemini_main.py ${API_KEY} wikidata ${CORPUS} ${RESULT_DIR}citysti/hardtables/ ${ENDPOINT}
 
     # tFood
-    mkdir -p ${RESULT_DIR}citysti/tfood/
-    CORPUS="${BENCHMARK_DIR}toughtables/wikidata/tables_subset/"
-    python gemini_main.py ${API_KEY} wikidata ${CORPUS} ${RESULT_DIR}citysti/tfood/
+    #mkdir -p ${RESULT_DIR}citysti/tfood/
+    #CORPUS="${BENCHMARK_DIR}toughtables/wikidata/tables_subset/"
+    #python gemini_main.py ${API_KEY} wikidata ${CORPUS} ${RESULT_DIR}citysti/tfood/ ${ENDPOINT}
 
     # Tough Tables - Wikidata
-    mkdir -p ${RESULT_DIR}citysti/toughtables_wd/
-    CORPUS="${BENCHMARK_DIR}toughtables/wikidata/tables_subset/"
-    python gemini_main.py ${API_KEY} wikidata ${CORPUS} ${RESULT_DIR}citysti/toughtables_wd/
+    #mkdir -p ${RESULT_DIR}citysti/toughtables_wd/
+    #CORPUS="${BENCHMARK_DIR}toughtables/wikidata/tables_subset/"
+    #python gemini_main.py ${API_KEY} wikidata ${CORPUS} ${RESULT_DIR}citysti/toughtables_wd/ ${ENDPOINT}
 
     # Wikitables 2013 - Wikidata
-    mkdir -p ${RESULT_DIR}citysti/wikitables_2013_wd/
-    CORPUS="${BENCHMARK_DIR}wikitables_2013/tables_subset/"
-    python gemini_main.py ${API_KEY} wikidata ${CORPUS} ${RESULT_DIR}citysti/wikitables_2013_wd/
+    #mkdir -p ${RESULT_DIR}citysti/wikitables_2013_wd/
+    #CORPUS="${BENCHMARK_DIR}wikitables_2013/tables_subset/"
+    #python gemini_main.py ${API_KEY} wikidata ${CORPUS} ${RESULT_DIR}citysti/wikitables_2013_wd/ ${ENDPOINT}
 
     # Wikitables 2019 - Wikidata
-    mkdir -p ${RESULT_DIR}citysti/wikitables_2019_wd/
-    CORPUS="${BENCHMARK_DIR}wikitables_2019/tables_subset/"
-    python gemini_main.py ${API_KEY} wikidata ${CORPUS} ${RESULT_DIR}citysti/wikitables_2019_wd/
+    #mkdir -p ${RESULT_DIR}citysti/wikitables_2019_wd/
+    #CORPUS="${BENCHMARK_DIR}wikitables_2019/tables_subset/"
+    #python gemini_main.py ${API_KEY} wikidata ${CORPUS} ${RESULT_DIR}citysti/wikitables_2019_wd/ ${ENDPOINT}
 fi

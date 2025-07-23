@@ -26,6 +26,7 @@ WIKITABLES_2013_DBPEDIA_GT = BENCHMARKS_BASE + 'wikitables_2013/gt/dbpedia/gt.cs
 WIKITABLES_2013_WIKIDATA_GT = BENCHMARKS_BASE + 'wikitables_2013/gt/wikidata/gt.csv'
 WIKITABLES_2019_DBPEDIA_GT = BENCHMARKS_BASE + 'wikitables_2019/gt/dbpedia/gt.csv'
 WIKITABLES_2019_WIKIDATA_GT = BENCHMARKS_BASE + 'wikitables_2019/gt/wikidata/gt.csv'
+HARDTABLES_ENTITY_CELLS = BENCHMARKS_BASE + 'semtab/HardTables/gt/entity_cells.txt'
 TOUGH_TABLES_WIKIDATA_ENTITY_CELLS = BENCHMARKS_BASE + 'toughtables/wikidata/gt/entity_cells.txt'
 WIKITABLES_2019_WIKIDATA_ENTITY_CELLS = BENCHMARKS_BASE + 'wikitables_2019/gt/wikidata/entity_cells.txt'
 
